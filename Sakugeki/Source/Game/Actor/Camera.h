@@ -47,7 +47,6 @@ public:
 	{
 		NONE,
 		FIXED_POINT,
-		FREE,
 		FOLLOW,
 	};
 
@@ -63,8 +62,6 @@ public:
 
 	// デストラクタ
 	~Camera(void) override;
-
-	void Load(void) override {};
 
 	// 更新
 	void Update(void) override;
@@ -88,7 +85,7 @@ public:
 	const VECTOR& GetAngles(void) const;
 	const Quaternion& GetQuaRot(void) const;
 	
-	// X回転を抜いたY軸のみのカメラ角度
+	// Y軸のみのカメラ角度
 	const Quaternion& GetQuaRotY(void) const;
 	
 	// 注視点の取得
@@ -103,7 +100,9 @@ public:
 	// 追従対象の設定
 	void SetFollow(const Transform* follow);
 
-protected:
+private:
+
+	void Load() override {};
 
 	// 大きさ、回転、座標の初期化
 	void InitTransform(void) override {}
@@ -120,7 +119,27 @@ protected:
 	// 初期化後の個別処理
 	void InitPost(void) override;
 
-private:
+	// カメラを初期位置に戻す
+	void SetDefault(void);
+
+	// 追従対象との位置同期を取る
+	void SyncFollow(void);
+
+	// カメラ操作
+	void ProcessRot(bool isLimit);
+
+	// カメラ回転(キーボード)
+	void RotKeyboard(bool isLimit);
+
+	// カメラ回転(ゲームパッド)
+	void RotGamePad(bool isLimit);
+
+	// モード別更新ステップ
+	void SetBeforeDrawFixedPoint(void);
+	void SetBeforeDrawFollow(void);
+
+	// 衝突判定
+	void Collision(void);
 
 	// 衝突時の押し戻し試行回数
 	static constexpr int CNT_TRY_COLLISION_CAMERA = 30;
@@ -151,28 +170,4 @@ private:
 
 	// 注視点
 	VECTOR targetPos_;
-
-	// カメラを初期位置に戻す
-	void SetDefault(void);
-
-	// 追従対象との位置同期を取る
-	void SyncFollow(void);
-
-	// カメラ操作
-	void ProcessRot(bool isLimit);
-	void ProcessMove(void);
-
-	// カメラ回転(キーボード)
-	void RotKeyboard(bool isLimit);
-
-	// カメラ回転(ゲームパッド)
-	void RotGamePad(bool isLimit);
-
-	// モード別更新ステップ
-	//void SetBeforeDrawFixedPoint(void);
-	//void SetBeforeDrawFree(void);
-	void SetBeforeDrawFollow(void);
-
-	// 衝突判定
-	void Collision(void);
 };

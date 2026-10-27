@@ -37,10 +37,9 @@ private:
 		MAX
 	};
 
-	// メニュー
-	std::unique_ptr<Menu> menu_;
-
 	void DrawTitle(void)  const;
 	void DrawMenu(void)   const;
 
+	// メニュー
+	std::unique_ptr<Menu> menu_;
 };

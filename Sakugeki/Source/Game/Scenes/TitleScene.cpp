@@ -24,9 +24,6 @@ void TitleScene::Init(void)
 {
 	SetMouseDispFlag(true);
 
-	// 定点カメラ
-	sceMng_.GetCamera().ChangeMode(Camera::MODE::FIXED_POINT);
-
 	menu_ = std::make_unique<Menu>(Menu::Layout{ {760, 600}, 400, 60, 16 });
 
 	menu_->AddItem(L"ゲーム開始", [this] { sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME); });

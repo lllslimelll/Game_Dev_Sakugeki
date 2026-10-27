@@ -114,10 +114,10 @@
     <ClCompile Include="Source\Game\Collider\ColliderSphere.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Common\AnimationController.cpp">
+    <ClCompile Include="Source\Engine\Common\AnimationController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Common\Transform.cpp">
+    <ClCompile Include="Source\Engine\Common\Transform.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Actor\Camera.cpp">
@@ -248,10 +248,10 @@
     <ClInclude Include="Source\Game\Collider\ColliderSphere.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Common\AnimationController.h">
+    <ClInclude Include="Source\Engine\Common\AnimationController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Common\Transform.h">
+    <ClInclude Include="Source\Engine\Common\Transform.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Actor\Camera.h">

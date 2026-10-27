@@ -9,7 +9,6 @@
 #include "../../Game/Scenes/DeadScene.h"
 #include "../../Game/Common/AsyncLoadingScreen.h"
 #include "../Common/Fader.h"
-#include "../../Game/Actor/Camera.h"
 #include "../Resource/ResourceManager.h"
 #include "../Audio/Audio.h"
 #include "../Scene/ScreenManager.h"
@@ -39,10 +38,6 @@ void SceneManager::Init(void)
 	// フェード
 	fader_ = std::make_unique<Fader>();
 	fader_->Init();
-
-	// カメラ
-	camera_ = std::make_unique<Camera>();
-	camera_->Init();
 
 	// 画面遷移中判定
 	isSceneChanging_ = true;
@@ -114,7 +109,6 @@ void SceneManager::Draw(void)
 	// メインスクリーンの取得
 	int mainScreen = ScreenManager::GetInstance().GetMainScreen();
 	// 描画先グラフィック領域の指定
-	// (３Ｄ描画で使用するカメラの設定などがリセットされる)
 	SetDrawScreen(mainScreen);
 
 	// 画面を初期化
@@ -127,9 +121,6 @@ void SceneManager::Draw(void)
 	}
 	else
 	{
-		// カメラ設定
-		camera_->SetBeforeDraw();
-
 		// Effekseerにより再生中のエフェクトを更新
 		UpdateEffekseer3D();
 
@@ -247,12 +238,6 @@ void SceneManager::PopOverlay()
 		scenes_.pop_back();
 	}
 }
-
-Camera& SceneManager::GetCamera(void)
-{
-	return *camera_;
-}
-
 
 SceneManager::SCENE_ID SceneManager::GetSceneID(void)
 {
