@@ -155,7 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Game\Scenes\LoadingScene.cpp" />
+    <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp" />
     <ClCompile Include="Source\Game\UI\Menu.cpp" />
     <ClCompile Include="Source\Game\Collider\ColliderCircleBoundary.cpp" />
     <ClCompile Include="Source\Game\Collider\ColliderPlane.cpp" />
@@ -198,9 +198,10 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageGround.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageTree.cpp" />
+    <ClCompile Include="Source\Game\UI\UILoading.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Game\Scenes\LoadingScene.h" />
+    <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h" />
     <ClInclude Include="Source\Game\UI\Menu.h" />
     <ClInclude Include="Source\Game\Collider\ColliderCircleBoundary.h" />
     <ClInclude Include="Source\Game\Collider\ColliderPlane.h" />
@@ -243,6 +244,7 @@
     <ClInclude Include="Source\Game\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Game\Actor\Stage\StageGround.h" />
     <ClInclude Include="Source\Game\Actor\Stage\StageTree.h" />
+    <ClInclude Include="Source\Game\UI\UILoading.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Game\Shader\Model\Stage\GroundPS.hlsl">

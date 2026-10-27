@@ -76,7 +76,5 @@ protected:
 	void CollisionGravity(void);
 	void CollisionCircleBoundary(void);
 	void CollisionCapsule(void);
-	// 衝突判定前準備
-	virtual void CollisionReserve(void) {};
 };
 

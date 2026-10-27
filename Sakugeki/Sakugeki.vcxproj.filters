@@ -141,7 +141,10 @@
     <ClCompile Include="Source\Game\UI\Menu.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Scenes\LoadingScene.cpp">
+    <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game\UI\UILoading.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -272,7 +275,10 @@
     <ClInclude Include="Source\Game\UI\Menu.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Scenes\LoadingScene.h">
+    <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game\UI\UILoading.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -32,6 +32,11 @@ void Player::Load()
 	// シェーダー
 	resMng_.Load(ResourceManager::SRC::SHADER_VS_PLAYER);
 	resMng_.Load(ResourceManager::SRC::SHADER_PS_PLAYER);
+
+	// アニメーション
+	resMng_.Load(ResourceManager::SRC::ANIM_IDLE);
+	resMng_.Load(ResourceManager::SRC::ANIM_RUN);
+	resMng_.Load(ResourceManager::SRC::ANIM_JUMP);
 }
 
 void Player::ProcessMove(void)
@@ -117,21 +122,6 @@ void Player::UpdateProcess(void)
 
 	// ジャンプ処理
 	ProcessJump();
-}
-
-void Player::CollisionReserve(void)
-{
-	VECTOR top = VAdd(transform_.pos, VScale(AsoUtility::DIR_U, 110));
-	VECTOR down = VAdd(transform_.pos, VScale(AsoUtility::DIR_U, 20));
-	
-	if (ownColliders_.count(static_cast<int>(COLLIDER_TYPE::CAPSULE)) != 0)
-	{
-		ColliderCapsule* colCapsule = dynamic_cast<ColliderCapsule*>(
-			ownColliders_.at(static_cast<int>(COLLIDER_TYPE::CAPSULE)));
-
-	//	colCapsule->SetLocalPosTop(top);
-	//	colCapsule->SetLocalPosDown(down);
-	}
 }
 
 void Player::InitTransform(void)

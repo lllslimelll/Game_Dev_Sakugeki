@@ -5,6 +5,7 @@
 #include <DxLib.h>
 
 class SceneBase;
+class AsyncLoadingScreen;
 class Fader;
 class Camera;
 
@@ -74,7 +75,7 @@ private:
 	// privateにして外部から生成できない様にする
 	SceneManager(void);
 	SceneManager(const SceneManager& instance) = default;
-	~SceneManager(void) = default;
+	~SceneManager(void);
 
 	// シーン遷移実行
 	void DoChangeScene(SCENE_ID sceneId);
@@ -85,6 +86,9 @@ private:
 	// フェード
 	void Fade(void);
 
+	// ロード待ちの更新
+	void UpdateLoading(void);
+
 	// 静的インスタンス
 	static SceneManager* instance_;
 
@@ -93,6 +97,9 @@ private:
 
 	// 各種シーン
 	std::vector<std::unique_ptr<SceneBase>> scenes_;
+
+	// ローディング画面
+	std::unique_ptr<AsyncLoadingScreen> loading_;
 
 	// フェード
 	std::unique_ptr<Fader> fader_;

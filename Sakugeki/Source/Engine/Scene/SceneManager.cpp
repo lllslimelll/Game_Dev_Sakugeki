@@ -7,6 +7,7 @@
 #include "../../Game/Scenes/PauseScene.h"
 #include "../../Game/Scenes/OptionScene.h"
 #include "../../Game/Scenes/DeadScene.h"
+#include "../../Game/Common/AsyncLoadingScreen.h"
 #include "../Common/Fader.h"
 #include "../../Game/Actor/Camera.h"
 #include "../Resource/ResourceManager.h"
@@ -44,7 +45,7 @@ void SceneManager::Init(void)
 	camera_->Init();
 
 	// 画面遷移中判定
-	isSceneChanging_ = false;
+	isSceneChanging_ = true;
 
 	// デルタタイム
 	preTime_ = std::chrono::system_clock::now();
@@ -90,8 +91,16 @@ void SceneManager::Update(void)
 
 	if (isSceneChanging_)
 	{
-		// フェード状態の切替処理
-		Fade();
+		if (loading_)
+		{
+			// ロード待ち
+			UpdateLoading();
+		}
+		else
+		{
+			// フェード状態の切替処理
+			Fade();
+		}
 	}
 	else
 	{
@@ -111,20 +120,28 @@ void SceneManager::Draw(void)
 	// 画面を初期化
 	ClearDrawScreen();
 
-	// カメラ設定
-	camera_->SetBeforeDraw();
-
-	// Effekseerにより再生中のエフェクトを更新
-	UpdateEffekseer3D();
-
-	// スタック内のシーンを描画
-	for (auto& scene : scenes_)
+	if (loading_)
 	{
-		scene->Draw();
+		// ロード中は新シーンを描画しない
+		loading_->Draw();
 	}
+	else
+	{
+		// カメラ設定
+		camera_->SetBeforeDraw();
 
-	// Effekseerにより再生中のエフェクトを描画する。
-	DrawEffekseer3D();
+		// Effekseerにより再生中のエフェクトを更新
+		UpdateEffekseer3D();
+
+		// スタック内のシーンを描画
+		for (auto& scene : scenes_)
+		{
+			scene->Draw();
+		}
+
+		// Effekseerにより再生中のエフェクトを描画する。
+		DrawEffekseer3D();
+	}
 	
 	// 暗転・明転
 	fader_->Draw();
@@ -137,8 +154,12 @@ void SceneManager::Draw(void)
 
 void SceneManager::Destroy(void)
 {
+	// 読み込み途中のハンドルを残したまま解放しないために待機
+	WaitHandleASyncLoadAll();
+
 	// シーンリストの破棄
 	scenes_.clear();
+	loading_.reset();
 
 	// インスタンスのメモリ解放
 	delete instance_;
@@ -178,18 +199,21 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 		break;
 	}
 
-	// 一旦ロードここに置く
-	scenes_.back()->Load();
-	// シーン末尾の初期化
-	scenes_.back()->Init();
+	// ロード待ち画面を作り、新シーンの Load を非同期で発行する
+	loading_ = std::make_unique<AsyncLoadingScreen>();
+	loading_->Load();
+	loading_->StartLoad(*scenes_.back());
 
-	// デルタタイムリセット
+	fader_->SetFade(Fader::STATE::NONE);
+
+	// 旧シーン破棄などにかかった時間を、ローディングの経過時間に含めない
 	ResetDeltaTime();
+
 
 	waitSceneId_ = SCENE_ID::NONE;
 }
 
-// オーバーレイの追加（オーバーレイとして）
+// シーンの追加（オーバーレイ）
 void SceneManager::PushOverlay(SCENE_ID sceneId)
 { 
 	// シーンの変更
@@ -209,7 +233,7 @@ void SceneManager::PushOverlay(SCENE_ID sceneId)
 		break;
 	}
 
-	// 一旦ロードここに置く
+	// オーバーレイシーンはリソースが少ないため、非同期ロードはしない
 	scenes_.back()->Load();
 	// シーン末尾の初期化
 	scenes_.back()->Init();
@@ -253,6 +277,30 @@ SceneManager::SceneManager(void)
 	deltaTime_ = 1.0f / 60.0f;
 }
 
+SceneManager::~SceneManager(void)
+{
+}
+
+void SceneManager::UpdateLoading(void)
+{
+	loading_->Update(deltaTime_);
+
+	// ロードと演出が終わるまで待つ
+	if (!loading_->IsFinished()) { return; }
+
+	// ロード待ち画面を破棄
+	loading_.reset();
+
+	// 末尾シーンの初期化
+	scenes_.back()->Init();
+
+	// デルタタイムリセット
+	ResetDeltaTime();
+
+	// 暗転から明転へ
+	fader_->SetFade(Fader::STATE::FADE_IN);
+}
+
 void SceneManager::ResetDeltaTime(void)
 {
 	deltaTime_ = 0.016f;
@@ -273,14 +321,13 @@ void SceneManager::Fade(void)
 			isSceneChanging_ = false;
 		}
 		break;
+
 	case Fader::STATE::FADE_OUT:
 		// 暗転中
 		if (fader_->IsEnd())
 		{
 			// 完全に暗転してからシーン遷移
 			DoChangeScene(waitSceneId_);
-			// 暗転から明転へ
-			fader_->SetFade(Fader::STATE::FADE_IN);
 		}
 		break;
 	}

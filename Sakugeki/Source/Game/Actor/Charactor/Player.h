@@ -57,8 +57,5 @@ private:
 
 	// 更新系
 	virtual void UpdateProcess(void) override;
-
-	// 衝突判定前準備
-	void CollisionReserve(void) override;
 };
 

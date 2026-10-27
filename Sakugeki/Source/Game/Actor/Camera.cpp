@@ -61,7 +61,6 @@ void Camera::SetBeforeDraw(void)
 
 	// DXライブラリのカメラとEffekseerのカメラを同期する。
 	Effekseer_Sync3DSetting();
-
 }
 
 void Camera::DrawDebug(void)
@@ -84,8 +83,8 @@ void Camera::InitCollider(void)
 		ColliderBase::TAG::CAMERA,
 		&transform_,
 		AsoUtility::VECTOR_ZERO,
-		COL_CAPSULE_SPHERE
-	);
+		COL_CAPSULE_SPHERE);
+
 	// 自分自身の衝突情報に登録
 	ownColliders_.emplace(
 		static_cast<int>(COLLIDER_TYPE::SPHERE), colliderSphere);
