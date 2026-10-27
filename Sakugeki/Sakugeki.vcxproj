@@ -187,8 +187,8 @@
     <ClCompile Include="Source\Game\Collider\ColliderLine.cpp" />
     <ClCompile Include="Source\Game\Collider\ColliderModel.cpp" />
     <ClCompile Include="Source\Game\Collider\ColliderSphere.cpp" />
-    <ClCompile Include="Source\Game\Common\AnimationController.cpp" />
-    <ClCompile Include="Source\Game\Common\Transform.cpp" />
+    <ClCompile Include="Source\Engine\Common\AnimationController.cpp" />
+    <ClCompile Include="Source\Engine\Common\Transform.cpp" />
     <ClCompile Include="Source\Game\Scenes\DeadScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\GameScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\OptionScene.cpp" />
@@ -234,8 +234,8 @@
     <ClInclude Include="Source\Game\Collider\ColliderLine.h" />
     <ClInclude Include="Source\Game\Collider\ColliderModel.h" />
     <ClInclude Include="Source\Game\Collider\ColliderSphere.h" />
-    <ClInclude Include="Source\Game\Common\AnimationController.h" />
-    <ClInclude Include="Source\Game\Common\Transform.h" />
+    <ClInclude Include="Source\Engine\Common\AnimationController.h" />
+    <ClInclude Include="Source\Engine\Common\Transform.h" />
     <ClInclude Include="Source\Game\Scenes\DeadScene.h" />
     <ClInclude Include="Source\Game\Scenes\GameScene.h" />
     <ClInclude Include="Source\Game\Scenes\OptionScene.h" />

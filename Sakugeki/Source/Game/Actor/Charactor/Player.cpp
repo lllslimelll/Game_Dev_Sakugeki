@@ -1,21 +1,21 @@
 #include <memory>
-#include "../../Common/AnimationController.h"
+#include "../../../Engine/Common/Transform.h"
+#include "../../../Engine/Common/AnimationController.h"
 #include "../../../Engine/Scene/SceneManager.h"
 #include "../../../Engine/Renderer/Material.h"
 #include "../../../Engine/Renderer/ModelRenderer.h"
 #include "../Camera.h"
 #include "../../../Engine/Input/Input.h"
 #include "../../../Engine/Resource/ResourceManager.h"
-#include "../../Common/Transform.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "Player.h"
 
-
-Player::Player(void)
+Player::Player(const Camera& camera)
 	:
-	CharactorBase()
+	CharactorBase(),
+	camera_(camera)
 {
 }
 
@@ -70,7 +70,7 @@ void Player::ProcessMove(void)
 		moveSpeed_ = SPEED_MOVE;
 
 		// Y軸のみのカメラ角度を取得
-		Quaternion cameraRot = scnMng_.GetCamera().GetQuaRotY();
+		Quaternion cameraRot = camera_.GetQuaRotY();
 
 		// 移動方向をカメラに合わせる
 		moveDir_ = Quaternion::PosAxis(cameraRot, dir);

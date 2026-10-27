@@ -3,6 +3,7 @@
 #include <memory>
 #include "SceneBase.h"
 
+class Camera;
 class StageManager;
 class Player;
 
@@ -30,6 +31,8 @@ public:
 
 private:
 	
+	// カメラ
+	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<StageManager> stageMng_;
 	std::unique_ptr<Player> player_;
 

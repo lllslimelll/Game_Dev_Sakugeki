@@ -15,17 +15,18 @@ GameScene::GameScene(void)
 
 GameScene::~GameScene(void)
 {
-	// コライダの解放
 	if (player_) { player_->Release(); }
 	if (stageMng_) { stageMng_->Release(); }
 }
 
 void GameScene::Load()
 {
+	camera_ = std::make_unique<Camera>();
+
 	stageMng_ = std::make_unique<StageManager>();
 	stageMng_->Load();
 
-	player_ = std::make_unique<Player>();
+	player_ = std::make_unique<Player>(*camera_);
 	player_->Load();
 }
 
@@ -34,9 +35,9 @@ void GameScene::Init(void)
 	SetMouseDispFlag(false);
 
 	// カメラ
-	auto& camera = sceMng_.GetCamera();
-	camera.ChangeMode(Camera::MODE::FOLLOW);
-	camera.SetFollow(&player_->GetTransform());
+	camera_->Init();
+	camera_->ChangeMode(Camera::MODE::FOLLOW);
+	camera_->SetFollow(&player_->GetTransform());
 
 	// 初期化
 	stageMng_->Init();
@@ -53,7 +54,7 @@ void GameScene::Update(void)
 {
 	stageMng_->Update();
 	player_->Update();
-	sceMng_.GetCamera().Update();
+	camera_->Update();
 
 	// シーン遷移
 	auto const& ins = Input::GetInstance();
@@ -66,6 +67,8 @@ void GameScene::Update(void)
 void GameScene::Draw(void)
 {
 	DrawFormatString(0, 0, 0xffffff, L"ゲーム");
+
+	camera_->SetBeforeDraw();
 
 	stageMng_->Draw();
 	player_->Draw();

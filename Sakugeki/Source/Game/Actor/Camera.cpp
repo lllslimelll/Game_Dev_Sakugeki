@@ -2,7 +2,7 @@
 #include <EffekseerForDXLib.h>
 #include "../../Engine/Utility/AsoUtility.h"
 #include "../../Engine/Input/Input.h"
-#include "../Common/Transform.h"
+#include "../../Engine/Common/Transform.h"
 #include "../Collider/ColliderBase.h"
 #include "../Collider/ColliderModel.h"
 #include "../Collider/ColliderSphere.h"
@@ -29,19 +29,9 @@ void Camera::Update(void)
 
 	switch (mode_)
 	{
-	case MODE::FREE:   UpdateFree();   break;
 	case MODE::FOLLOW: UpdateFollow(); break;
 	default: break;   // FIXED_POINT は何もしない
 	}
-}
-
-void Camera::UpdateFree()
-{
-	ProcessRot(false);
-	ProcessMove();
-	rotY_ = Quaternion::AngleAxis(angles_.y, AsoUtility::AXIS_Y);
-	transform_.quaRot = rotY_.Mult(Quaternion::AngleAxis(angles_.x, AsoUtility::AXIS_X));
-	targetPos_ = VAdd(transform_.pos, transform_.quaRot.PosAxis(FOLLOW_TARGET_LOCAL_POS));
 }
 
 void Camera::UpdateFollow()
@@ -139,8 +129,6 @@ void Camera::ChangeMode(MODE mode)
 	{
 	case Camera::MODE::FIXED_POINT:
 		break;
-	case Camera::MODE::FREE:
-		break;
 	case Camera::MODE::FOLLOW:
 		break;
 	}
@@ -194,34 +182,10 @@ void Camera::ProcessRot(bool isLimit)
 	RotGamePad(isLimit);
 }
 
-void Camera::ProcessMove(void)
+void Camera::SetBeforeDrawFixedPoint(void)
 {
+	// 何もしない
 }
-
-//void Camera::SetBeforeDrawFixedPoint(void)
-//{
-//	// 何もしない
-//}
-//
-//void Camera::SetBeforeDrawFree(void)
-//{
-//
-//	// カメラ操作(回転)
-//	ProcessRot(false);
-//
-//	// カメラ操作(移動)
-//	ProcessMove();
-//
-//	// Y軸
-//	rotY_ = Quaternion::AngleAxis(angles_.y, AsoUtility::AXIS_Y);
-//
-//	// Y軸 + X軸
-//	transform_.quaRot = rotY_.Mult(Quaternion::AngleAxis(angles_.x, AsoUtility::AXIS_X));
-//
-//	// 注視点更新
-//	targetPos_ = VAdd(transform_.pos, transform_.quaRot.PosAxis(FOLLOW_TARGET_LOCAL_POS));
-//
-//}
 
 void Camera::SetBeforeDrawFollow(void)
 {
