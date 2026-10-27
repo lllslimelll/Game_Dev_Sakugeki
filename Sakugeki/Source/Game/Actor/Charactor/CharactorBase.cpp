@@ -38,9 +38,6 @@ void CharactorBase::Update(void)
 	// 重力による移動量
 	CalcGravityPow();
 
-	// 衝突判定前準備
-	CollisionReserve();
-
 	// 衝突判定
 	Collision();
 
