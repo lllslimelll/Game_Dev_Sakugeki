@@ -1,8 +1,6 @@
 #pragma once
-class Vector2
+struct Vector2
 {
-public:
-
 	int x;
 	int y;
 
