@@ -1,0 +1,198 @@
+#include "../Core/Application.h"
+#include "PixelRenderer.h"
+
+
+PixelRenderer::PixelRenderer(Material& material)
+	:
+	material_(material)
+{
+}
+
+void PixelRenderer::MakeSquareVertex(Vector2 size, Vector2 pos)
+{
+	size_ = size;
+	pos_ = pos;
+
+	int cnt = 0;
+	float sX = static_cast<float>(pos_.x);
+	float sY = static_cast<float>(pos_.y);
+	float eX = static_cast<float>(pos_.x + size_.x);
+	float eY = static_cast<float>(pos_.y + size_.y);
+
+	// ４頂点の初期化
+	for (int i = 0; i < 4; i++)
+	{
+		vertexs_[i].rhw = 1.0f;
+		vertexs_[i].dif = GetColorU8(255, 255, 255, 255);
+		vertexs_[i].spc = GetColorU8(0, 0, 0, 255);
+		vertexs_[i].su = 0.0f;
+		vertexs_[i].sv = 0.0f;
+	}
+
+	// 左上
+	vertexs_[cnt].pos = VGet(sX, sY, 0.0f);
+	vertexs_[cnt].u = 0.0f;
+	vertexs_[cnt].v = 0.0f;
+	cnt++;
+
+	// 右上
+	vertexs_[cnt].pos = VGet(eX, sY, 0.0f);
+	vertexs_[cnt].u = 1.0f;
+	vertexs_[cnt].v = 0.0f;
+	cnt++;
+
+	// 右下
+	vertexs_[cnt].pos = VGet(eX, eY, 0.0f);
+	vertexs_[cnt].u = 1.0f;
+	vertexs_[cnt].v = 1.0f;
+	cnt++;
+
+	// 左下
+	vertexs_[cnt].pos = VGet(sX, eY, 0.0f);
+	vertexs_[cnt].u = 0.0f;
+	vertexs_[cnt].v = 1.0f;
+
+	// 頂点インデックスの生成
+	MakeVertexIndex();
+}
+
+void PixelRenderer::MakeVertexIndex(void)
+{
+	// 頂点インデックス
+	int cnt = 0;
+	indexes_[cnt++] = 0;
+	indexes_[cnt++] = 1;
+	indexes_[cnt++] = 3;
+
+	indexes_[cnt++] = 1;
+	indexes_[cnt++] = 2;
+	indexes_[cnt++] = 3;
+}
+
+void PixelRenderer::MakeSkewVertex(Vector2 size, Vector2 pos, float skewX)
+{
+	// MakeSquareVertex と同じ初期化
+	for (int i = 0; i < 4; i++)
+	{
+		vertexs_[i].rhw = 1.0f;
+		vertexs_[i].dif = GetColorU8(255, 255, 255, 255);
+		vertexs_[i].spc = GetColorU8(0, 0, 0, 255);
+		vertexs_[i].su = 0.0f;
+		vertexs_[i].sv = 0.0f;
+	}
+
+	float sX = (float)pos.x;
+	float sY = (float)pos.y;
+	float eX = (float)(pos.x + size.x);
+	float eY = (float)(pos.y + size.y);
+
+	// 右辺を上にずらす(右上に角度)
+	// 左上
+	vertexs_[0].pos = VGet(sX, sY, 0.0f);
+	vertexs_[0].u = 0.0f; vertexs_[0].v = 0.0f;
+	// 右上 ← ここをskewX分だけ上に
+	vertexs_[1].pos = VGet(eX, sY - skewX, 0.0f);
+	vertexs_[1].u = 1.0f; vertexs_[1].v = 0.0f;
+	// 右下 ← ここもskewX分だけ上に
+	vertexs_[2].pos = VGet(eX, eY - skewX, 0.0f);
+	vertexs_[2].u = 1.0f; vertexs_[2].v = 1.0f;
+	// 左下
+	vertexs_[3].pos = VGet(sX, eY, 0.0f);
+	vertexs_[3].u = 0.0f; vertexs_[3].v = 1.0f;
+
+	MakeVertexIndex();
+}
+
+void PixelRenderer::Draw(void)
+{
+	// マテリアルの設定をGPUに反映
+	SetToDevice();
+
+	// 描画
+	DrawPolygonIndexed2DToShader(vertexs_, NUM_VERTEX, indexes_, NUM_POLYGON);
+
+	// シェーダの後始末
+	Reset();
+}
+
+void PixelRenderer::SetToDevice(void)
+{
+	// オリジナルシェーダ設定(ON)
+	MV1SetUseOrigShader(true);
+
+	// 使用するピクセルシェーダをGPUに指定
+	SetUsePixelShader(material_.GetShaderPSH());
+
+	// テクスチャアドレスモードを設定
+	SetTextureAddressModeUV(static_cast<int>(material_.GetTextureAddress()),
+							static_cast<int>(material_.GetTextureAddress()));
+
+	// ピクセルシェーダにテクスチャを転送
+	const auto& textures = material_.GetTextures();
+
+	if (textures.size() == 0)
+	{
+		// 前回使用分のテクスチャを引き継がないように
+		SetUseTextureToShader(0, -1);
+	}
+	else
+	{
+		for (const auto& pair : textures)
+		{
+			SetUseTextureToShader(pair.first, pair.second);
+		}
+	}
+
+	// 定数バッファハンドル取得
+	int constBuf = material_.GetConstBufPSH();
+
+	FLOAT4* constBufsPtr = (FLOAT4*)GetBufferShaderConstantBuffer(constBuf);
+	const auto& constBufs = material_.GetConstBufsPS();
+
+	for (int i = 0; i < constBufs.size(); i++)
+	{
+		if (i != 0)
+		{
+			constBufsPtr++;
+		}
+		constBufsPtr->x = constBufs[i].x;
+		constBufsPtr->y = constBufs[i].y;
+		constBufsPtr->z = constBufs[i].z;
+		constBufsPtr->w = constBufs[i].w;
+	}
+
+	// ピクセルシェーダー用の定数バッファを更新して書き込んだ内容を反映する
+	UpdateShaderConstantBuffer(constBuf);
+
+	// ピクセルシェーダー用の定数バッファを定数バッファレジスタにセット
+	SetShaderConstantBuffer(
+		constBuf, DX_SHADERTYPE_PIXEL, Material::CONSTANT_BUF_SLOT_BEGIN_PS);
+
+	// ピクセルシェーダー設定
+	SetUsePixelShader(material_.GetShaderPSH());
+}
+
+void PixelRenderer::Reset(void)
+{
+	// テクスチャ解除
+	const auto& textures = material_.GetTextures();
+
+	if (textures.size() == 0)
+	{
+		// 前回使用分のテクスチャを引き継がないように
+		SetUseTextureToShader(0, -1);
+	}
+	else
+	{
+		for (const auto& pair : textures)
+		{
+			SetUseTextureToShader(pair.first, -1);
+		}
+	}
+
+	// ピクセルシェーダ解除
+	SetUsePixelShader(-1);
+
+	// オリジナルシェーダ設定(OFF)
+	MV1SetUseOrigShader(false);
+}
