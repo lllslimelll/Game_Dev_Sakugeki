@@ -1,20 +1,18 @@
 #include <DxLib.h>
-#include "../../Engine/Utility/AsoUtility.h"
 #include "Transform.h"
 
 Transform::Transform(void)
 	:
 	modelId(-1),
-	scl(AsoUtility::VECTOR_ONE),
-	rot(AsoUtility::VECTOR_ZERO),
-	pos(AsoUtility::VECTOR_ZERO),
-	localPos(AsoUtility::VECTOR_ZERO),
+	scl(Vector3::ONE),
+	rot(Vector3::ZERO),
+	pos(Vector3::ZERO),
+	localPos(Vector3::ZERO),
 	matScl(MGetIdent()),
 	matRot(MGetIdent()),
 	matPos(MGetIdent()),
 	quaRot(Quaternion()),
 	quaRotLocal(Quaternion())
-
 {
 }
 
@@ -24,7 +22,6 @@ Transform::~Transform(void)
 
 void Transform::Update(void)
 {
-
 	// 大きさ
 	matScl = MGetScale(scl);
 
@@ -47,7 +44,6 @@ void Transform::Update(void)
 	{
 		MV1SetMatrix(modelId, mat);
 	}
-
 }
 
 void Transform::Release(void)
@@ -59,37 +55,37 @@ void Transform::SetModel(int model)
 	modelId = model;
 }
 
-VECTOR Transform::GetForward(void) const
+Vector3 Transform::GetForward(void) const
 {
-	return GetDir(AsoUtility::DIR_F);
+	return GetDir(Vector3::DIR_FORWARD);
 }
 
-VECTOR Transform::GetBack(void) const
+Vector3 Transform::GetBack(void) const
 {
-	return GetDir(AsoUtility::DIR_B);
+	return GetDir(Vector3::DIR_BACK);
 }
 
-VECTOR Transform::GetRight(void) const
+Vector3 Transform::GetRight(void) const
 {
-	return GetDir(AsoUtility::DIR_R);
+	return GetDir(Vector3::DIR_RIGHT);
 }
 
-VECTOR Transform::GetLeft(void) const
+Vector3 Transform::GetLeft(void) const
 {
-	return GetDir(AsoUtility::DIR_L);
+	return GetDir(Vector3::DIR_LEFT);
 }
 
-VECTOR Transform::GetUp(void) const
+Vector3 Transform::GetUp(void) const
 {
-	return GetDir(AsoUtility::DIR_U);
+	return GetDir(Vector3::DIR_UP);
 }
 
-VECTOR Transform::GetDown(void) const
+Vector3 Transform::GetDown(void) const
 {
-	return GetDir(AsoUtility::DIR_D);
+	return GetDir(Vector3::DIR_DOWN);
 }
 
-VECTOR Transform::GetDir(const VECTOR& dir) const
+Vector3 Transform::GetDir(const Vector3& dir) const
 {
 	return quaRot.PosAxis(dir);
 }

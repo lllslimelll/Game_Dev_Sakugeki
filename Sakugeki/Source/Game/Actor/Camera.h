@@ -14,10 +14,10 @@ class Camera : public ActorBase
 public:
 
 	// カメラの初期座標
-	static constexpr VECTOR DERFAULT_POS = { 0.0f, 0.0f, -500.0f };
+	static inline Vector3 DERFAULT_POS = { 0.0f, 0.0f, -500.0f };
 	
 	// カメラの初期角度
-	static constexpr VECTOR DERFAULT_ANGLES = { 
+	static inline Vector3 DERFAULT_ANGLES = { 
 		0.0f, 0.0f, 0.0f
 	};
 
@@ -33,10 +33,10 @@ public:
 	static constexpr float VIEW_FAR = 20000.0f;
 
 	// 追従位置からカメラ位置までの相対座標
-	static constexpr VECTOR FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 200.0f, -300.0f };
+	static inline Vector3 FOLLOW_CAMERA_LOCAL_POS = { 0.0f, 200.0f, -300.0f };
 
 	// 追従位置から注視点までの相対座標
-	static constexpr VECTOR FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
+	static inline Vector3 FOLLOW_TARGET_LOCAL_POS = { 0.0f, 0.0f, 0.0f };
 
 	// カメラのX回転上限度角
 	static constexpr float LIMIT_X_UP_RAD = 40.0f * (DX_PI_F / 180.0f);
@@ -66,7 +66,6 @@ public:
 	// 更新
 	void Update(void) override;
 
-	void UpdateFree();
 	void UpdateFollow();
 
 	// 描画前のカメラ設定
@@ -79,20 +78,20 @@ public:
 	void Release(void) override;
 
 	// 座標の取得
-	const VECTOR& GetPos(void) const;
+	const Vector3& GetPos(void) const;
 
 	// 角度の取得
-	const VECTOR& GetAngles(void) const;
+	const Vector3& GetAngles(void) const;
 	const Quaternion& GetQuaRot(void) const;
 	
 	// Y軸のみのカメラ角度
 	const Quaternion& GetQuaRotY(void) const;
 	
 	// 注視点の取得
-	const VECTOR& GetTargetPos(void) const;
+	const Vector3& GetTargetPos(void) const;
 
 	// カメラの前方方向
-	VECTOR GetForward(void) const;
+	Vector3 GetForward(void) const;
 
 	// カメラモードの変更
 	void ChangeMode(MODE mode);
@@ -154,7 +153,7 @@ private:
 	static constexpr float LERP_RATE_MOVE = 0.1f;
 
 	// カメラの更新前位置
-	VECTOR prePos_;
+	Vector3 prePos_;
 
 	// カメラが追従対象とするTransform
 	const Transform* followTransform_;
@@ -163,11 +162,11 @@ private:
 	MODE mode_;
 
 	// カメラ角度(rad)
-	VECTOR angles_;
+	Vector3 angles_;
 
 	// カメラ角度(Y軸のみ)
 	Quaternion rotY_;
 
 	// 注視点
-	VECTOR targetPos_;
+	Vector3 targetPos_;
 };

@@ -171,10 +171,10 @@ Vector3 Vector3::Slerp(const Vector3& start, const Vector3& end, float t)
 	// 真逆の方向なら回転面が決まらないので、from に垂直な適当な軸を選ぶ
 	if (ortho.IsZero())
 	{
-		ortho = Cross(from, UP).Normalized();
+		ortho = Cross(from, DIR_UP).Normalized();
 		if (ortho.IsZero())
 		{
-			ortho = Cross(from, RIGHT).Normalized();
+			ortho = Cross(from, DIR_RIGHT).Normalized();
 		}
 	}
 

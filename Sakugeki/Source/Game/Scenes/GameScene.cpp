@@ -2,6 +2,8 @@
 #include "../../Engine/Input/Input.h"
 #include "../../Engine/Audio/Audio.h"
 #include "../../Engine/Scene/SceneManager.h"
+#include "../../Engine/Math/Vector3.h"
+#include "../../Engine/Math/UtilityMath.h"
 #include "../Actor/Charactor/Player.h"
 #include "../Actor/Stage/StageManager.h"
 #include "../Actor/Camera.h"

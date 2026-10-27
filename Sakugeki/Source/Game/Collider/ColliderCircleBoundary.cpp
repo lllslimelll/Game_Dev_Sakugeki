@@ -18,10 +18,10 @@ float ColliderCircleBoundary::GetRadius(void) const
 	return radius_;
 }
 
-bool ColliderCircleBoundary::PushBackInside(VECTOR& pos, float bodyRadius) const
+bool ColliderCircleBoundary::PushBackInside(Vector3& pos, float bodyRadius) const
 {
 	// 円の中心（追従先の座標）からの水平ベクトル
-	const VECTOR& center = follow_->pos;
+	const Vector3& center = follow_->pos;
 	float dx = pos.x - center.x;
 	float dz = pos.z - center.z;
 

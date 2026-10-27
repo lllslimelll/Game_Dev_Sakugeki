@@ -85,17 +85,17 @@ void Camera::InitPost(void)
 	ChangeMode(MODE::FIXED_POINT);
 }
 
-const VECTOR& Camera::GetPos(void) const
+const Vector3& Camera::GetPos(void) const
 {
 	return transform_.pos;
 }
 
-const VECTOR& Camera::GetAngles(void) const
+const Vector3& Camera::GetAngles(void) const
 {
 	return angles_;
 }
 
-const VECTOR& Camera::GetTargetPos(void) const
+const Vector3& Camera::GetTargetPos(void) const
 {
 	return targetPos_;
 }
@@ -110,7 +110,7 @@ const Quaternion& Camera::GetQuaRotY(void) const
 	return rotY_;
 }
 
-VECTOR Camera::GetForward(void) const
+Vector3 Camera::GetForward(void) const
 {
 	return VNorm(VSub(targetPos_, transform_.pos));
 }

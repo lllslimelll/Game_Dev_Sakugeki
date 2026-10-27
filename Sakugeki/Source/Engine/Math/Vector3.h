@@ -11,15 +11,15 @@ struct Vector3
 	// 長さ0とみなす閾値
 	static constexpr float EPSILON = 1.0e-6f;
 
-	// よく使う定数
+	// 頻出する成分の定数
 	static const Vector3 ZERO;
 	static const Vector3 ONE;
-	static const Vector3 UP;
-	static const Vector3 DOWN;
-	static const Vector3 RIGHT;
-	static const Vector3 LEFT;
-	static const Vector3 FORWARD;
-	static const Vector3 BACK;
+	static const Vector3 DIR_UP;
+	static const Vector3 DIR_DOWN;
+	static const Vector3 DIR_RIGHT;
+	static const Vector3 DIR_LEFT;
+	static const Vector3 DIR_FORWARD;
+	static const Vector3 DIR_BACK;
 
 	// コンストラクタ
 	Vector3(void);
@@ -85,13 +85,13 @@ Vector3 operator*(float s, const Vector3& v);
 // DxLibのVECTORとサイズが同じであることを保証
 static_assert(sizeof(Vector3) == sizeof(VECTOR), "Vector3 と VECTOR のサイズが一致しません");
 
-// 定数の定義
+// 頻出する成分の定数の定義
 inline const Vector3 Vector3::ZERO = { 0.0f,  0.0f,  0.0f };
 inline const Vector3 Vector3::ONE = { 1.0f,  1.0f,  1.0f };
-inline const Vector3 Vector3::UP = { 0.0f,  1.0f,  0.0f };
-inline const Vector3 Vector3::DOWN = { 0.0f, -1.0f,  0.0f };
-inline const Vector3 Vector3::RIGHT = { 1.0f,  0.0f,  0.0f };
-inline const Vector3 Vector3::LEFT = { -1.0f,  0.0f,  0.0f };
-inline const Vector3 Vector3::FORWARD = { 0.0f,  0.0f,  1.0f };
-inline const Vector3 Vector3::BACK = { 0.0f,  0.0f, -1.0f };
+inline const Vector3 Vector3::DIR_UP = { 0.0f,  1.0f,  0.0f };
+inline const Vector3 Vector3::DIR_DOWN = { 0.0f, -1.0f,  0.0f };
+inline const Vector3 Vector3::DIR_RIGHT = { 1.0f,  0.0f,  0.0f };
+inline const Vector3 Vector3::DIR_LEFT = { -1.0f,  0.0f,  0.0f };
+inline const Vector3 Vector3::DIR_FORWARD = { 0.0f,  0.0f,  1.0f };
+inline const Vector3 Vector3::DIR_BACK = { 0.0f,  0.0f, -1.0f };
 
