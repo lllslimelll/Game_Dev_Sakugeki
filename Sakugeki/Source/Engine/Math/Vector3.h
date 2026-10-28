@@ -25,26 +25,19 @@ struct Vector3
 	Vector3(void);
 
 	// コンストラクタ
-	Vector3(float vX, float vY, float vZ);
-
-	// DxLib との相互変換
-	Vector3(const VECTOR& v);
-	operator VECTOR(void) const;
-
-	// 単項演算子
-	Vector3 operator-(void) const;
+	Vector3(float vecX, float vecY, float vecZ);
 
 	// 二項演算子
-	Vector3 operator+(const Vector3& v) const;
-	Vector3 operator-(const Vector3& v) const;
-	Vector3 operator*(float s) const;
-	Vector3 operator/(float s) const;
+	Vector3 operator+(const Vector3& vec) const;
+	Vector3 operator-(const Vector3& vec) const;
+	Vector3 operator*(float scale) const;
+	Vector3 operator/(float div) const;
 
 	// 複合代入演算子
-	Vector3& operator+=(const Vector3& v);
-	Vector3& operator-=(const Vector3& v);
-	Vector3& operator*=(float s);
-	Vector3& operator/=(float s);
+	Vector3& operator+=(const Vector3& vec);
+	Vector3& operator-=(const Vector3& vec);
+	Vector3& operator*=(float scale);
+	Vector3& operator/=(float div);
 
 	// 長さ
 	float Magnitude(void) const;
@@ -64,9 +57,6 @@ struct Vector3
 	// 外積
 	static Vector3 Cross(const Vector3& a, const Vector3& b);
 
-	// 積
-	static Vector3 Scale(const Vector3& a, const Vector3& b);
-
 	// 線形補間
 	static Vector3 Lerp(const Vector3& start, const Vector3& end, float t);
 	// 球面線形補間
@@ -77,10 +67,11 @@ struct Vector3
 
 	// 比較
 	static bool Equals(const Vector3& a, const Vector3& b, float eps = EPSILON);
-};
 
-// スカラーが左の掛け算
-Vector3 operator*(float s, const Vector3& v);
+	// DxLibの VECTOR との変換
+	VECTOR ToVECTOR() const;
+	static Vector3 GetVector3(const VECTOR& vec);
+};
 
 // DxLibのVECTORとサイズが同じであることを保証
 static_assert(sizeof(Vector3) == sizeof(VECTOR), "Vector3 と VECTOR のサイズが一致しません");

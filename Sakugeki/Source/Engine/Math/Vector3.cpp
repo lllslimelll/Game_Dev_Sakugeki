@@ -10,81 +10,63 @@ Vector3::Vector3(void)
 {
 }
 
-Vector3::Vector3(float vX, float vY, float vZ)
+Vector3::Vector3(float vecX, float vecY, float vecZ)
 	:
-	x(vX),
-	y(vY),
-	z(vZ)
+	x(vecX),
+	y(vecY),
+	z(vecZ)
 {
 }
 
-Vector3::Vector3(const VECTOR& v)
-	:
-	x(v.x),
-	y(v.y),
-	z(v.z)
+Vector3 Vector3::operator+(const Vector3& vec) const
 {
+	return { x + vec.x, y + vec.y, z + vec.z };
 }
 
-Vector3::operator VECTOR(void) const
+Vector3 Vector3::operator-(const Vector3& vec) const
 {
-	return VECTOR{ x, y, z };
+	return { x - vec.x, y - vec.y, z - vec.z };
 }
 
-Vector3 Vector3::operator-(void) const
+Vector3 Vector3::operator*(float scale) const
 {
-	return { -x, -y, -z };
+	return { x * scale, y * scale, z * scale };
 }
 
-Vector3 Vector3::operator+(const Vector3& v) const
+Vector3 Vector3::operator/(float div) const
 {
-	return { x + v.x, y + v.y, z + v.z };
+	return { x / div, y / div, z / div };
 }
 
-Vector3 Vector3::operator-(const Vector3& v) const
+Vector3& Vector3::operator+=(const Vector3& vec)
 {
-	return { x - v.x, y - v.y, z - v.z };
-}
-
-Vector3 Vector3::operator*(float s) const
-{
-	return { x * s, y * s, z * s };
-}
-
-Vector3 Vector3::operator/(float s) const
-{
-	return { x / s, y / s, z / s };
-}
-
-Vector3& Vector3::operator+=(const Vector3& v)
-{
-	x += v.x;
-	y += v.y;
-	z += v.z;
+	x += vec.x;
+	y += vec.y;
+	z += vec.z;
 	return *this;
 }
 
-Vector3& Vector3::operator-=(const Vector3& v)
+Vector3& Vector3::operator-=(const Vector3& vec)
 {
-	x -= v.x;
-	y -= v.y;
-	z -= v.z;
+	x -= vec.x;
+	y -= vec.y;
+	z -= vec.z;
 	return *this;
 }
 
-Vector3& Vector3::operator*=(float s)
+Vector3& Vector3::operator*=(float scale)
 {
-	x *= s;
-	y *= s;
-	z *= s;
+	x *= scale;
+	y *= scale;
+	z *= scale;
 	return *this;
 }
 
-Vector3& Vector3::operator/=(float s)
+Vector3& Vector3::operator/=(float div)
 {
-	x /= s;
-	y /= s;
-	z /= s;
+	x /= div;
+	y /= div;
+	z /= div;
 	return *this;
 }
 
@@ -127,11 +109,6 @@ Vector3 Vector3::Cross(const Vector3& a, const Vector3& b)
 		a.y * b.z - a.z * b.y,
 		a.z * b.x - a.x * b.z,
 		a.x * b.y - a.y * b.x };
-}
-
-Vector3 Vector3::Scale(const Vector3& a, const Vector3& b)
-{
-	return { a.x * b.x, a.y * b.y, a.z * b.z };
 }
 
 Vector3 Vector3::Lerp(const Vector3& start, const Vector3& end, float t)
@@ -196,7 +173,12 @@ bool Vector3::Equals(const Vector3& a, const Vector3& b, float eps)
 	return (a - b).SquareMagnitude() <= eps * eps;
 }
 
-Vector3 operator*(float s, const Vector3& v)
+VECTOR Vector3::ToVECTOR() const
 {
-	return v * s;
+	return VGet(x, y, z);
+}
+
+Vector3 Vector3::GetVector3(const VECTOR& vec)
+{
+	return { vec.x, vec.y, vec.z };
 }

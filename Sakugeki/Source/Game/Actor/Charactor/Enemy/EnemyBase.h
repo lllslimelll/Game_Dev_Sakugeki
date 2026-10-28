@@ -20,7 +20,6 @@ public:
 		EnemyBase::TYPE type; // 種類
 		int hp;				  // 体力
 		VECTOR defaultPos;    // 初期座標
-		float movableRange;	  // 移動可能範囲
 	};
 
 	// コンストラクタ
@@ -51,8 +50,6 @@ protected:
 	int hp_;
 	// 初期位置
 	const VECTOR defaultPos_;
-	// 移動可能範囲
-	float movableRange_;
 
 	// 大きさ、回転、座標の初期化
 	void InitTransform(void) override {}
@@ -68,8 +65,5 @@ protected:
 
 	// 状態遷移
 	void ChangeState(int state);
-
-	// 移動可能範囲判定
-	bool InMovableRange(void) const;
 };
 

@@ -91,8 +91,6 @@ void EnemyManager::LoadCsvData(void)
 			stof(strSplit[idx++]),
 			stof(strSplit[idx++]),
 		};
-		// 移動可能範囲
-		data.movableRange = stof(strSplit[idx++]);
 		// エネミー生成
 		Create(data);
 	}

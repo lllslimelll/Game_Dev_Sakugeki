@@ -9,7 +9,6 @@ EnemyBase::EnemyBase(const EnemyBase::EnemyData& data, Player* player)
 	hp_(data.hp),
 	stateBase_(-1),
 	defaultPos_(data.defaultPos),
-	movableRange_(data.movableRange)
 {
 	// 初期座標の設定
 	transform_.pos = data.defaultPos;
@@ -37,21 +36,4 @@ void EnemyBase::ChangeState(int state)
 
 	// 各状態遷移の初期処理
 	stateChanges_[stateBase_]();
-}
-
-bool EnemyBase::InMovableRange(void) const
-{
-	bool ret = false;
-
-	// 初期位置からの距離
-	float dis = static_cast<float>(
-		AsoUtility::SqrMagnitude(defaultPos_, transform_.pos));
-		
-	// 指定距離判定
-	if (dis < movableRange_ * movableRange_)
-	{
-		return true;
-	}
-
-	return ret;
 }
