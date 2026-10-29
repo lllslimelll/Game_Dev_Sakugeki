@@ -23,11 +23,11 @@ public:
     // デストラクタ
     ~AnimationController(void);
 
-    // 外部FBXからアニメーション追加
-    void Add(int type, float speed, const std::wstring path);
+    // アニメーションデータを追加
+    void Add(int type, float speed, int animHandle);
 
-    // 同じFBX内のアニメーションを追加
-    void AddInFbx(int type, float speed, int animIndex);
+    // 自身のモデルに組み込まれたアニメーションを追加
+    void AddFromSelf(int type, float speed, int animIndex);
 
     // アニメーション再生
     void Play(int type, bool isLoop = true);

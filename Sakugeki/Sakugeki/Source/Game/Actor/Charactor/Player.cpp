@@ -149,11 +149,9 @@ void Player::InitAnimation(void)
 	animController_ = std::make_unique<AnimationController>(transform_.modelId);
 
 	// アニメーション
-	animController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).path_);
-
-	animController_->Add(static_cast<int>(ANIM_TYPE::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).path_);
-
-	animController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).path_);
+	animController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);
+	animController_->Add(static_cast<int>(ANIM_TYPE::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).handleId_);
+	animController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).handleId_);
 
 	//animController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::JUMP_RISING).path_);
 }
