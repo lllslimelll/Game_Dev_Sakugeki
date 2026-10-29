@@ -19,15 +19,15 @@ AnimationController::~AnimationController(void)
 {
 }
 
-void AnimationController::Add(int type, float speed, const std::wstring path)
+void AnimationController::Add(int type, float speed, int animHandle)
 {
     Animation animation;
-    animation.model = MV1LoadModel(path.c_str());
+    animation.model = animHandle;
     animation.animIndex = -1;
     Add(type, speed, animation);
 }
 
-void AnimationController::AddInFbx(int type, float speed, int animIndex)
+void AnimationController::AddFromSelf(int type, float speed, int animIndex)
 {
     Animation animation;
     animation.model = -1;
@@ -127,13 +127,6 @@ void AnimationController::Update(void)
 
 void AnimationController::Release(void)
 {
-    for (const std::pair<int, Animation>& pair : animations_)
-    {
-        if (pair.second.model != -1)
-        {
-            MV1DeleteModel(pair.second.model);
-        }
-    }
     animations_.clear();
 }
 
