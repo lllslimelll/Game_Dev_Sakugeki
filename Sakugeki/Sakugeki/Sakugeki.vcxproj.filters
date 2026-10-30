@@ -90,7 +90,7 @@
     <ClCompile Include="Source\Game\Actor\Charactor\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Actor\Actor.cpp">
+    <ClCompile Include="Source\Engine\Actor\Actor.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Actor\SkyBox.cpp">
@@ -156,10 +156,16 @@
     <ClCompile Include="Source\Engine\Math\Matrix3D.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Component\CharacterMovementComponent.cpp">
+    <ClCompile Include="Source\Engine\Component\CharacterMovementComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Controller\PlayerController.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Component\Component.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engine\Component\HealthComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,7 +245,7 @@
     <ClInclude Include="Source\Game\Actor\Charactor\Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Actor\Actor.h">
+    <ClInclude Include="Source\Engine\Actor\Actor.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Actor\SkyBox.h">
@@ -305,10 +311,16 @@
     <ClInclude Include="Source\Engine\Math\Matrix3D.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Component\CharacterMovementComponent.h">
+    <ClInclude Include="Source\Engine\Component\CharacterMovementComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Controller\PlayerController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Component\Component.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engine\Component\HealthComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
