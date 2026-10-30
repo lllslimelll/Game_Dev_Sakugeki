@@ -1,8 +1,8 @@
 #pragma once
-#include "../ActorBase.h"
+#include "../Actor.h"
 
 // 地面（平面コライダ）
-class StageGround : public ActorBase
+class StageGround : public Actor
 {
 public:
 

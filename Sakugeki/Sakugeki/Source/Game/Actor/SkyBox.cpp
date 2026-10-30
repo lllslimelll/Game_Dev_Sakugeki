@@ -6,7 +6,7 @@
 
 SkyBox::SkyBox()
 	:
-	ActorBase()
+	Actor()
 {
 }
 

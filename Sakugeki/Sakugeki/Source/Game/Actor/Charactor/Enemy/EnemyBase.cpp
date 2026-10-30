@@ -3,7 +3,7 @@
 
 EnemyBase::EnemyBase(const EnemyBase::EnemyData& data, Player* player)
 	:
-	CharactorBase(),
+	Character(),
 	player_(player),
 	type_(data.type),
 	hp_(data.hp),
@@ -20,7 +20,7 @@ EnemyBase::~EnemyBase(void)
 
 void EnemyBase::Draw(void)
 {
-	CharactorBase::Draw();
+	Character::Draw();
 
 #ifdef _DEBUG
 

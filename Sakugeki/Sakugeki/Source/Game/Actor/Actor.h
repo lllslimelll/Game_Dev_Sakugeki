@@ -10,16 +10,16 @@ class ColliderBase;
 class Material;
 class ModelRenderer;
 
-class ActorBase
+class Actor
 {
 
 public:
 
 	// コンストラクタ
-	ActorBase();
+	Actor();
 
 	// デストラクタ
-	virtual ~ActorBase();
+	virtual ~Actor();
 
 	// リソースロード
 	virtual void Load() = 0;
