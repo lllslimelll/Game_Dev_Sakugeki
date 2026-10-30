@@ -2,7 +2,7 @@
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Renderer/Material.h"
 #include "../../Engine/Renderer/ModelRenderer.h"
-#include "../Collider/ColliderBase.h"
+#include "../../Game/Collider/ColliderBase.h"  
 #include "Actor.h"
 
 Actor::Actor()
@@ -33,6 +33,21 @@ void Actor::Init()
 
 	// 初期化後の個別処理
 	InitPost();
+
+	// コンポーネントの初期化
+	for (auto& conponent : components_)
+	{
+		conponent->Init();
+	}
+}
+
+void Actor::Update()
+{
+	// コンポーネントの更新
+	for (auto& component : components_)
+	{
+		component->Update();
+	}
 }
 
 void Actor::Draw()
@@ -40,6 +55,12 @@ void Actor::Draw()
 	if (renderer_)
 	{
 		renderer_->Draw();
+	}
+
+	// コンポーネントの描画
+	for (auto& component : components_)
+	{
+		component->Draw();
 	}
 
 #ifdef _DEBUG
@@ -55,6 +76,12 @@ void Actor::Draw()
 
 void Actor::Release()
 {
+	// コンポーネントの解放
+	for (auto& component : components_)
+	{
+		component->Release();
+	}
+
 	transform_.Release();
 
 	// 自身のコライダ解放

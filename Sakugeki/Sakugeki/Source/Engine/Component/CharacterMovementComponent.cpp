@@ -1,17 +1,18 @@
 #include <algorithm>
-#include "../../Engine/Common/Transform.h"
-#include "../../Engine/Math/Quaternion.h"
-#include "../../Engine/Scene/SceneManager.h"
-#include "../Collider/ColliderBase.h"
-#include "../Collider/ColliderCapsule.h"
-#include "../Collider/ColliderCircleBoundary.h"
-#include "../Collider/ColliderModel.h"
-#include "../Collider/ColliderPlane.h"
+#include "..//Common/Transform.h"
+#include "../Math/Quaternion.h"
+#include "../Scene/SceneManager.h"
+#include "../../Game/Collider/ColliderBase.h"
+#include "../../Game/Collider/ColliderCapsule.h"
+#include "../../Game/Collider/ColliderCircleBoundary.h"
+#include "../../Game/Collider/ColliderModel.h"
+#include "../../Game/Collider/ColliderPlane.h"
 #include "CharacterMovementComponent.h"
 
-CharacterMovementComponent::CharacterMovementComponent(Transform& transform,
+CharacterMovementComponent::CharacterMovementComponent(Actor& owner, Transform& transform,
 	const std::vector<const ColliderBase*>& hitColliders)
 	:
+	Component(owner),
 	transform_(transform),
 	hitColliders_(hitColliders),
 	capsule_(nullptr),
@@ -33,14 +34,17 @@ void CharacterMovementComponent::Update(void)
 {
 	const float deltaTime = SceneManager::GetInstance().GetDeltaTime();
 
-	// 水平方向の速度（入力をそのまま速度にする）
+	// 水平方向の速度
 	Vector3 input(moveInput_.x, 0.0f, moveInput_.z);
 	if (input.SquareMagnitude() > 1.0f) { input = input.Normalized(); }
 	velocity_.x = input.x * maxWalkSpeed_;
 	velocity_.z = input.z * maxWalkSpeed_;
 
 	// 入力があれば、その方向を向く
-	if (!input.IsZero()) { facingDir_ = input.Normalized(); }
+	if (!input.IsZero()) 
+	{
+		facingDir_ = input.Normalized();
+	}
 
 	// ジャンプ（接地しているときだけ）
 	if (isJumpRequested_ && isGrounded_)
