@@ -31,17 +31,17 @@ AsyncLoadingScreen::~AsyncLoadingScreen(void)
 
 void AsyncLoadingScreen::Load(void)
 {
-	// 非同期にする前に、画面用のリソースを同期で読む
+	// UI
 	ui_ = std::make_unique<UILoading>();
 	ui_->Load();
 }
 
 void AsyncLoadingScreen::StartLoad(SceneBase& target)
 {
-	// 非同期ロードを発行
-	SetUseASyncLoadFlag(TRUE);
+	// 非同期ロード
+	SetUseASyncLoadFlag(TRUE);  // 発行
 	target.Load();
-	SetUseASyncLoadFlag(FALSE);
+	SetUseASyncLoadFlag(FALSE); // 発行終了
 
 	// 発行した数を進捗の分母として保存
 	total_ = GetASyncLoadNum();
@@ -51,14 +51,14 @@ void AsyncLoadingScreen::Update(float deltaTime)
 {
 	time_ += deltaTime;
 
-	// 実際の進捗（読み込むものがなければ完了済み）
+	// 実際の進捗
 	float actual = 1.0f;
 	if (total_ > 0)
 	{
 		actual = 1.0f - static_cast<float>(GetASyncLoadNum()) / static_cast<float>(total_);
 	}
 
-	// 表示用の進捗は滑らかに追従させる（戻らない）
+	// 表示用の進捗を滑らかに追従
 	float next = progress_ + (actual - progress_) * PROGRESS_FOLLOW;
 	progress_ = max(progress_, next);
 }
@@ -70,12 +70,9 @@ void AsyncLoadingScreen::Draw(void) const
 
 bool AsyncLoadingScreen::IsFinished(void) const
 {
-	// 読み込むものがなかった場合は、最低表示時間を待たない
-	if (total_ == 0)
-	{
-		return true;
-	}
+	if (total_ == 0) { return true; }
 
+	// ロード完了と最低表示時間を満たしたら true を返す
 	return GetASyncLoadNum() == 0
 		&& time_ >= MIN_TIME
 		&& progress_ >= PROGRESS_FINISH;
