@@ -7,7 +7,7 @@
 
 StageTree::StageTree(void)
 	:
-	ActorBase()
+	Actor()
 {
 }
 

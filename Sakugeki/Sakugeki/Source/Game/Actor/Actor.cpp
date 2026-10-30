@@ -3,9 +3,9 @@
 #include "../../Engine/Renderer/Material.h"
 #include "../../Engine/Renderer/ModelRenderer.h"
 #include "../Collider/ColliderBase.h"
-#include "ActorBase.h"
+#include "Actor.h"
 
-ActorBase::ActorBase()
+Actor::Actor()
 	: 
 	resMng_(ResourceManager::GetInstance()),
 	scnMng_(SceneManager::GetInstance()),
@@ -13,11 +13,11 @@ ActorBase::ActorBase()
 {
 }
 
-ActorBase::~ActorBase()
+Actor::~Actor()
 {
 }
 
-void ActorBase::Init()
+void Actor::Init()
 {
 	// Transform初期化
 	InitTransform();
@@ -35,7 +35,7 @@ void ActorBase::Init()
 	InitPost();
 }
 
-void ActorBase::Draw()
+void Actor::Draw()
 {
 	if (renderer_)
 	{
@@ -53,7 +53,7 @@ void ActorBase::Draw()
 #endif // _DEBUG
 }
 
-void ActorBase::Release()
+void Actor::Release()
 {
 	transform_.Release();
 
@@ -65,14 +65,14 @@ void ActorBase::Release()
 	ownColliders_.clear();
 }
 
-const Transform& ActorBase::GetTransform() const
+const Transform& Actor::GetTransform() const
 {
 	return transform_;
 }
 
 
 // 特定の自身の衝突情報
-const ColliderBase* ActorBase::GetOwnCollider(int key) const
+const ColliderBase* Actor::GetOwnCollider(int key) const
 {
 	if (ownColliders_.count(key) == 0)
 	{
@@ -82,7 +82,7 @@ const ColliderBase* ActorBase::GetOwnCollider(int key) const
 }
 
 // 衝突対象となるコライダを登録
-void ActorBase::AddHitCollider(const ColliderBase* hitCollider)
+void Actor::AddHitCollider(const ColliderBase* hitCollider)
 {
 	for (const auto& c : hitColliders_)
 	{
@@ -96,7 +96,7 @@ void ActorBase::AddHitCollider(const ColliderBase* hitCollider)
 }
 
 // 衝突対象となるコライダをクリア
-void ActorBase::ClearHitCollider()
+void Actor::ClearHitCollider()
 {
 	hitColliders_.clear();
 }

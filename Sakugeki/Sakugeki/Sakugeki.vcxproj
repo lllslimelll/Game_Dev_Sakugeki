@@ -155,6 +155,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Controller\PlayerController.cpp" />
+    <ClCompile Include="Source\Game\Component\CharacterMovementComponent.cpp" />
     <ClCompile Include="Source\Engine\Math\Matrix3D.cpp" />
     <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp" />
     <ClCompile Include="Source\Game\UI\Menu.cpp" />
@@ -175,9 +177,9 @@
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Engine\Scene\ScreenManager.cpp" />
     <ClCompile Include="Source\Engine\Utility\AsoUtility.cpp" />
-    <ClCompile Include="Source\Game\Actor\ActorBase.cpp" />
+    <ClCompile Include="Source\Game\Actor\Actor.cpp" />
     <ClCompile Include="Source\Game\Actor\Camera.cpp" />
-    <ClCompile Include="Source\Game\Actor\Charactor\CharactorBase.cpp" />
+    <ClCompile Include="Source\Game\Actor\Charactor\Character.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Player.cpp" />
@@ -204,6 +206,8 @@
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Controller\PlayerController.h" />
+    <ClInclude Include="Source\Game\Component\CharacterMovementComponent.h" />
     <ClInclude Include="Source\Engine\Math\Matrix3D.h" />
     <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h" />
     <ClInclude Include="Source\Game\UI\Menu.h" />
@@ -225,9 +229,9 @@
     <ClInclude Include="Source\Engine\Scene\SceneManager.h" />
     <ClInclude Include="Source\Engine\Scene\ScreenManager.h" />
     <ClInclude Include="Source\Engine\Utility\AsoUtility.h" />
-    <ClInclude Include="Source\Game\Actor\ActorBase.h" />
+    <ClInclude Include="Source\Game\Actor\Actor.h" />
     <ClInclude Include="Source\Game\Actor\Camera.h" />
-    <ClInclude Include="Source\Game\Actor\Charactor\CharactorBase.h" />
+    <ClInclude Include="Source\Game\Actor\Charactor\Character.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Player.h" />

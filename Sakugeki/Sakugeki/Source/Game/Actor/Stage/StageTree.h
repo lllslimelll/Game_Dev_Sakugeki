@@ -1,8 +1,8 @@
 #pragma once
-#include "../ActorBase.h"
+#include "../Actor.h"
 
 // 木（今は全部の木を1つのモデルとして一括ロード）
-class StageTree : public ActorBase
+class StageTree : public Actor
 {
 public:
 
