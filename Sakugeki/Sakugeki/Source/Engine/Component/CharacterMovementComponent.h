@@ -1,31 +1,28 @@
 #pragma once
 #include <vector>
-#include "../../Engine/Math/Vector3.h"
+#include "../Math/Vector3.h"
+#include "Component.h"
 
 class Transform;
 class ColliderBase;
 class ColliderCapsule;
 
-/// <summary>
 /// キャラクターの移動を担当するコンポーネント
-/// </summary>
-class CharacterMovementComponent
+class CharacterMovementComponent : public Component
 {
 public:
 
-	/// <summary>
 	/// コンストラクタ
 	/// trasnform    : 動かす対象
-	/// hitColliders :衝突相手のコライダ（持ち主の Actor が管理する）
-	/// </summary>
-	CharacterMovementComponent(Transform& trasnform,
+	/// hitColliders : 衝突相手のコライダ（持ち主の Actor が管理する）
+	CharacterMovementComponent(Actor& owner, Transform& trasnform,
 		const std::vector<const ColliderBase*>& hitColliders);
 
 	// デストラクタ
-	~CharacterMovementComponent();
+	~CharacterMovementComponent() override;
 
 	// 更新
-	void Update();
+	void Update() override;
 
 	// 移動入力を追加
 	void AddMoveInput(const Vector3& worldDir);

@@ -2,7 +2,10 @@
 #include <vector>
 #include <map>
 #include <memory>
-#include "../../Engine/Common/Transform.h"
+#include <type_traits>
+#include <utility>
+#include "../Common/Transform.h"
+#include "../Component/Component.h"
 
 class ResourceManager;
 class SceneManager;
@@ -28,7 +31,7 @@ public:
 	void Init(void);
 
 	// 更新
-	virtual void Update() = 0;
+	virtual void Update();
 
 	// 描画
 	virtual void Draw();
@@ -72,6 +75,21 @@ protected:
 
 	// 衝突相手の情報
 	std::vector<const ColliderBase*> hitColliders_;
+
+	// 所有しているコンポーネント
+	std::vector<std::unique_ptr<Component>> components_;
+
+	// コンポーネントを追加する
+	template <class T, class... Args>
+	T* AddComponent(Args&&... args)
+	{
+		static_assert(std::is_base_of_v<Component, T>, "T は Component を継承している必要があります");
+
+		auto component = std::make_unique<T>(*this, std::forward<Args>(args)...);
+		T* ret = component.get();
+		components_.emplace_back(std::move(component));
+		return ret;
+	}
 
 	// 大きさ、回転、座標の初期化
 	virtual void InitTransform() = 0;
