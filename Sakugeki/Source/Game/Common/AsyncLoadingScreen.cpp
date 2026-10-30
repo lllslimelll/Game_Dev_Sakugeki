@@ -38,10 +38,10 @@ void AsyncLoadingScreen::Load(void)
 
 void AsyncLoadingScreen::StartLoad(SceneBase& target)
 {
-	// 非同期ロードを発行
-	SetUseASyncLoadFlag(TRUE);
+	// 非同期ロード
+	SetUseASyncLoadFlag(TRUE);  // 発行
 	target.Load();
-	SetUseASyncLoadFlag(FALSE);
+	SetUseASyncLoadFlag(FALSE); // 発行終了
 
 	// 発行した数を進捗の分母として保存
 	total_ = GetASyncLoadNum();
@@ -70,12 +70,9 @@ void AsyncLoadingScreen::Draw(void) const
 
 bool AsyncLoadingScreen::IsFinished(void) const
 {
-	// 読み込むものがなかった場合は、最低表示時間を待たない
-	if (total_ == 0)
-	{
-		return true;
-	}
+	if (total_ == 0) { return true; }
 
+	// 非同期ロード終了と最低表示時間で終了
 	return GetASyncLoadNum() == 0
 		&& time_ >= MIN_TIME
 		&& progress_ >= PROGRESS_FINISH;
