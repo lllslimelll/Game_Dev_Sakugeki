@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Engine/Math/Vector3.h"
-#include "Character.h"
+#include "../../../Engine/Actor/Character/Character.h"
 
 class Player : public Character
 {

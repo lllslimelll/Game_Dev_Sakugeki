@@ -1,15 +1,15 @@
 #pragma once
 
-class Actor;
+class GameObject;
 
-/// コンポーネントの基底クラス
+// コンポーネントの基底クラス
 class Component
 {
 public:
 
 	// コンストラクタ
 	// owner : 持ち主の Actor
-	explicit Component(Actor& owner);
+	explicit Component(GameObject& gameObject);
 
 	// デストラクタ
 	virtual ~Component(void);
@@ -19,23 +19,34 @@ public:
 	Component& operator=(const Component&) = delete;
 
 	// 初期化
-	virtual void Init(void);
+	virtual void Init();
 
 	// 更新
-	virtual void Update(void);
+	virtual void Update();
 
 	// 描画
-	virtual void Draw(void);
+	virtual void Draw();
 
 	// 解放
-	virtual void Release(void);
+	virtual void Release();
 
-	// 持ち主の取得
-	Actor& GetOwner(void);
-	const Actor& GetOwner(void) const;
+	// 持ち主の GameObject を取得
+	GameObject& GetGameObject();
+	const GameObject& GetGameObject() const;
+
+	// 有効・無効の設定
+	void SetEnabled(bool isEnabled);
+
+	// 有効か
+	bool IsEnabled() const;
 
 protected:
 
-	// 持ち主
-	Actor& owner_;
+	// 持ち主の GameObject
+	GameObject& gameObject_;
+
+private:
+
+	// 有効か
+	bool isEnabled_;
 };

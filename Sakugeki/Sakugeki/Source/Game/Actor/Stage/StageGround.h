@@ -1,8 +1,8 @@
 #pragma once
-#include "../Actor.h"
+#include "../../../Engine/GameObject/GameObject.h"
 
 // 地面（平面コライダ）
-class StageGround : public Actor
+class StageGround : public GameObject
 {
 public:
 

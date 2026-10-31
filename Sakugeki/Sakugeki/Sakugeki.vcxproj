@@ -179,7 +179,7 @@
     <ClCompile Include="Source\Engine\Scene\SceneManager.cpp" />
     <ClCompile Include="Source\Engine\Scene\ScreenManager.cpp" />
     <ClCompile Include="Source\Engine\Utility\AsoUtility.cpp" />
-    <ClCompile Include="Source\Engine\Actor\Actor.cpp" />
+    <ClCompile Include="Source\Engine\GameObject\GameObject.cpp" />
     <ClCompile Include="Source\Game\Actor\Camera.cpp" />
     <ClCompile Include="Source\Engine\Actor\Character\Character.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.cpp" />
@@ -233,7 +233,7 @@
     <ClInclude Include="Source\Engine\Scene\SceneManager.h" />
     <ClInclude Include="Source\Engine\Scene\ScreenManager.h" />
     <ClInclude Include="Source\Engine\Utility\AsoUtility.h" />
-    <ClInclude Include="Source\Engine\Actor\Actor.h" />
+    <ClInclude Include="Source\Engine\GameObject\GameObject.h" />
     <ClInclude Include="Source\Game\Actor\Camera.h" />
     <ClInclude Include="Source\Engine\Actor\Character\Character.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.h" />

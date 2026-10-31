@@ -13,7 +13,7 @@ public:
 	// コンストラクタ
 	// owner : 持ち主
 	// maxHp : 最大体力
-	HealthComponent(Actor& owner, int maxHp);
+	HealthComponent(GameObject& gameObject, int maxHp);
 
 	// デストラクタ
 	~HealthComponent(void) override;

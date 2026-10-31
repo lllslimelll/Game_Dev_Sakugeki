@@ -7,7 +7,7 @@
 #include "../../../Engine/Math/UtilityMath.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
-#include "../../Component/CharacterMovementComponent.h"
+#include "../../../Engine/Component/CharacterMovementComponent.h"
 #include "Player.h"
 
 Player::Player(void)
@@ -40,11 +40,11 @@ void Player::UpdateAnimation(void)
 {
 	// 移動の状態から選ぶ
 	ANIM_TYPE type = ANIM_TYPE::IDLE;
-	if (!movement_->IsGrounded())
+	if (!movementComp_->IsGrounded())
 	{
 		type = ANIM_TYPE::JUMP;
 	}
-	else if (movement_->IsMoving())
+	else if (movementComp_->IsMoving())
 	{
 		type = ANIM_TYPE::RUN;
 	}
@@ -57,7 +57,7 @@ void Player::UpdateAnimation(void)
 void Player::InitTransform(void)
 {
 	// 大きさ
-	transform_.scl = { 1.5f,1.5f,1.5f };
+	transform_.scl = { 1.3f,1.3f,1.3f };
 
 	// Y軸を180度
 	transform_.quaRotLocal = Quaternion::AngleAxis(UtilityMath::DegToRadF(180.0f), Vector3::DIR_UP);
@@ -90,7 +90,7 @@ void Player::InitCollider(void)
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
 
 	// 移動の押し戻しにカプセルを使う
-	movement_->SetCapsule(colCapsule);
+	movementComp_->SetCapsule(colCapsule);
 }
 
 void Player::InitAnimation(void)
@@ -107,8 +107,8 @@ void Player::InitAnimation(void)
 void Player::InitPost(void)
 {
 	// 移動のパラメータ
-	movement_->SetMaxWalkSpeed(MAX_WALK_SPEED);
-	movement_->SetJumpSpeed(JUMP_SPEED);
+	movementComp_->SetMaxWalkSpeed(MAX_WALK_SPEED);
+	movementComp_->SetJumpSpeed(JUMP_SPEED);
 
 	transform_.Update();
 

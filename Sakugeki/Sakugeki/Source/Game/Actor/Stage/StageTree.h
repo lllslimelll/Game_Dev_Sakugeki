@@ -1,8 +1,8 @@
 #pragma once
-#include "../Actor.h"
+#include "../../../Engine/GameObject/GameObject.h"
 
 // 木（今は全部の木を1つのモデルとして一括ロード）
-class StageTree : public Actor
+class StageTree : public GameObject
 {
 public:
 

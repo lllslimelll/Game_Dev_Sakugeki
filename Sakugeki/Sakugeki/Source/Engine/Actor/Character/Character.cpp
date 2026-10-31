@@ -4,10 +4,11 @@
 
 Character::Character(void)
 	:
-	Actor(),
-	movement_(std::make_unique<CharacterMovementComponent>(transform_, hitColliders_)),
+	GameObject(),
+	movementComp_(nullptr),
 	animController_()
 {
+	movementComp_ = AddComponent<CharacterMovementComponent>(transform_, hitColliders_);
 }
 
 Character::~Character(void)
@@ -16,8 +17,8 @@ Character::~Character(void)
 
 void Character::Update(void)
 {
-	// 移動
-	movement_->Update();
+	// コンポーネントの更新
+	GameObject::Update();
 
 	// モデル制御更新
 	transform_.Update();
@@ -40,15 +41,15 @@ void Character::Release()
 		animController_->Release();
 	}
 
-	Actor::Release();
+	GameObject::Release();
 }
 
 CharacterMovementComponent& Character::GetMovement(void)
 {
-	return *movement_;
+	return *movementComp_;
 }
 
 const CharacterMovementComponent& Character::GetMovement(void) const
 {
-	return *movement_;
+	return *movementComp_;
 }

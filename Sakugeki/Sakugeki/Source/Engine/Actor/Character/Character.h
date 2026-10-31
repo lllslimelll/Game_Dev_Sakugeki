@@ -1,11 +1,11 @@
 #pragma once
 #include <memory>
-#include "../Actor.h"
+#include "../../GameObject/GameObject.h"
 
 class AnimationController;
 class CharacterMovementComponent;
 
-class Character : public Actor
+class Character : public GameObject
 {
 public:
 
@@ -34,8 +34,8 @@ public:
 
 protected:
 
-	// 移動
-	std::unique_ptr<CharacterMovementComponent> movement_;
+	// 移動コンポーネント
+	CharacterMovementComponent* movementComp_;
 
 	// アニメーション
 	std::unique_ptr <AnimationController> animController_;

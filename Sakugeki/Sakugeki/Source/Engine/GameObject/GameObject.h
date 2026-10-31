@@ -13,16 +13,16 @@ class ColliderBase;
 class Material;
 class ModelRenderer;
 
-class Actor
+class GameObject
 {
 
 public:
 
 	// コンストラクタ
-	Actor();
+	GameObject();
 
 	// デストラクタ
-	virtual ~Actor();
+	virtual ~GameObject();
 
 	// リソースロード
 	virtual void Load() = 0;
@@ -38,6 +38,35 @@ public:
 
 	// 解放
 	virtual void Release();
+
+	// コンポーネントを追加する
+	template <class T, class... Args>
+	T* AddComponent(Args&&... args)
+	{
+		static_assert(std::is_base_of_v<Component, T>, "T は Component を継承している必要があります");
+
+		auto component = std::make_unique<T>(*this, std::forward<Args>(args)...);
+		T* ret = component.get();
+		components_.emplace_back(std::move(component));
+		return ret;
+	}
+
+	// コンポーネントを取得する
+	template <class T>
+	T* GetComponent(void)
+	{
+		static_assert(std::is_base_of_v<Component, T>, "T は Component を継承している必要があります");
+
+		for (auto& component : components_)
+		{
+			if (T* ret = dynamic_cast<T*>(component.get()))
+			{
+				return ret;
+			}
+		}
+		return nullptr;
+	}
+
 
 	// 大きさ、回転、座標等の取得
 	const Transform& GetTransform() const;
@@ -78,19 +107,6 @@ protected:
 
 	// 所有しているコンポーネント
 	std::vector<std::unique_ptr<Component>> components_;
-
-	// コンポーネントを追加する
-	template <class T, class... Args>
-	T* AddComponent(Args&&... args)
-	{
-		static_assert(std::is_base_of_v<Component, T>, "T は Component を継承している必要があります");
-
-		auto component = std::make_unique<T>(*this, std::forward<Args>(args)...);
-		T* ret = component.get();
-		components_.emplace_back(std::move(component));
-		return ret;
-	}
-
 	// 大きさ、回転、座標の初期化
 	virtual void InitTransform() = 0;
 

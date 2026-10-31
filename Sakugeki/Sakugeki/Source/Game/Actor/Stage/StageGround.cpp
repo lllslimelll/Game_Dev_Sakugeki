@@ -9,7 +9,7 @@
 
 StageGround::StageGround(void)
 	:
-	Actor()
+	GameObject()
 {
 }
 

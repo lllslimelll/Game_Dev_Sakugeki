@@ -15,7 +15,7 @@ public:
 	/// コンストラクタ
 	/// trasnform    : 動かす対象
 	/// hitColliders : 衝突相手のコライダ（持ち主の Actor が管理する）
-	CharacterMovementComponent(Actor& owner, Transform& trasnform,
+	CharacterMovementComponent(GameObject& gameObject, Transform& trasnform,
 		const std::vector<const ColliderBase*>& hitColliders);
 
 	// デストラクタ

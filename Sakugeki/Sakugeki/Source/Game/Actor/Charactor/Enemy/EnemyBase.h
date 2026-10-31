@@ -1,7 +1,7 @@
 #pragma once
 #include <functional>
 #include <DxLib.h>
-#include "../Character.h"
+#include "../../../../Engine/Actor/Character/Character.h"
 
 class Player;
 

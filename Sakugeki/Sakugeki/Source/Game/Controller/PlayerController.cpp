@@ -3,8 +3,8 @@
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/Quaternion.h"
 #include "../Actor/Camera.h"
-#include "../Actor/Charactor/Character.h"
-#include "../Component/CharacterMovementComponent.h"
+#include "../../Engine/Actor/Character/Character.h"
+#include "../../Engine/Component/CharacterMovementComponent.h"
 #include "PlayerController.h"
 
 PlayerController::PlayerController(Character& character, const Camera& camera)

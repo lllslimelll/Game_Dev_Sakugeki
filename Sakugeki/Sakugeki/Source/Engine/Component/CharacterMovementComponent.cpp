@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "..//Common/Transform.h"
+#include "../Common/Transform.h"
 #include "../Math/Quaternion.h"
 #include "../Scene/SceneManager.h"
 #include "../../Game/Collider/ColliderBase.h"
@@ -9,10 +9,10 @@
 #include "../../Game/Collider/ColliderPlane.h"
 #include "CharacterMovementComponent.h"
 
-CharacterMovementComponent::CharacterMovementComponent(Actor& owner, Transform& transform,
+CharacterMovementComponent::CharacterMovementComponent(GameObject& gameObject, Transform& transform,
 	const std::vector<const ColliderBase*>& hitColliders)
 	:
-	Component(owner),
+	Component(gameObject),
 	transform_(transform),
 	hitColliders_(hitColliders),
 	capsule_(nullptr),
