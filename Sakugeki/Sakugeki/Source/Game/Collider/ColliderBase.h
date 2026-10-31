@@ -27,7 +27,6 @@ public:
 		PLAYER,
 		CAMERA,
 		ENEMY,
-		VIEW_RANGE,
 	};
 
 	// コンストラクタ

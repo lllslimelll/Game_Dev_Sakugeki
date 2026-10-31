@@ -3,9 +3,9 @@
 #include "../../Engine/Renderer/Material.h"
 #include "../../Engine/Renderer/ModelRenderer.h"
 #include "../../Game/Collider/ColliderBase.h"  
-#include "Actor.h"
+#include "GameObject.h"
 
-Actor::Actor()
+GameObject::GameObject()
 	: 
 	resMng_(ResourceManager::GetInstance()),
 	scnMng_(SceneManager::GetInstance()),
@@ -13,11 +13,11 @@ Actor::Actor()
 {
 }
 
-Actor::~Actor()
+GameObject::~GameObject()
 {
 }
 
-void Actor::Init()
+void GameObject::Init()
 {
 	// Transform初期化
 	InitTransform();
@@ -35,22 +35,23 @@ void Actor::Init()
 	InitPost();
 
 	// コンポーネントの初期化
-	for (auto& conponent : components_)
+	for (auto& component : components_)
 	{
-		conponent->Init();
+		component->Init();
 	}
 }
 
-void Actor::Update()
+void GameObject::Update()
 {
 	// コンポーネントの更新
 	for (auto& component : components_)
 	{
+		if (!component->IsEnabled()) { continue; }
 		component->Update();
 	}
 }
 
-void Actor::Draw()
+void GameObject::Draw()
 {
 	if (renderer_)
 	{
@@ -60,6 +61,7 @@ void Actor::Draw()
 	// コンポーネントの描画
 	for (auto& component : components_)
 	{
+		if (!component->IsEnabled()) { continue; }
 		component->Draw();
 	}
 
@@ -74,7 +76,7 @@ void Actor::Draw()
 #endif // _DEBUG
 }
 
-void Actor::Release()
+void GameObject::Release()
 {
 	// コンポーネントの解放
 	for (auto& component : components_)
@@ -92,14 +94,14 @@ void Actor::Release()
 	ownColliders_.clear();
 }
 
-const Transform& Actor::GetTransform() const
+const Transform& GameObject::GetTransform() const
 {
 	return transform_;
 }
 
 
 // 特定の自身の衝突情報
-const ColliderBase* Actor::GetOwnCollider(int key) const
+const ColliderBase* GameObject::GetOwnCollider(int key) const
 {
 	if (ownColliders_.count(key) == 0)
 	{
@@ -109,7 +111,7 @@ const ColliderBase* Actor::GetOwnCollider(int key) const
 }
 
 // 衝突対象となるコライダを登録
-void Actor::AddHitCollider(const ColliderBase* hitCollider)
+void GameObject::AddHitCollider(const ColliderBase* hitCollider)
 {
 	for (const auto& c : hitColliders_)
 	{
@@ -123,7 +125,7 @@ void Actor::AddHitCollider(const ColliderBase* hitCollider)
 }
 
 // 衝突対象となるコライダをクリア
-void Actor::ClearHitCollider()
+void GameObject::ClearHitCollider()
 {
 	hitColliders_.clear();
 }

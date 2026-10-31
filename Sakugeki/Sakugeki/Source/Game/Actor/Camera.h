@@ -4,12 +4,12 @@
 #include <DxLib.h>
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/Quaternion.h"
-#include "Actor.h"
+#include "../../Engine/GameObject/GameObject.h"
 
 class Transform;
 class ColliderSphere;
 
-class Camera : public Actor
+class Camera : public GameObject
 {
 public:
 

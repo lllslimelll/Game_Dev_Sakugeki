@@ -1,37 +1,48 @@
 #include "Component.h"
 
-Component::Component(Actor& owner)
+Component::Component(GameObject& gameObject)
 	:
-	owner_(owner)
+	gameObject_(gameObject),
+	isEnabled_(true)
 {
 }
 
-Component::~Component(void)
+Component::~Component()
 {
 }
 
-void Component::Init(void)
+void Component::Init()
 {
 }
 
-void Component::Update(void)
+void Component::Update()
 {
 }
 
-void Component::Draw(void)
+void Component::Draw()
 {
 }
 
-void Component::Release(void)
+void Component::Release()
 {
 }
 
-Actor& Component::GetOwner(void)
+GameObject& Component::GetGameObject()
 {
-	return owner_;
+	return gameObject_;
 }
 
-const Actor& Component::GetOwner(void) const
+const GameObject& Component::GetGameObject() const
 {
-	return owner_;
+	return gameObject_;
+}
+
+void Component::SetEnabled(bool isEnabled)
+{
+	isEnabled_ = isEnabled;
+}
+
+bool Component::IsEnabled() const
+{
+	return isEnabled_;
 }

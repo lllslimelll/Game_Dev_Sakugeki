@@ -1,9 +1,9 @@
 #include <algorithm>
 #include "HealthComponent.h"
 
-HealthComponent::HealthComponent(Actor& owner, int maxHp)
+HealthComponent::HealthComponent(GameObject& gameObject, int maxHp)
 	:
-	Component(owner),
+	Component(gameObject),
 	maxHp_(maxHp),
 	hp_(maxHp),
 	onDeath_()

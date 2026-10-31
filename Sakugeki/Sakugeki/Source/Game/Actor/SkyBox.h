@@ -1,8 +1,8 @@
 #pragma once
 #include <DxLib.h>
-#include "Actor.h"
+#include "../../Engine/GameObject/GameObject.h"
 
-class SkyBox : public Actor
+class SkyBox : public GameObject
 {
 
 public:
