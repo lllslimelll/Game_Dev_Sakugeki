@@ -3,10 +3,7 @@
 class Character;
 class Camera;
 
-/// <summary>
-/// プレイヤーの操作を行うクラス
-/// 入力を読み取り、キャラクターの移動コンポーネントに指示する
-/// </summary>
+// プレイヤーの操作を行うクラス
 class PlayerControllerComponent
 {
 public:

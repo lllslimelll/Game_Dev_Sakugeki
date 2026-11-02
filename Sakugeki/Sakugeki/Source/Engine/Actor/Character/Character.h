@@ -2,7 +2,6 @@
 #include <memory>
 #include "../../GameObject/GameObject.h"
 
-class AnimationController;
 class CharacterMovementComponent;
 
 class Character : public GameObject
@@ -36,9 +35,6 @@ protected:
 
 	// 移動コンポーネント
 	CharacterMovementComponent* movementComp_;
-
-	// アニメーション
-	std::unique_ptr <AnimationController> animController_;
 
 	// 移動の状態から再生するアニメーションを選ぶ
 	virtual void UpdateAnimation() {};

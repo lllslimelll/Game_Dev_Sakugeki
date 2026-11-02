@@ -1,12 +1,10 @@
-#include "../../../Engine/Common/AnimationController.h"
 #include "../../Component/CharacterMovementComponent.h"
 #include "Character.h"
 
 Character::Character(void)
 	:
 	GameObject(),
-	movementComp_(nullptr),
-	animController_()
+	movementComp_(nullptr)
 {
 	movementComp_ = AddComponent<CharacterMovementComponent>(transform_, hitColliders_);
 }
@@ -22,22 +20,10 @@ void Character::Update(void)
 
 	// 移動の状態からアニメーションを選ぶ
 	UpdateAnimation();
-
-	// アニメーション再生
-	if (animController_ != nullptr)
-	{
-		animController_->Update();
-	}
 }
 
 void Character::Release()
 {
-	// アニメーションのリソース解放
-	if (animController_ != nullptr)
-	{
-		animController_->Release();
-	}
-
 	GameObject::Release();
 }
 

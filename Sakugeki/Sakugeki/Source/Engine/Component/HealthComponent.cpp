@@ -25,7 +25,7 @@ void HealthComponent::TakeDamage(int damage)
 
 	hp_ = (std::max)(hp_ - damage, 0);
 
-	// ‘Ì—Í‚ª 0 ‚É‚È‚Á‚½‚ç€–S‚ğ’Ê’m
+	// ä½“åŠ›ãŒ 0 ã«ãªã£ãŸã‚‰æ­»äº¡ã‚’é€šçŸ¥
 	if (IsDead() && onDeath_)
 	{
 		onDeath_();
