@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <map>
+#include "Component.h"
 
-class AnimationController
+class AnimatorComponent : public Component
 {
 public:
 
@@ -18,10 +19,11 @@ public:
     };
 
     // コンストラクタ
-    AnimationController(int modelId);
+    // gameObject : 持ち主の GameObject
+    explicit AnimatorComponent(GameObject& gameObject);
 
     // デストラクタ
-    ~AnimationController(void);
+    ~AnimatorComponent(void) override;
 
     // アニメーションデータを追加
     void Add(int type, float speed, int animHandle);
@@ -34,10 +36,10 @@ public:
     void Replay(void);
 
     // 更新
-    void Update(void);
+    void Update(void) override;
 
     // 解放
-    void Release(void);
+    void Release(void) override;
 
     // 再生中のアニメーション種別
     int GetPlayType(void) const;

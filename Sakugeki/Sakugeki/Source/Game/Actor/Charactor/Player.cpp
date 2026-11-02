@@ -1,19 +1,17 @@
-#include <memory>
 #include "../../../Engine/Common/Transform.h"
-#include "../../../Engine/Common/AnimationController.h"
-#include "../../../Engine/Renderer/Material.h"
-#include "../../../Engine/Renderer/ModelRenderer.h"
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Math/UtilityMath.h"
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../../Engine/Component/CharacterMovementComponent.h"
-#include"../../../Engine/Component/MeshRendererComponent.h"
+#include "../../../Engine/Component/MeshRendererComponent.h"
+#include "../../../Engine/Component/AnimatorComponent.h"
 #include "Player.h"
 
 Player::Player(void)
 	:
-	Character()
+	Character(),
+	animatorComp_(nullptr)
 {
 }
 
@@ -52,7 +50,7 @@ void Player::UpdateAnimation(void)
 
 	// ジャンプだけはループしない
 	bool isLoop = (type != ANIM_TYPE::JUMP);
-	animController_->Play(static_cast<int>(type), isLoop);
+	animatorComp_->Play(static_cast<int>(type), isLoop);
 }
 
 void Player::InitTransform(void)
@@ -95,13 +93,13 @@ void Player::InitCollider(void)
 
 void Player::InitAnimation(void)
 {
-	// アニメーション
-	animController_ = std::make_unique<AnimationController>(transform_.modelId);
+	// アニメーターコンポーネントを追加
+	animatorComp_ = AddComponent<AnimatorComponent>();
 
-	// アニメーション
-	animController_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);
-	animController_->Add(static_cast<int>(ANIM_TYPE::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).handleId_);
-	animController_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).handleId_);
+	// 再生するアニメーションを登録
+	animatorComp_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);
+	animatorComp_->Add(static_cast<int>(ANIM_TYPE::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).handleId_);
+	animatorComp_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).handleId_);
 }
 
 void Player::InitPost(void)
@@ -112,5 +110,5 @@ void Player::InitPost(void)
 
 	transform_.Update();
 
-	animController_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
+	animatorComp_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
 }

@@ -2,51 +2,51 @@
 #include <functional>
 #include "Component.h"
 
-/// ‘Ì—Í‚ğ’S“–‚·‚éƒRƒ“ƒ|[ƒlƒ“ƒgƒNƒ‰ƒX
+/// ä½“åŠ›ã‚’æ‹…å½“ã™ã‚‹ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã‚¯ãƒ©ã‚¹
 class HealthComponent : public Component
 {
 public:
 
-	// €–S‚ÉŒÄ‚Î‚ê‚éŠÖ”
+	// æ­»äº¡æ™‚ã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
 	using DeathCallback = std::function<void(void)>;
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	// owner : ‚¿å
-	// maxHp : Å‘å‘Ì—Í
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	// owner : æŒã¡ä¸»
+	// maxHp : æœ€å¤§ä½“åŠ›
 	HealthComponent(GameObject& gameObject, int maxHp);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~HealthComponent(void) override;
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	void Init(void) override;
 
-	// ƒ_ƒ[ƒW‚ğó‚¯‚é
+	// ãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’å—ã‘ã‚‹
 	void TakeDamage(int damage);
 
-	// ‰ñ•œ‚·‚é
+	// å›å¾©ã™ã‚‹
 	void Heal(int amount);
 
-	// €–S‚ÉŒÄ‚Î‚ê‚éŠÖ”‚ğİ’è
+	// æ­»äº¡æ™‚ã«å‘¼ã°ã‚Œã‚‹é–¢æ•°ã‚’è¨­å®š
 	void SetOnDeath(DeathCallback onDeath);
 
-	// ‘Ì—Í
+	// ä½“åŠ›
 	int GetHp(void) const;
 
-	// Å‘å‘Ì—Í
+	// æœ€å¤§ä½“åŠ›
 	int GetMaxHp(void) const;
 
-	// €–S‚µ‚Ä‚¢‚é‚©
+	// æ­»äº¡ã—ã¦ã„ã‚‹ã‹
 	bool IsDead(void) const;
 
 private:
 
-	// Å‘å‘Ì—Í
+	// æœ€å¤§ä½“åŠ›
 	int maxHp_;
 
-	// ‘Ì—Í
+	// ä½“åŠ›
 	int hp_;
 
-	// €–S‚ÉŒÄ‚Î‚ê‚éŠÖ”
+	// æ­»äº¡æ™‚ã«å‘¼ã°ã‚Œã‚‹é–¢æ•°
 	DeathCallback onDeath_;
 };

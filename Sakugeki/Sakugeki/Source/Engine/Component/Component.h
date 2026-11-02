@@ -2,51 +2,51 @@
 
 class GameObject;
 
-// ƒRƒ“ƒ|[ƒlƒ“ƒg‚ÌŠî’êƒNƒ‰ƒX
+// ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆã®åŸºåº•ã‚¯ãƒ©ã‚¹
 class Component
 {
 public:
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	// owner : ‚¿å‚Ì Actor
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	// owner : æŒã¡ä¸»ã® Actor
 	explicit Component(GameObject& gameObject);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	virtual ~Component(void);
 
-	// ƒRƒs[‹Ö~i‚¿å‚Ö‚ÌQÆ‚ğ‚Â‚½‚ßj
+	// ã‚³ãƒ”ãƒ¼ç¦æ­¢ï¼ˆæŒã¡ä¸»ã¸ã®å‚ç…§ã‚’æŒã¤ãŸã‚ï¼‰
 	Component(const Component&) = delete;
 	Component& operator=(const Component&) = delete;
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	virtual void Init();
 
-	// XV
+	// æ›´æ–°
 	virtual void Update();
 
-	// •`‰æ
+	// æç”»
 	virtual void Draw();
 
-	// ‰ğ•ú
+	// è§£æ”¾
 	virtual void Release();
 
-	// ‚¿å‚Ì GameObject ‚ğæ“¾
+	// æŒã¡ä¸»ã® GameObject ã‚’å–å¾—
 	GameObject& GetGameObject();
 	const GameObject& GetGameObject() const;
 
-	// —LŒøE–³Œø‚Ìİ’è
+	// æœ‰åŠ¹ãƒ»ç„¡åŠ¹ã®è¨­å®š
 	void SetEnabled(bool isEnabled);
 
-	// —LŒø‚©
+	// æœ‰åŠ¹ã‹
 	bool IsEnabled() const;
 
 protected:
 
-	// ‚¿å‚Ì GameObject
+	// æŒã¡ä¸»ã® GameObject
 	GameObject& gameObject_;
 
 private:
 
-	// —LŒø‚©
+	// æœ‰åŠ¹ã‹
 	bool isEnabled_;
 };

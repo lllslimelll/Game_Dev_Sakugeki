@@ -1,10 +1,13 @@
 #include <DxLib.h>
+#include "../Common/Transform.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "AnimationController.h"
+#include "../GameObject/GameObject.h"
+#include "AnimatorComponent.h"
 
-AnimationController::AnimationController(int modelId)
+AnimatorComponent::AnimatorComponent(GameObject& gameObject)
     :
-    modelId_(modelId),
+	Component(gameObject),
+    modelId_(gameObject.GetTransform().modelId),
     playType_(-1),
     playAnim_(),
     isLoop_(true),
@@ -15,11 +18,11 @@ AnimationController::AnimationController(int modelId)
 {
 }
 
-AnimationController::~AnimationController(void)
+AnimatorComponent::~AnimatorComponent(void)
 {
 }
 
-void AnimationController::Add(int type, float speed, int animHandle)
+void AnimatorComponent::Add(int type, float speed, int animHandle)
 {
     Animation animation;
     animation.model = animHandle;
@@ -27,7 +30,7 @@ void AnimationController::Add(int type, float speed, int animHandle)
     Add(type, speed, animation);
 }
 
-void AnimationController::AddFromSelf(int type, float speed, int animIndex)
+void AnimatorComponent::AddFromSelf(int type, float speed, int animIndex)
 {
     Animation animation;
     animation.model = -1;
@@ -35,7 +38,7 @@ void AnimationController::AddFromSelf(int type, float speed, int animIndex)
     Add(type, speed, animation);
 }
 
-void AnimationController::Play(int type, bool isLoop)
+void AnimatorComponent::Play(int type, bool isLoop)
 {
     if (playType_ == type) { return; }
 
@@ -76,13 +79,15 @@ void AnimationController::Play(int type, bool isLoop)
     }
 }
 
-void AnimationController::Replay(void)
+void AnimatorComponent::Replay(void)
 {
     playAnim_.step = 0.0f;
 }
 
-void AnimationController::Update(void)
+void AnimatorComponent::Update(void)
 {
+    if (playType_ == -1) { return; }
+
     const float deltaTime = SceneManager::GetInstance().GetDeltaTime();
 
     // ブレンド更新
@@ -125,33 +130,33 @@ void AnimationController::Update(void)
     MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
 }
 
-void AnimationController::Release(void)
+void AnimatorComponent::Release(void)
 {
     animations_.clear();
 }
 
-int AnimationController::GetPlayType(void) const
+int AnimatorComponent::GetPlayType(void) const
 {
     return playType_;
 }
 
-bool AnimationController::IsEnd(void) const
+bool AnimatorComponent::IsEnd(void) const
 {
     if (isLoop_) return false;
     return playAnim_.step >= playAnim_.totalTime;
 }
 
-const AnimationController::Animation& AnimationController::GetPlayAnim(void) const
+const AnimatorComponent::Animation& AnimatorComponent::GetPlayAnim(void) const
 {
     return playAnim_;
 }
 
-bool AnimationController::IsBlending(void) const
+bool AnimatorComponent::IsBlending(void) const
 {
     return blendRate_ < 1.0f;
 }
 
-void AnimationController::Add(int type, float speed, Animation& animation)
+void AnimatorComponent::Add(int type, float speed, Animation& animation)
 {
     animation.speed = speed;
     if (animations_.count(type) == 0)
@@ -160,7 +165,7 @@ void AnimationController::Add(int type, float speed, Animation& animation)
     }
 }
 
-void AnimationController::Attach(Animation& anim)
+void AnimatorComponent::Attach(Animation& anim)
 {
     if (anim.model == -1)
     {

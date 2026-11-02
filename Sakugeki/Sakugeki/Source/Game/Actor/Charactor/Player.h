@@ -1,6 +1,9 @@
 #pragma once
 #include "../../../Engine/Math/Vector3.h"
+#include "../../../Engine/Component/AnimatorComponent.h"
 #include "../../../Engine/Actor/Character/Character.h"
+
+class AnimatorComponent;
 
 class Player : public Character
 {
@@ -54,4 +57,7 @@ private:
 	static inline const Vector3 COL_CAPSULE_DOWN_LOCAL_POS = { 0.0f, 30.0f, 0.0f };
 	// 衝突判定用カプセル
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
+
+	// アニメーターコンポーネント
+	AnimatorComponent* animatorComp_;
 };

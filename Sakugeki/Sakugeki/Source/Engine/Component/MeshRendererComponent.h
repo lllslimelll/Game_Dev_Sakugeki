@@ -6,30 +6,30 @@
 class Material;
 class ModelRenderer;
 
-// ƒ‚ƒfƒ‹‚ğ•`‰æ‚·‚é•”•i
-// ‚¿å‚Ì Transform ‚Ìƒ‚ƒfƒ‹‚ğAw’è‚µ‚½ƒVƒF[ƒ_[‚Å•`‰æ‚·‚é
+// ãƒ¢ãƒ‡ãƒ«ã‚’æç”»ã™ã‚‹éƒ¨å“
+// æŒã¡ä¸»ã® Transform ã®ãƒ¢ãƒ‡ãƒ«ã‚’ã€æŒ‡å®šã—ãŸã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã§æç”»ã™ã‚‹
 class MeshRendererComponent : public Component
 {
 public:
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	// gameObject   : ‚¿å‚Ì GameObject
-	// vertexShader : ’¸“_ƒVƒF[ƒ_[
-	// pixelShader  : ƒsƒNƒZƒ‹ƒVƒF[ƒ_[
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	// gameObject   : æŒã¡ä¸»ã® GameObject
+	// vertexShader : é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
+	// pixelShader  : ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 	MeshRendererComponent(GameObject& gameObject,
 		ResourceManager::SRC vertexShader, ResourceManager::SRC pixelShader);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~MeshRendererComponent(void) override;
 
-	// •`‰æ
+	// æç”»
 	void Draw(void) override;
 
 private:
 
-	// ƒ}ƒeƒŠƒAƒ‹irenderer_ ‚ªQÆ‚·‚é‚Ì‚ÅAæ‚ÉéŒ¾‚·‚éj
+	// ãƒãƒ†ãƒªã‚¢ãƒ«ï¼ˆrenderer_ ãŒå‚ç…§ã™ã‚‹ã®ã§ã€å…ˆã«å®£è¨€ã™ã‚‹ï¼‰
 	std::unique_ptr<Material> material_;
 
-	// •`‰æ
+	// æç”»
 	std::unique_ptr<ModelRenderer> renderer_;
 };
