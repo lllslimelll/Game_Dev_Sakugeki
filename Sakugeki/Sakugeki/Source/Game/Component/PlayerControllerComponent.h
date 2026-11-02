@@ -7,7 +7,7 @@ class Camera;
 /// プレイヤーの操作を行うクラス
 /// 入力を読み取り、キャラクターの移動コンポーネントに指示する
 /// </summary>
-class PlayerController
+class PlayerControllerComponent
 {
 public:
 
@@ -16,10 +16,10 @@ public:
 	/// character : 操作するキャラクター
 	/// camera    : 移動方向の基準にするカメラ
 	/// </summary>
-	PlayerController(Character& character, const Camera& camera);
+	PlayerControllerComponent(Character& character, const Camera& camera);
 
 	// デストラクタ
-	~PlayerController(void);
+	~PlayerControllerComponent(void);
 
 	// 更新
 	void Update(void);

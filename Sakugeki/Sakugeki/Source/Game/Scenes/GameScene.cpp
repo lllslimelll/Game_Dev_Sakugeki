@@ -7,7 +7,7 @@
 #include "../Actor/Charactor/Player.h"
 #include "../Actor/Stage/StageManager.h"
 #include "../Actor/Camera.h"
-#include "../Controller/PlayerController.h"
+#include "../Component/PlayerControllerComponent.h"
 #include "GameScene.h"
 
 GameScene::GameScene(void)
@@ -47,7 +47,7 @@ void GameScene::Init(void)
 	player_->Init();
 
 	// プレイヤーの操作
-	playerController_ = std::make_unique<PlayerController>(*player_, *camera_);
+	playerControllerComp_ = std::make_unique<PlayerControllerComponent>(*player_, *camera_);
 
 	// ステージ側の全コライダをキャラに登録
 	for (const ColliderBase* col : stageMng_->GetColliders())
@@ -59,7 +59,7 @@ void GameScene::Init(void)
 void GameScene::Update(void)
 {
 	stageMng_->Update();
-	playerController_->Update();
+	playerControllerComp_->Update();
 	player_->Update();
 	camera_->Update();
 

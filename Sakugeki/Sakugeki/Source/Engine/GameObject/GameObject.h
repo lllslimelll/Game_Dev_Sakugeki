@@ -10,8 +10,6 @@
 class ResourceManager;
 class SceneManager;
 class ColliderBase;
-class Material;
-class ModelRenderer;
 
 class GameObject
 {
@@ -70,6 +68,7 @@ public:
 
 	// 大きさ、回転、座標等の取得
 	const Transform& GetTransform() const;
+	Transform& GetTransform();
 
 	// 自身の衝突情報取得
 	const std::map<int, ColliderBase*>& GetOwnColliders() const
@@ -94,10 +93,6 @@ protected:
 
 	// モデル制御の基本情報
 	Transform transform_;
-
-	// モデル描画用
-	std::unique_ptr<Material> material_;
-	std::unique_ptr<ModelRenderer> renderer_;
 
 	// 自身の衝突情報
 	std::map<int, ColliderBase*> ownColliders_;

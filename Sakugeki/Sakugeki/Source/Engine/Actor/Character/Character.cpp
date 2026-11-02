@@ -20,9 +20,6 @@ void Character::Update(void)
 	// コンポーネントの更新
 	GameObject::Update();
 
-	// モデル制御更新
-	transform_.Update();
-
 	// 移動の状態からアニメーションを選ぶ
 	UpdateAnimation();
 
