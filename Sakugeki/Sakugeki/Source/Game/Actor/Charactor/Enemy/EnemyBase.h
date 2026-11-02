@@ -1,11 +1,11 @@
 #pragma once
 #include <functional>
 #include <DxLib.h>
-#include "../../../../Engine/Actor/Character/Character.h"
+#include "../../../../Engine/GameObject/GameObject.h"
 
 class Player;
 
-class EnemyBase : public Character
+class EnemyBase : public GameObject
 {
 public:
 

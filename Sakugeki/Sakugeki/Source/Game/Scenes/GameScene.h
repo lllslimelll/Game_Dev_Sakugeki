@@ -6,7 +6,6 @@
 class Camera;
 class StageManager;
 class Player;
-class PlayerControllerComponent;
 
 class GameScene : public SceneBase
 {
@@ -36,9 +35,6 @@ private:
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<StageManager> stageMng_;
 	std::unique_ptr<Player> player_;
-
-	// プレイヤーの操作役
-	std::unique_ptr<PlayerControllerComponent> playerControllerComp_;
 
 	// リアルシャドウ描画
 	void DrawShadow(void);

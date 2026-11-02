@@ -8,7 +8,7 @@ class Component
 public:
 
 	// コンストラクタ
-	// owner : 持ち主の Actor
+	// owner : 持ち主の GameObject
 	explicit Component(GameObject& gameObject);
 
 	// デストラクタ
