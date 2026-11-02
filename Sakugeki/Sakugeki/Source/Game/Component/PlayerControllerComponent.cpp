@@ -2,15 +2,18 @@
 #include "../../Engine/Math/Vector2.h"
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/Quaternion.h"
-#include "../Actor/Camera.h"
-#include "../../Engine/Actor/Character/Character.h"
+#include "../../Engine/GameObject/GameObject.h"
 #include "../../Engine/Component/CharacterMovementComponent.h"
+#include "../../Engine/Component/AnimatorComponent.h"
+#include "../Actor/Camera.h"
 #include "PlayerControllerComponent.h"
 
-PlayerControllerComponent::PlayerControllerComponent(Character& character, const Camera& camera)
+PlayerControllerComponent::PlayerControllerComponent(GameObject& gameObject, const Camera& camera)
 	:
-	character_(character),
-	camera_(camera)
+	Component(gameObject),
+	camera_(camera),
+	movementComp_(nullptr),
+	animatorComp_(nullptr)
 {
 }
 
@@ -18,10 +21,22 @@ PlayerControllerComponent::~PlayerControllerComponent(void)
 {
 }
 
+void PlayerControllerComponent::Init(void)
+{
+	// コンポーネントの取得
+	movementComp_ = gameObject_.GetComponent<CharacterMovementComponent>();
+	animatorComp_ = gameObject_.GetComponent<AnimatorComponent>();
+}
+
 void PlayerControllerComponent::Update(void)
 {
+	UpdateMove();
+	UpdateAnimation();
+}
+
+void PlayerControllerComponent::UpdateMove(void)
+{
 	auto& ins = Input::GetInstance();
-	CharacterMovementComponent& movement = character_.GetMovement();
 
 	// 移動入力
 	Vector2 input = ins.GetMoveInput();
@@ -29,12 +44,30 @@ void PlayerControllerComponent::Update(void)
 	{
 		// カメラのY軸回転に合わせる
 		Vector3 dir = camera_.GetQuaRotY().Rotate(Vector3(input.x, 0.0f, input.y));
-		movement.AddMoveInput(dir.Normalized()); // 移動入力を追加
+		movementComp_->AddMoveInput(dir.Normalized()); // 移動入力を追加
 	}
 
 	// ジャンプ
 	if (ins.IsPressed(Input::Command::JUMP))
 	{
-		movement.Jump();
+		movementComp_->Jump();
 	}
+}
+
+void PlayerControllerComponent::UpdateAnimation(void)
+{
+	// 移動の状態から選ぶ
+	ANIM_TYPE type = ANIM_TYPE::IDLE;
+	if (!movementComp_->IsGrounded())
+	{
+		type = ANIM_TYPE::JUMP;
+	}
+	else if (movementComp_->IsMoving())
+	{
+		type = ANIM_TYPE::RUN;
+	}
+
+	// ジャンプだけはループしない
+	bool isLoop = (type != ANIM_TYPE::JUMP);
+	animatorComp_->Play(static_cast<int>(type), isLoop);
 }

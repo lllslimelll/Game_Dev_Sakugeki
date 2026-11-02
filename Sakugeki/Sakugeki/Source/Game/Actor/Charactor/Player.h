@@ -1,22 +1,16 @@
 #pragma once
 #include "../../../Engine/Math/Vector3.h"
-#include "../../../Engine/Component/AnimatorComponent.h"
-#include "../../../Engine/Actor/Character/Character.h"
+#include "../../../Engine/GameObject/GameObject.h"
 
-class AnimatorComponent;
+class Camera;
+class CharacterMovementComponent;
 
-class Player : public Character
+class Player : public GameObject
 {
 public:
 
-	enum class ANIM_TYPE
-	{
-		IDLE,
-		RUN,
-		JUMP,
-	};
-
-	Player(void);
+	// camera : 移動方向の基準にするカメラ
+	explicit  Player(Camera& camera);
 
 	~Player(void) override;
 
@@ -24,6 +18,13 @@ public:
 	virtual void Load() override;
 
 private:
+
+	enum class COLLIDER_TYPE
+	{
+		GROUND_LINE,
+		CAPSULE,
+		MAX,
+	};
 
 	// 初期化
 	// 大きさ、回転、座標
@@ -36,9 +37,6 @@ private:
 	void InitAnimation() override;
 	// 個別処理
 	void InitPost() override;
-
-	// 移動の状態から再生するアニメーションを選ぶ
-	void UpdateAnimation(void) override;
 
 	// 移動速度（単位 / 秒）
 	static constexpr float MAX_WALK_SPEED = 600.0f;
@@ -58,6 +56,6 @@ private:
 	// 衝突判定用カプセル
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 
-	// アニメーターコンポーネント
-	AnimatorComponent* animatorComp_;
+	// 移動
+	CharacterMovementComponent* movementComp_;
 };

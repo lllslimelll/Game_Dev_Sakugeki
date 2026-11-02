@@ -6,13 +6,16 @@
 #include "../../../Engine/Component/CharacterMovementComponent.h"
 #include "../../../Engine/Component/MeshRendererComponent.h"
 #include "../../../Engine/Component/AnimatorComponent.h"
+#include "../../Component/PlayerControllerComponent.h"
 #include "Player.h"
 
-Player::Player(void)
+Player::Player(Camera& camera)
 	:
-	Character(),
-	animatorComp_(nullptr)
+	GameObject(),
+	movementComp_(nullptr)
 {
+	AddComponent<PlayerControllerComponent>(camera);
+	movementComp_ = AddComponent<CharacterMovementComponent>(transform_, hitColliders_);
 }
 
 Player::~Player(void)
@@ -33,24 +36,6 @@ void Player::Load()
 	resMng_.Load(ResourceManager::SRC::ANIM_IDLE);
 	resMng_.Load(ResourceManager::SRC::ANIM_RUN);
 	resMng_.Load(ResourceManager::SRC::ANIM_JUMP);
-}
-
-void Player::UpdateAnimation(void)
-{
-	// 移動の状態から選ぶ
-	ANIM_TYPE type = ANIM_TYPE::IDLE;
-	if (!movementComp_->IsGrounded())
-	{
-		type = ANIM_TYPE::JUMP;
-	}
-	else if (movementComp_->IsMoving())
-	{
-		type = ANIM_TYPE::RUN;
-	}
-
-	// ジャンプだけはループしない
-	bool isLoop = (type != ANIM_TYPE::JUMP);
-	animatorComp_->Play(static_cast<int>(type), isLoop);
 }
 
 void Player::InitTransform(void)
@@ -93,13 +78,18 @@ void Player::InitCollider(void)
 
 void Player::InitAnimation(void)
 {
-	// アニメーターコンポーネントを追加
-	animatorComp_ = AddComponent<AnimatorComponent>();
+	using AnimType = PlayerControllerComponent::ANIM_TYPE;
+
+	// アニメーターコンポーネントを追加（このあとは使わないので、ローカル変数で持つ）
+	auto* animator = AddComponent<AnimatorComponent>();
 
 	// 再生するアニメーションを登録
-	animatorComp_->Add(static_cast<int>(ANIM_TYPE::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);
-	animatorComp_->Add(static_cast<int>(ANIM_TYPE::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).handleId_);
-	animatorComp_->Add(static_cast<int>(ANIM_TYPE::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).handleId_);
+	animator->Add(static_cast<int>(AnimType::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);
+	animator->Add(static_cast<int>(AnimType::RUN), 40.0f, resMng_.Load(ResourceManager::SRC::ANIM_RUN).handleId_);
+	animator->Add(static_cast<int>(AnimType::JUMP), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_JUMP).handleId_);
+
+	// 最初は待機
+	animator->Play(static_cast<int>(AnimType::IDLE), true);
 }
 
 void Player::InitPost(void)
@@ -109,6 +99,4 @@ void Player::InitPost(void)
 	movementComp_->SetJumpSpeed(JUMP_SPEED);
 
 	transform_.Update();
-
-	animatorComp_->Play(static_cast<int>(ANIM_TYPE::IDLE), true);
 }
