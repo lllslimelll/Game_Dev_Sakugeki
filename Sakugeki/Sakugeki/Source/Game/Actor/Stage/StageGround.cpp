@@ -1,7 +1,6 @@
 #include "../../../Engine/Resource/ResourceManager.h"
-#include "../../../Engine/Renderer/Material.h"
-#include "../../../Engine/Renderer/ModelRenderer.h"
 #include "../../../Engine/Utility/AsoUtility.h"
+#include "../../../Engine/Component/MeshRendererComponent.h"
 #include "../../../Engine/Common/Transform.h"
 #include "../../Collider/ColliderPlane.h"
 #include "../../Collider/ColliderCircleBoundary.h" 
@@ -42,11 +41,8 @@ void StageGround::InitTransform(void)
 
 void StageGround::InitRenderer(void)
 {
-	material_ = std::make_unique<Material>(
-		ResourceManager::SRC::SHADER_VS_GROUND, 0,
-		ResourceManager::SRC::SHADER_PS_GROUND, 0);
-
-	renderer_ = std::make_unique<ModelRenderer>(*material_, transform_.modelId);
+	AddComponent<MeshRendererComponent>(
+		ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);
 }
 
 void StageGround::InitCollider(void)

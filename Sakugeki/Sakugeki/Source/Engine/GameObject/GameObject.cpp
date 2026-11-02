@@ -1,7 +1,5 @@
 #include "../../Engine/Resource/ResourceManager.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/Renderer/Material.h"
-#include "../../Engine/Renderer/ModelRenderer.h"
 #include "../../Game/Collider/ColliderBase.h"  
 #include "GameObject.h"
 
@@ -49,15 +47,13 @@ void GameObject::Update()
 		if (!component->IsEnabled()) { continue; }
 		component->Update();
 	}
+
+	// モデル制御更新
+	transform_.Update();
 }
 
 void GameObject::Draw()
 {
-	if (renderer_)
-	{
-		renderer_->Draw();
-	}
-
 	// コンポーネントの描画
 	for (auto& component : components_)
 	{
@@ -95,6 +91,11 @@ void GameObject::Release()
 }
 
 const Transform& GameObject::GetTransform() const
+{
+	return transform_;
+}
+
+Transform& GameObject::GetTransform()
 {
 	return transform_;
 }

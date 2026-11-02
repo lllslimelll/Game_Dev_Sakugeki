@@ -1,6 +1,5 @@
 #include "../../../Engine/Resource/ResourceManager.h"
-#include "../../../Engine/Renderer/Material.h"
-#include "../../../Engine/Renderer/ModelRenderer.h"
+#include "../../../Engine/Component/MeshRendererComponent.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageTree.h"
@@ -38,11 +37,8 @@ void StageTree::InitTransform(void)
 
 void StageTree::InitRenderer(void)
 {
-	material_ = std::make_unique<Material>(
-		ResourceManager::SRC::SHADER_VS_TREE, 0,
-		ResourceManager::SRC::SHADER_PS_TREE, 0);
-
-	renderer_ = std::make_unique<ModelRenderer>(*material_, transform_.modelId);
+	AddComponent<MeshRendererComponent>(
+		ResourceManager::SRC::SHADER_VS_TREE, ResourceManager::SRC::SHADER_PS_TREE);
 }
 
 void StageTree::InitCollider(void)

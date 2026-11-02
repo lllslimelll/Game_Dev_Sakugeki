@@ -8,6 +8,7 @@
 #include "../../Collider/ColliderLine.h"
 #include "../../Collider/ColliderCapsule.h"
 #include "../../../Engine/Component/CharacterMovementComponent.h"
+#include"../../../Engine/Component/MeshRendererComponent.h"
 #include "Player.h"
 
 Player::Player(void)
@@ -67,10 +68,9 @@ void Player::InitTransform(void)
 
 void Player::InitRenderer()
 {
-	material_ = std::make_unique<Material>(ResourceManager::SRC::SHADER_VS_PLAYER, 0,
-		ResourceManager::SRC::SHADER_PS_PLAYER, 0);
-
-	renderer_ = std::make_unique<ModelRenderer>(*material_, transform_.modelId);
+	AddComponent<MeshRendererComponent>(
+		ResourceManager::SRC::SHADER_VS_PLAYER,
+		ResourceManager::SRC::SHADER_PS_PLAYER);
 }
 
 void Player::InitCollider(void)

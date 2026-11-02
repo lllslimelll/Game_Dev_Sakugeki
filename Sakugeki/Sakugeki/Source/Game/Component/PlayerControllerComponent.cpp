@@ -5,20 +5,20 @@
 #include "../Actor/Camera.h"
 #include "../../Engine/Actor/Character/Character.h"
 #include "../../Engine/Component/CharacterMovementComponent.h"
-#include "PlayerController.h"
+#include "PlayerControllerComponent.h"
 
-PlayerController::PlayerController(Character& character, const Camera& camera)
+PlayerControllerComponent::PlayerControllerComponent(Character& character, const Camera& camera)
 	:
 	character_(character),
 	camera_(camera)
 {
 }
 
-PlayerController::~PlayerController(void)
+PlayerControllerComponent::~PlayerControllerComponent(void)
 {
 }
 
-void PlayerController::Update(void)
+void PlayerControllerComponent::Update(void)
 {
 	auto& ins = Input::GetInstance();
 	CharacterMovementComponent& movement = character_.GetMovement();
