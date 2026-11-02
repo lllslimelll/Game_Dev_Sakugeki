@@ -116,12 +116,3 @@ EnemyBase* EnemyManager::Create(const EnemyBase::EnemyData& data)
 
 	return enemy;
 }
-
-// 衝突対象となるコライダを登録
-void EnemyManager::AddHitCollider(const ColliderBase* hitCollider)
-{
-	for (auto& enemy : enemies_)
-	{
-		enemy->AddHitCollider(hitCollider);
-	}
-}

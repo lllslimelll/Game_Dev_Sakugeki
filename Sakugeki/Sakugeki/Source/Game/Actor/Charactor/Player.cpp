@@ -1,21 +1,22 @@
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Math/UtilityMath.h"
-#include "../../Collider/ColliderLine.h"
-#include "../../Collider/ColliderCapsule.h"
+#include "../../../Engine/Collider/ColliderLine.h"
+#include "../../../Engine/Collider/ColliderCapsule.h"
+#include "../../../Engine/Collider/CollisionManager.h"
 #include "../../../Engine/Component/CharacterMovementComponent.h"
 #include "../../../Engine/Component/MeshRendererComponent.h"
 #include "../../../Engine/Component/AnimatorComponent.h"
 #include "../../Component/PlayerControllerComponent.h"
 #include "Player.h"
 
-Player::Player(const Camera& camera)
+Player::Player(const Camera& camera, const CollisionManager& collisionMng)
 	:
 	GameObject(),
 	movementComp_(nullptr)
 {
 	AddComponent<PlayerControllerComponent>(camera);
-	movementComp_ = AddComponent<CharacterMovementComponent>(transform_, hitColliders_);
+	movementComp_ = AddComponent<CharacterMovementComponent>(transform_, collisionMng);
 }
 
 Player::~Player(void)

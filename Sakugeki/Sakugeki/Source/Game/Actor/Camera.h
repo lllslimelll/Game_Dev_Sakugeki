@@ -8,6 +8,7 @@
 
 class Transform;
 class ColliderSphere;
+class CollisionManager;
 
 class Camera : public GameObject
 {
@@ -57,7 +58,7 @@ public:
 	};
 
 	// コンストラクタ
-	Camera(void);
+	explicit Camera(const CollisionManager& collisionMng);
 
 	// デストラクタ
 	~Camera(void) override;
@@ -149,6 +150,8 @@ private:
 
 	// カメラの補完移動率
 	static constexpr float LERP_RATE_MOVE = 0.1f;
+
+	const CollisionManager& collisionMng_;
 
 	// カメラの更新前位置
 	Vector3 prePos_;

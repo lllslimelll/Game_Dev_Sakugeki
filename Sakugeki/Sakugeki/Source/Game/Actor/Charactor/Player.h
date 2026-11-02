@@ -4,13 +4,14 @@
 
 class Camera;
 class CharacterMovementComponent;
+class CollisionManager;
 
 class Player : public GameObject
 {
 public:
 
 	// camera : 移動方向の基準にするカメラ
-	explicit Player(const Camera& camera);
+	explicit Player(const Camera& camera, const CollisionManager& collisionMng);
 
 	~Player(void) override;
 

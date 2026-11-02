@@ -6,6 +6,7 @@
 class Camera;
 class StageManager;
 class Player;
+class CollisionManager;
 
 class GameScene : public SceneBase
 {
@@ -31,7 +32,7 @@ public:
 
 private:
 	
-	// カメラ
+	std::unique_ptr<CollisionManager> collisionMng_;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<StageManager> stageMng_;
 	std::unique_ptr<Player> player_;

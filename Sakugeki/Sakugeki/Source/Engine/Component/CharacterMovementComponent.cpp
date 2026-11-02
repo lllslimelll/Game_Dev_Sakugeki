@@ -1,20 +1,21 @@
 #include <algorithm>
-#include "../Common/Transform.h"
-#include "../Math/Quaternion.h"
-#include "../Scene/SceneManager.h"
-#include "../../Game/Collider/ColliderBase.h"
-#include "../../Game/Collider/ColliderCapsule.h"
-#include "../../Game/Collider/ColliderCircleBoundary.h"
-#include "../../Game/Collider/ColliderModel.h"
-#include "../../Game/Collider/ColliderPlane.h"
-#include "CharacterMovementComponent.h"
+#include "../../Engine/Common/Transform.h"
+#include "../../Engine/Math/Quaternion.h"
+#include "../../Engine/Scene/SceneManager.h"
+#include "../../Engine/Collider/ColliderBase.h"
+#include "../../Engine/Collider/ColliderCapsule.h"
+#include "../../Engine/Collider/ColliderCircleBoundary.h"
+#include "../../Engine/Collider/ColliderModel.h"
+#include "../../Engine/Collider/ColliderPlane.h"
+#include "../../Engine/Collider/CollisionManager.h"
+#include "../../Engine/Component/CharacterMovementComponent.h"
 
 CharacterMovementComponent::CharacterMovementComponent(GameObject& gameObject, Transform& transform,
-	const std::vector<const ColliderBase*>& hitColliders)
+	const CollisionManager& collisionMng)
 	:
 	Component(gameObject),
 	transform_(transform),
-	hitColliders_(hitColliders),
+	collisionMng_(collisionMng),
 	capsule_(nullptr),
 	maxWalkSpeed_(0.0f),
 	jumpSpeed_(0.0f),
@@ -137,7 +138,7 @@ void CharacterMovementComponent::CollideBoundary(void)
 	// 自分の体の半径
 	float bodyRadius = (capsule_ != nullptr) ? capsule_->GetRadius() : 0.0f;
 
-	for (const ColliderBase* hitCol : hitColliders_)
+	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
 	{
 		if (hitCol->GetShape() != ColliderBase::SHAPE::CIRCLE_BOUNDARY) continue;
 
@@ -150,7 +151,7 @@ void CharacterMovementComponent::CollideModel(void)
 {
 	if (capsule_ == nullptr) { return; }
 
-	for (const ColliderBase* hitCol : hitColliders_)
+	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
 	{
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
 
@@ -173,7 +174,7 @@ void CharacterMovementComponent::CollideGround(void)
 	// 上昇中は判定しない
 	if (velocity_.y > 0.0f) { return; }
 
-	for (const ColliderBase* hitCol : hitColliders_)
+	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
 	{
 		if (hitCol->GetShape() != ColliderBase::SHAPE::PLANE) continue;
 

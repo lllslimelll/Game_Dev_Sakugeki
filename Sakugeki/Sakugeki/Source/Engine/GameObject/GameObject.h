@@ -79,12 +79,6 @@ public:
 	// 特定の自身の衝突情報
 	const ColliderBase* GetOwnCollider(int key) const;
 
-	// 衝突対象となるコライダを登録
-	void AddHitCollider(const ColliderBase* hitCollider);
-
-	// 衝突対象となるコライダをクリア
-	void ClearHitCollider();
-
 protected:
 
 	// シングルトン参照
@@ -97,11 +91,9 @@ protected:
 	// 自身の衝突情報
 	std::map<int, ColliderBase*> ownColliders_;
 
-	// 衝突相手の情報
-	std::vector<const ColliderBase*> hitColliders_;
-
 	// 所有しているコンポーネント
 	std::vector<std::unique_ptr<Component>> components_;
+
 	// 大きさ、回転、座標の初期化
 	virtual void InitTransform() = 0;
 
