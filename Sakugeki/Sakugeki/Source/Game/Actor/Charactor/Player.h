@@ -10,7 +10,7 @@ class Player : public GameObject
 public:
 
 	// camera : 移動方向の基準にするカメラ
-	explicit  Player(Camera& camera);
+	explicit Player(const Camera& camera);
 
 	~Player(void) override;
 
