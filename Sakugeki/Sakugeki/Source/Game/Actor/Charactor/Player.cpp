@@ -9,7 +9,7 @@
 #include "../../Component/PlayerControllerComponent.h"
 #include "Player.h"
 
-Player::Player(Camera& camera)
+Player::Player(const Camera& camera)
 	:
 	GameObject(),
 	movementComp_(nullptr)

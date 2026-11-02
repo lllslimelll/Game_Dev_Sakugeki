@@ -1,7 +1,6 @@
 #pragma once
 #include "../../Engine/Component/Component.h"
 
-class Character;
 class Camera;
 class AnimatorComponent;
 
