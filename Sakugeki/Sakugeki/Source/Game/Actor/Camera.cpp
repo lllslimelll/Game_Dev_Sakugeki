@@ -5,13 +5,15 @@
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/UtilityMath.h"
-#include "../Collider/ColliderBase.h"
-#include "../Collider/ColliderModel.h"
-#include "../Collider/ColliderSphere.h"
+#include "../../Engine/Collider/ColliderBase.h"
+#include "../../Engine/Collider/ColliderModel.h"
+#include "../../Engine/Collider/ColliderSphere.h"
+#include "../../Engine/Collider/CollisionManager.h"
 #include "Camera.h"
 
-Camera::Camera(void)
+Camera::Camera(const CollisionManager& collisionMng)
 	:
+	collisionMng_(collisionMng),
 	followTransform_(nullptr),
 	mode_(MODE::NONE),
 	angles_(Vector3::ZERO),
@@ -206,7 +208,7 @@ void Camera::Collision(void)
 	// プレイヤーのルートフレーム
 	Vector3 start = Vector3::GetVector3(MV1GetFramePosition(followTransform_->modelId, 1));
 
-	for (const auto& hitCol : hitColliders_)
+	for (const auto& hitCol : collisionMng_.GetColliders())
 	{
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;

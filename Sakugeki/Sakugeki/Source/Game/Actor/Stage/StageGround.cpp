@@ -2,8 +2,8 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Component/MeshRendererComponent.h"
 #include "../../../Engine/Common/Transform.h"
-#include "../../Collider/ColliderPlane.h"
-#include "../../Collider/ColliderCircleBoundary.h" 
+#include "../../../Engine/Collider/ColliderPlane.h"
+#include "../../../Engine/Collider/ColliderCircleBoundary.h" 
 #include "StageGround.h"
 
 StageGround::StageGround(void)

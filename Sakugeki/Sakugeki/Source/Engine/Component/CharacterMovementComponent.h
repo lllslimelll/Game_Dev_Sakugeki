@@ -6,6 +6,7 @@
 class Transform;
 class ColliderBase;
 class ColliderCapsule;
+class CollisionManager;
 
 /// キャラクターの移動を担当するコンポーネント
 class CharacterMovementComponent : public Component
@@ -14,9 +15,9 @@ public:
 
 	/// コンストラクタ
 	/// trasnform    : 動かす対象
-	/// hitColliders : 衝突相手のコライダ（持ち主の Actor が管理する）
+	/// collisionMng : 当たり判定の管理クラス
 	CharacterMovementComponent(GameObject& gameObject, Transform& trasnform,
-		const std::vector<const ColliderBase*>& hitColliders);
+		const CollisionManager& collisionMng);
 
 	// デストラクタ
 	~CharacterMovementComponent() override;
@@ -68,8 +69,8 @@ private:
 	// 動かす対象
 	Transform& transform_;
 
-	// 衝突相手のコライダ
-	const std::vector<const ColliderBase*>& hitColliders_;
+	// 当たり判定の管理クラス
+	const CollisionManager& collisionMng_;
 
 	// 押し戻しに使うカプセル
 	const ColliderCapsule* capsule_;

@@ -1,6 +1,6 @@
 #include "../../Engine/Resource/ResourceManager.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Game/Collider/ColliderBase.h"  
+#include "../../Engine/Collider/ColliderBase.h"  
 #include "GameObject.h"
 
 GameObject::GameObject()
@@ -66,7 +66,7 @@ void GameObject::Draw()
 	// 所有しているコライダの描画
 	for (const auto& own : ownColliders_)
 	{
-		own.second->Draw();
+	//	own.second->Draw();
 	}
 
 #endif // _DEBUG
@@ -109,24 +109,4 @@ const ColliderBase* GameObject::GetOwnCollider(int key) const
 		return nullptr;
 	}
 	return ownColliders_.at(key);
-}
-
-// 衝突対象となるコライダを登録
-void GameObject::AddHitCollider(const ColliderBase* hitCollider)
-{
-	for (const auto& c : hitColliders_)
-	{
-		if (c == hitCollider)
-		{
-			return;
-		}
-	}
-
-	hitColliders_.emplace_back(hitCollider);
-}
-
-// 衝突対象となるコライダをクリア
-void GameObject::ClearHitCollider()
-{
-	hitColliders_.clear();
 }
