@@ -155,7 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Engine\Collider\CollisionManager.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\CollisionManager.cpp" />
     <ClCompile Include="Source\Engine\Component\MeshRendererComponent.cpp" />
     <ClCompile Include="Source\Engine\Component\HealthComponent.cpp" />
     <ClCompile Include="Source\Engine\Component\Component.cpp" />
@@ -164,8 +164,8 @@
     <ClCompile Include="Source\Engine\Math\Matrix3D.cpp" />
     <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp" />
     <ClCompile Include="Source\Game\UI\Menu.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderCircleBoundary.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderPlane.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderCircleBoundary.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderPlane.cpp" />
     <ClCompile Include="Source\Engine\Audio\Audio.cpp" />
     <ClCompile Include="Source\Engine\Common\Fader.cpp" />
     <ClCompile Include="Source\Engine\Common\FpsController.cpp" />
@@ -188,11 +188,11 @@
     <ClCompile Include="Source\Game\Actor\Charactor\Player.cpp" />
     <ClCompile Include="Source\Game\Actor\SkyBox.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageManager.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderBase.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderCapsule.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderLine.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderModel.cpp" />
-    <ClCompile Include="Source\Engine\Collider\ColliderSphere.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderBase.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderCapsule.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderLine.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderModel.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\ColliderSphere.cpp" />
     <ClCompile Include="Source\Engine\Component\AnimatorComponent.cpp" />
     <ClCompile Include="Source\Engine\Common\Transform.cpp" />
     <ClCompile Include="Source\Game\Scenes\DeadScene.cpp" />
@@ -209,7 +209,7 @@
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Engine\Collider\CollisionManager.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\CollisionManager.h" />
     <ClInclude Include="Source\Engine\Component\MeshRendererComponent.h" />
     <ClInclude Include="Source\Engine\Component\HealthComponent.h" />
     <ClInclude Include="Source\Engine\Component\Component.h" />
@@ -218,8 +218,8 @@
     <ClInclude Include="Source\Engine\Math\Matrix3D.h" />
     <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h" />
     <ClInclude Include="Source\Game\UI\Menu.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderCircleBoundary.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderPlane.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderCircleBoundary.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderPlane.h" />
     <ClInclude Include="Source\Engine\Audio\Audio.h" />
     <ClInclude Include="Source\Engine\Common\Fader.h" />
     <ClInclude Include="Source\Engine\Common\FpsController.h" />
@@ -243,11 +243,11 @@
     <ClInclude Include="Source\Game\Actor\Charactor\Player.h" />
     <ClInclude Include="Source\Game\Actor\SkyBox.h" />
     <ClInclude Include="Source\Game\Actor\Stage\StageManager.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderBase.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderCapsule.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderLine.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderModel.h" />
-    <ClInclude Include="Source\Engine\Collider\ColliderSphere.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderBase.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderCapsule.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderLine.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderModel.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ColliderSphere.h" />
     <ClInclude Include="Source\Engine\Component\AnimatorComponent.h" />
     <ClInclude Include="Source\Engine\Common\Transform.h" />
     <ClInclude Include="Source\Game\Scenes\DeadScene.h" />

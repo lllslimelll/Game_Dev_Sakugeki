@@ -1,6 +1,6 @@
 #pragma once
 #include <DxLib.h>
-#include "../../Engine/Math/Vector3.h"
+#include "../../../Engine/Math/Vector3.h"
 #include "ColliderBase.h"
 
 class Transform;
