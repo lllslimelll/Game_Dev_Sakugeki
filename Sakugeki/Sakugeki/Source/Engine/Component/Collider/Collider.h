@@ -3,7 +3,7 @@
 #include "../../../Engine/Math/Vector3.h"
 class Transform;
 
-class ColliderBase
+class Collider
 {
 public:
 
@@ -30,9 +30,9 @@ public:
 	};
 
 	// コンストラクタ
-	ColliderBase(SHAPE shape, TAG tag, const Transform* follow);
+	Collider(SHAPE shape, TAG tag, const Transform* follow);
 	// デストラクタ
-	virtual ~ColliderBase(void);
+	virtual ~Collider(void);
 
 	// 描画
 	void Draw(void);

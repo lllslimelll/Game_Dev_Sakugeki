@@ -1,53 +1,53 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderModel.h"
-#include "ColliderLine.h"
+#include "ModelCollider.h"
+#include "LineCollider.h"
 
-ColliderLine::ColliderLine(TAG tag, const Transform* follow,
+LineCollider::LineCollider(TAG tag, const Transform* follow,
 	const Vector3& localPosStart, const Vector3& localPosEnd)
 	:
-	ColliderBase(SHAPE::LINE, tag, follow),
+	Collider(SHAPE::LINE, tag, follow),
 	localPosStart_(localPosStart),
 	localPosEnd_(localPosEnd)
 {
 }
 
-ColliderLine::~ColliderLine(void)
+LineCollider::~LineCollider(void)
 {
 }
 
-void ColliderLine::SetLocalPosStart(const Vector3& pos)
+void LineCollider::SetLocalPosStart(const Vector3& pos)
 {
 	localPosStart_ = pos;
 }
 
-void ColliderLine::SetLocalPosEnd(const Vector3& pos)
+void LineCollider::SetLocalPosEnd(const Vector3& pos)
 {
 	localPosEnd_ = pos;
 }
 
-const Vector3& ColliderLine::GetLocalPosStart(void) const
+const Vector3& LineCollider::GetLocalPosStart(void) const
 {
 	return localPosStart_;
 }
 
-const Vector3& ColliderLine::GetLocalPosEnd(void) const
+const Vector3& LineCollider::GetLocalPosEnd(void) const
 {
 	return localPosEnd_;
 }
 
-Vector3 ColliderLine::GetPosStart(void) const
+Vector3 LineCollider::GetPosStart(void) const
 {
 	return GetRotPos(localPosStart_);
 }
 
-Vector3 ColliderLine::GetPosEnd(void) const
+Vector3 LineCollider::GetPosEnd(void) const
 {
 	return GetRotPos(localPosEnd_);
 }
 
-bool ColliderLine::PushBackUp(
-	const ColliderModel* colliderModel, Transform& transform,
+bool LineCollider::PushBackUp(
+	const ModelCollider* colliderModel, Transform& transform,
 	float pushDistance, bool isExclude, bool isTarget) const
 {
 	bool isJump = false;
@@ -81,7 +81,7 @@ bool ColliderLine::PushBackUp(
 	return isJump;
 }
 
-void ColliderLine::DrawDebug(int color)
+void LineCollider::DrawDebug(int color)
 {
 	Vector3 start = GetPosStart();
 	Vector3 end = GetPosEnd();

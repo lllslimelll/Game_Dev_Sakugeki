@@ -8,7 +8,7 @@ class ModelRenderer;
 
 // モデルを描画する部品
 // 持ち主の Transform のモデルを、指定したシェーダーで描画する
-class MeshRendererComponent : public Component
+class MeshRenderer : public Component
 {
 public:
 
@@ -16,11 +16,11 @@ public:
 	// gameObject   : 持ち主の GameObject
 	// vertexShader : 頂点シェーダー
 	// pixelShader  : ピクセルシェーダー
-	MeshRendererComponent(GameObject& gameObject,
+	MeshRenderer(GameObject& gameObject,
 		ResourceManager::SRC vertexShader, ResourceManager::SRC pixelShader);
 
 	// デストラクタ
-	~MeshRendererComponent(void) override;
+	~MeshRenderer(void) override;
 
 	// 描画
 	void Draw(void) override;

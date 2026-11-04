@@ -2,7 +2,7 @@
 #include "../../Engine/Component/Component.h"
 
 class Camera;
-class AnimatorComponent;
+class Animator;
 
 // プレイヤーの操作を行うクラス
 class PlayerControllerComponent : public Component
@@ -39,10 +39,10 @@ private:
 	const Camera& camera_;
 
 	// 移動用コンポーネント
-	CharacterMovementComponent* movementComp_;
+	CharacterMovement* movementComp_;
 
 	// アニメーション
-	AnimatorComponent* animatorComp_;
+	Animator* animatorComp_;
 
 	// 移動の更新処理
 	void UpdateMove(void);

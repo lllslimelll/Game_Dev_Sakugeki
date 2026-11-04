@@ -5,9 +5,9 @@
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/UtilityMath.h"
-#include "../../Engine/Collider/ColliderBase.h"
-#include "../../Engine/Collider/ColliderModel.h"
-#include "../../Engine/Collider/ColliderSphere.h"
+#include "../../Engine/Collider/Collider.h"
+#include "../../Engine/Collider/ModelCollider.h"
+#include "../../Engine/Collider/SphereCollider.h"
 #include "../../Engine/Collider/CollisionManager.h"
 #include "Camera.h"
 
@@ -73,8 +73,8 @@ void Camera::SetFollow(const Transform* follow)
 void Camera::InitCollider(void)
 {
 	// 主にステージとの衝突で使用する球体コライダ
-	ColliderSphere* colliderSphere = new ColliderSphere(
-		ColliderBase::TAG::CAMERA,
+	SphereCollider* colliderSphere = new SphereCollider(
+		Collider::TAG::CAMERA,
 		&transform_,
 		Vector3::ZERO,
 		COL_CAPSULE_SPHERE);
@@ -211,11 +211,11 @@ void Camera::Collision(void)
 	for (const auto& hitCol : collisionMng_.GetColliders())
 	{
 		// モデル以外は処理を飛ばす
-		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
 
 		// 派生クラスへキャスト
-		const ColliderModel* colliderModel =
-			dynamic_cast<const ColliderModel*>(hitCol);
+		const ModelCollider* colliderModel =
+			dynamic_cast<const ModelCollider*>(hitCol);
 
 		if (colliderModel == nullptr) continue;
 

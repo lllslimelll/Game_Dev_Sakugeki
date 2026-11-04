@@ -3,8 +3,8 @@
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/Quaternion.h"
 #include "../../Engine/GameObject/GameObject.h"
-#include "../../Engine/Component/CharacterMovementComponent.h"
-#include "../../Engine/Component/AnimatorComponent.h"
+#include "../../Engine/Component/CharacterMovement.h"
+#include "../../Engine/Component/Animator.h"
 #include "../Actor/Camera.h"
 #include "PlayerControllerComponent.h"
 
@@ -24,8 +24,8 @@ PlayerControllerComponent::~PlayerControllerComponent(void)
 void PlayerControllerComponent::Init(void)
 {
 	// コンポーネントの取得
-	movementComp_ = gameObject_.GetComponent<CharacterMovementComponent>();
-	animatorComp_ = gameObject_.GetComponent<AnimatorComponent>();
+	movementComp_ = gameObject_.GetComponent<CharacterMovement>();
+	animatorComp_ = gameObject_.GetComponent<Animator>();
 }
 
 void PlayerControllerComponent::Update(void)

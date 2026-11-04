@@ -1,15 +1,15 @@
 #pragma once
 #include <DxLib.h>
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderBase.h"
+#include "Collider.h"
 
 // ‰~ü‚Ì‹«ŠEƒRƒ‰ƒCƒ_
-class ColliderCircleBoundary : public ColliderBase
+class CircleBoundaryCollider : public Collider
 {
 public:
 
-	ColliderCircleBoundary(TAG tag, const Transform* follow, float radius);
-	~ColliderCircleBoundary(void) override;
+	CircleBoundaryCollider(TAG tag, const Transform* follow, float radius);
+	~CircleBoundaryCollider(void) override;
 
 	// §ŒÀ”¼Œa
 	float GetRadius(void) const;

@@ -1,7 +1,7 @@
 #include <algorithm>
-#include "HealthComponent.h"
+#include "Health.h"
 
-HealthComponent::HealthComponent(GameObject& gameObject, int maxHp)
+Health::Health(GameObject& gameObject, int maxHp)
 	:
 	Component(gameObject),
 	maxHp_(maxHp),
@@ -10,16 +10,16 @@ HealthComponent::HealthComponent(GameObject& gameObject, int maxHp)
 {
 }
 
-HealthComponent::~HealthComponent(void)
+Health::~Health(void)
 {
 }
 
-void HealthComponent::Init(void)
+void Health::Init(void)
 {
 	hp_ = maxHp_;
 }
 
-void HealthComponent::TakeDamage(int damage)
+void Health::TakeDamage(int damage)
 {
 	if (IsDead() || damage <= 0) { return; }
 
@@ -32,29 +32,29 @@ void HealthComponent::TakeDamage(int damage)
 	}
 }
 
-void HealthComponent::Heal(int amount)
+void Health::Heal(int amount)
 {
 	if (IsDead() || amount <= 0) { return; }
 
 	hp_ = (std::min)(hp_ + amount, maxHp_);
 }
 
-void HealthComponent::SetOnDeath(DeathCallback onDeath)
+void Health::SetOnDeath(DeathCallback onDeath)
 {
 	onDeath_ = std::move(onDeath);
 }
 
-int HealthComponent::GetHp(void) const
+int Health::GetHp(void) const
 {
 	return hp_;
 }
 
-int HealthComponent::GetMaxHp(void) const
+int Health::GetMaxHp(void) const
 {
 	return maxHp_;
 }
 
-bool HealthComponent::IsDead(void) const
+bool Health::IsDead(void) const
 {
 	return hp_ <= 0;
 }

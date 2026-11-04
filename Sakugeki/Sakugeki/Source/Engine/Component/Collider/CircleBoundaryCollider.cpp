@@ -1,24 +1,24 @@
 #include <cmath>
-#include "ColliderCircleBoundary.h"
+#include "CircleBoundaryCollider.h"
 
-ColliderCircleBoundary::ColliderCircleBoundary(
+CircleBoundaryCollider::CircleBoundaryCollider(
 	TAG tag, const Transform* follow, float radius)
 	:
-	ColliderBase(SHAPE::CIRCLE_BOUNDARY, tag, follow),
+	Collider(SHAPE::CIRCLE_BOUNDARY, tag, follow),
 	radius_(radius)
 {
 }
 
-ColliderCircleBoundary::~ColliderCircleBoundary(void)
+CircleBoundaryCollider::~CircleBoundaryCollider(void)
 {
 }
 
-float ColliderCircleBoundary::GetRadius(void) const
+float CircleBoundaryCollider::GetRadius(void) const
 {
 	return radius_;
 }
 
-bool ColliderCircleBoundary::PushBackInside(Vector3& pos, float bodyRadius) const
+bool CircleBoundaryCollider::PushBackInside(Vector3& pos, float bodyRadius) const
 {
 	// 円の中心（追従先の座標）からの水平ベクトル
 	const Vector3& center = follow_->pos;

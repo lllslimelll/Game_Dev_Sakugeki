@@ -1,4 +1,4 @@
-#include "../../../Engine/Collider/ColliderBase.h"
+#include "../../../Engine/Collider/Collider.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageGround.h"
 #include "StageTree.h"
@@ -45,9 +45,9 @@ void StageManager::Release(void)
 	if (tree_) { tree_->Release(); }
 }
 
-std::vector<const ColliderBase*> StageManager::GetColliders(void) const
+std::vector<const Collider*> StageManager::GetColliders(void) const
 {
-	std::vector<const ColliderBase*> ret;
+	std::vector<const Collider*> ret;
 
 	for (const auto& [type, col] : ground_->GetOwnColliders())
 	{

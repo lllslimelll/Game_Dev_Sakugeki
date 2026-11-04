@@ -1,6 +1,6 @@
 #include "../../Engine/Resource/ResourceManager.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/Collider/ColliderBase.h"  
+#include "../../Engine/Component/Collider/Collider.h"  
 #include "GameObject.h"
 
 GameObject::GameObject()
@@ -102,7 +102,7 @@ Transform& GameObject::GetTransform()
 
 
 // 特定の自身の衝突情報
-const ColliderBase* GameObject::GetOwnCollider(int key) const
+const Collider* GameObject::GetOwnCollider(int key) const
 {
 	if (ownColliders_.count(key) == 0)
 	{

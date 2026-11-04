@@ -3,7 +3,7 @@
 #include "Component.h"
 
 /// 体力を担当するコンポーネントクラス
-class HealthComponent : public Component
+class Health : public Component
 {
 public:
 
@@ -13,10 +13,10 @@ public:
 	// コンストラクタ
 	// owner : 持ち主
 	// maxHp : 最大体力
-	HealthComponent(GameObject& gameObject, int maxHp);
+	Health(GameObject& gameObject, int maxHp);
 
 	// デストラクタ
-	~HealthComponent(void) override;
+	~Health(void) override;
 
 	// 初期化
 	void Init(void) override;

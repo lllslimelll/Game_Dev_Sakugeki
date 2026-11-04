@@ -1,7 +1,7 @@
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderBase.h"
+#include "Collider.h"
 
-ColliderBase::ColliderBase(SHAPE shape, TAG tag, const Transform* follow)
+Collider::Collider(SHAPE shape, TAG tag, const Transform* follow)
 	:
 	shape_(shape),
 	tag_(tag),
@@ -10,11 +10,11 @@ ColliderBase::ColliderBase(SHAPE shape, TAG tag, const Transform* follow)
 {
 }
 
-ColliderBase::~ColliderBase(void)
+Collider::~Collider(void)
 {
 }
 
-void ColliderBase::Draw(void)
+void Collider::Draw(void)
 {
 	int color = COLOR_INVALID;
 
@@ -26,12 +26,12 @@ void ColliderBase::Draw(void)
 	DrawDebug(color);
 }
 
-void ColliderBase::SetFollow(Transform* follow)
+void Collider::SetFollow(Transform* follow)
 {
 	follow_ = follow;
 }
 
-Vector3 ColliderBase::GetRotPos(const Vector3& localPos) const
+Vector3 Collider::GetRotPos(const Vector3& localPos) const
 {
 	// 追従相手の回転に合わせて指定ローカル座標を回転し、
 	// 基準座標に加えることでワールド座標へ変換

@@ -1,8 +1,8 @@
 #pragma once
 #include <vector>
 #include "EnemyBase.h"
-#include "../../../../Engine/Collider/ColliderBase.h"
-class ColliderBase;
+#include "../../../../Engine/Collider/Collider.h"
+class Collider;
 class Player;
 
 class EnemyManager

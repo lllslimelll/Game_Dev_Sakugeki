@@ -3,7 +3,7 @@
 #include "../../../Engine/GameObject/GameObject.h"
 
 class Camera;
-class CharacterMovementComponent;
+class CharacterMovement;
 class CollisionManager;
 
 class Player : public GameObject
@@ -58,5 +58,5 @@ private:
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
 
 	// 移動
-	CharacterMovementComponent* movementComp_;
+	CharacterMovement* movementComp_;
 };

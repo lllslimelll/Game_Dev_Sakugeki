@@ -2,9 +2,9 @@
 #include "../Common/Transform.h"
 #include "../../Engine/Scene/SceneManager.h"
 #include "../GameObject/GameObject.h"
-#include "AnimatorComponent.h"
+#include "Animator.h"
 
-AnimatorComponent::AnimatorComponent(GameObject& gameObject)
+Animator::Animator(GameObject& gameObject)
     :
 	Component(gameObject),
     modelId_(gameObject.GetTransform().modelId),
@@ -18,11 +18,11 @@ AnimatorComponent::AnimatorComponent(GameObject& gameObject)
 {
 }
 
-AnimatorComponent::~AnimatorComponent(void)
+Animator::~Animator(void)
 {
 }
 
-void AnimatorComponent::Add(int type, float speed, int animHandle)
+void Animator::Add(int type, float speed, int animHandle)
 {
     Animation animation;
     animation.model = animHandle;
@@ -30,7 +30,7 @@ void AnimatorComponent::Add(int type, float speed, int animHandle)
     Add(type, speed, animation);
 }
 
-void AnimatorComponent::AddFromSelf(int type, float speed, int animIndex)
+void Animator::AddFromSelf(int type, float speed, int animIndex)
 {
     Animation animation;
     animation.model = -1;
@@ -38,7 +38,7 @@ void AnimatorComponent::AddFromSelf(int type, float speed, int animIndex)
     Add(type, speed, animation);
 }
 
-void AnimatorComponent::Play(int type, bool isLoop)
+void Animator::Play(int type, bool isLoop)
 {
     if (playType_ == type) { return; }
 
@@ -79,12 +79,12 @@ void AnimatorComponent::Play(int type, bool isLoop)
     }
 }
 
-void AnimatorComponent::Replay(void)
+void Animator::Replay(void)
 {
     playAnim_.step = 0.0f;
 }
 
-void AnimatorComponent::Update(void)
+void Animator::Update(void)
 {
     if (playType_ == -1) { return; }
 
@@ -130,33 +130,33 @@ void AnimatorComponent::Update(void)
     MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
 }
 
-void AnimatorComponent::Release(void)
+void Animator::Release(void)
 {
     animations_.clear();
 }
 
-int AnimatorComponent::GetPlayType(void) const
+int Animator::GetPlayType(void) const
 {
     return playType_;
 }
 
-bool AnimatorComponent::IsEnd(void) const
+bool Animator::IsEnd(void) const
 {
     if (isLoop_) return false;
     return playAnim_.step >= playAnim_.totalTime;
 }
 
-const AnimatorComponent::Animation& AnimatorComponent::GetPlayAnim(void) const
+const Animator::Animation& Animator::GetPlayAnim(void) const
 {
     return playAnim_;
 }
 
-bool AnimatorComponent::IsBlending(void) const
+bool Animator::IsBlending(void) const
 {
     return blendRate_ < 1.0f;
 }
 
-void AnimatorComponent::Add(int type, float speed, Animation& animation)
+void Animator::Add(int type, float speed, Animation& animation)
 {
     animation.speed = speed;
     if (animations_.count(type) == 0)
@@ -165,7 +165,7 @@ void AnimatorComponent::Add(int type, float speed, Animation& animation)
     }
 }
 
-void AnimatorComponent::Attach(Animation& anim)
+void Animator::Attach(Animation& anim)
 {
     if (anim.model == -1)
     {

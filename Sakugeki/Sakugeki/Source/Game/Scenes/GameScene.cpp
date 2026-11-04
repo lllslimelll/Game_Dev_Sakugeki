@@ -50,7 +50,7 @@ void GameScene::Init(void)
 	player_->Init();
 
 	// ステージ側の全コライダをキャラに登録
-	for (const ColliderBase* col : stageMng_->GetColliders())
+	for (const Collider* col : stageMng_->GetColliders())
 	{
 		collisionMng_->Register(col);
 	}

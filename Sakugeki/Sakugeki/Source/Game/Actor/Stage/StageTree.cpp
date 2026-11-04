@@ -1,5 +1,5 @@
 #include "../../../Engine/Resource/ResourceManager.h"
-#include "../../../Engine/Component/MeshRendererComponent.h"
+#include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageTree.h"
@@ -37,7 +37,7 @@ void StageTree::InitTransform(void)
 
 void StageTree::InitRenderer(void)
 {
-	AddComponent<MeshRendererComponent>(
+	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_TREE, ResourceManager::SRC::SHADER_PS_TREE);
 }
 
