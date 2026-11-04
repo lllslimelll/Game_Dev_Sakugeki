@@ -4,7 +4,7 @@
 
 class StageGround;
 class StageTree;
-class ColliderBase;
+class Collider;
 
 // ステージ管理クラス
 class StageManager
@@ -21,7 +21,7 @@ public:
 	void Release(void);
 
 	// コライダ取得
-	std::vector<const ColliderBase*> GetColliders(void) const;
+	std::vector<const Collider*> GetColliders(void) const;
 
 	// モデルハンドル取得
 	std::vector<int> GetModelIds(void) const;

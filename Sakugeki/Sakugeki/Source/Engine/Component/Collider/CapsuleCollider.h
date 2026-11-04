@@ -1,18 +1,18 @@
 #include <DxLib.h>
-#include "ColliderBase.h"
+#include "Collider.h"
 class Transform;
-class ColliderModel;
+class ModelCollider;
 
-class ColliderCapsule : public ColliderBase
+class CapsuleCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	ColliderCapsule(TAG tag, const Transform* follow,
+	CapsuleCollider(TAG tag, const Transform* follow,
 		const Vector3& localPosTop, const Vector3& localPosDown, float radius);
 
 	// デストラクタ
-	~ColliderCapsule(void);
+	~CapsuleCollider(void);
 
 	// 親Transformからの相対位置を取得
 	const Vector3& GetLocalPosTop(void) const;
@@ -38,7 +38,7 @@ public:
 
 	// 指定された回数と距離で三角形の法線方向に押し戻す
 	void PushBackAlongNormal(
-		const ColliderModel* colliderModel, Transform& transform,
+		const ModelCollider* colliderModel, Transform& transform,
 		int maxTryCnt, float pushDistance,
 		bool isExclude = false, bool isTarget = false) const;
 
@@ -49,7 +49,7 @@ public:
 		float pushDistance) const override;
 
 	// 衝突してるか否か（対モデル）
-	bool IsHit(const ColliderModel* colliderModel,
+	bool IsHit(const ModelCollider* colliderModel,
 		bool isExclude = false, bool isTarget = false) const;
 
 protected:

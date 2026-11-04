@@ -39,9 +39,9 @@ void AsyncLoadingScreen::Load(void)
 void AsyncLoadingScreen::StartLoad(SceneBase& target)
 {
 	// 非同期ロード
-	SetUseASyncLoadFlag(TRUE);  // 発行
+	SetUseASyncLoadFlag(true);  // 発行
 	target.Load();
-	SetUseASyncLoadFlag(FALSE); // 発行終了
+	SetUseASyncLoadFlag(false); // 発行終了
 
 	// 発行した数を進捗の分母として保存
 	total_ = GetASyncLoadNum();
@@ -60,7 +60,7 @@ void AsyncLoadingScreen::Update(float deltaTime)
 
 	// 表示用の進捗を滑らかに追従
 	float next = progress_ + (actual - progress_) * PROGRESS_FOLLOW;
-	progress_ = max(progress_, next);
+	progress_ = (std::max)(progress_, next);
 }
 
 void AsyncLoadingScreen::Draw(void) const

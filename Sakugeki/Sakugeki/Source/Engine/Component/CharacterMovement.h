@@ -4,23 +4,23 @@
 #include "Component.h"
 
 class Transform;
-class ColliderBase;
-class ColliderCapsule;
+class Collider;
+class CapsuleCollider;
 class CollisionManager;
 
 /// キャラクターの移動を担当するコンポーネント
-class CharacterMovementComponent : public Component
+class CharacterMovement : public Component
 {
 public:
 
 	/// コンストラクタ
 	/// trasnform    : 動かす対象
 	/// collisionMng : 当たり判定の管理クラス
-	CharacterMovementComponent(GameObject& gameObject, Transform& trasnform,
+	CharacterMovement(GameObject& gameObject, Transform& trasnform,
 		const CollisionManager& collisionMng);
 
 	// デストラクタ
-	~CharacterMovementComponent() override;
+	~CharacterMovement() override;
 
 	// 更新
 	void Update() override;
@@ -32,7 +32,7 @@ public:
 	void Jump();
 
 	// カプセルコライダを設定
-	void SetCapsule(const ColliderCapsule* capsule);
+	void SetCapsule(const CapsuleCollider* capsule);
 
 	// 移動速度（単位 / 秒）
 	void SetMaxWalkSpeed(float speed);
@@ -73,7 +73,7 @@ private:
 	const CollisionManager& collisionMng_;
 
 	// 押し戻しに使うカプセル
-	const ColliderCapsule* capsule_;
+	const CapsuleCollider* capsule_;
 
 	// パラメータ
 	float maxWalkSpeed_;

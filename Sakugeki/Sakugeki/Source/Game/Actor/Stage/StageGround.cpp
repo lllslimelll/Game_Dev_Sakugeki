@@ -1,9 +1,9 @@
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Utility/AsoUtility.h"
-#include "../../../Engine/Component/MeshRendererComponent.h"
+#include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Common/Transform.h"
-#include "../../../Engine/Collider/ColliderPlane.h"
-#include "../../../Engine/Collider/ColliderCircleBoundary.h" 
+#include "../../../Engine/Collider/PlaneCollider.h"
+#include "../../../Engine/Collider/CircleBoundaryCollider.h" 
 #include "StageGround.h"
 
 StageGround::StageGround(void)
@@ -41,20 +41,20 @@ void StageGround::InitTransform(void)
 
 void StageGround::InitRenderer(void)
 {
-	AddComponent<MeshRendererComponent>(
+	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);
 }
 
 void StageGround::InitCollider(void)
 {
 	// 平面コライダ（地面）
-	ColliderPlane* colPlane =
-		new ColliderPlane(ColliderBase::TAG::GROUND, &transform_);
+	PlaneCollider* colPlane =
+		new PlaneCollider(Collider::TAG::GROUND, &transform_);
 
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::PLANE), colPlane);
 
 	// 円周の境界線コライダ（移動制限用の壁）
-	ColliderCircleBoundary* colBoundary =
-		new ColliderCircleBoundary(ColliderBase::TAG::WALL, &transform_, BOUNDARY_RADIUS);
+	CircleBoundaryCollider* colBoundary =
+		new CircleBoundaryCollider(Collider::TAG::WALL, &transform_, BOUNDARY_RADIUS);
 	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::BOUNDARY), colBoundary);
 }

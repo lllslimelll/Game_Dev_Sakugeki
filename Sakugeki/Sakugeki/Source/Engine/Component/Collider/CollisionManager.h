@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-class ColliderBase;
+class Collider;
 
 // 当たり判定の管理クラス
 class CollisionManager
@@ -19,16 +19,16 @@ public:
 	CollisionManager& operator=(const CollisionManager&) = delete;
 
 	// コライダーを登録
-	void Register(const ColliderBase* collider);
+	void Register(const Collider* collider);
 
 	// コライダーの登録を解除
-	void Unregister(const ColliderBase* collider);
+	void Unregister(const Collider* collider);
 
 	// コライダーを取得
-	const std::vector<const ColliderBase*>& GetColliders(void) const;
+	const std::vector<const Collider*>& GetColliders(void) const;
 
 private:
 
 	// コライダー
-	std::vector<const ColliderBase*> colliders_;
+	std::vector<const Collider*> colliders_;
 };

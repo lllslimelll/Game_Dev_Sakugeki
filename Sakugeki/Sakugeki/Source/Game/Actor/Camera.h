@@ -7,7 +7,7 @@
 #include "../../Engine/GameObject/GameObject.h"
 
 class Transform;
-class ColliderSphere;
+class SphereCollider;
 class CollisionManager;
 
 class Camera : public GameObject

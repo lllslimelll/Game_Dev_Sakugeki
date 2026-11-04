@@ -2,15 +2,15 @@
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/Quaternion.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/Collider/ColliderBase.h"
-#include "../../Engine/Collider/ColliderCapsule.h"
-#include "../../Engine/Collider/ColliderCircleBoundary.h"
-#include "../../Engine/Collider/ColliderModel.h"
-#include "../../Engine/Collider/ColliderPlane.h"
+#include "../../Engine/Collider/Collider.h"
+#include "../../Engine/Collider/CapsuleCollider.h"
+#include "../../Engine/Collider/CircleBoundaryCollider.h"
+#include "../../Engine/Collider/ModelCollider.h"
+#include "../../Engine/Collider/PlaneCollider.h"
 #include "../../Engine/Collider/CollisionManager.h"
-#include "../../Engine/Component/CharacterMovementComponent.h"
+#include "../../Engine/Component/CharacterMovement.h"
 
-CharacterMovementComponent::CharacterMovementComponent(GameObject& gameObject, Transform& transform,
+CharacterMovement::CharacterMovement(GameObject& gameObject, Transform& transform,
 	const CollisionManager& collisionMng)
 	:
 	Component(gameObject),
@@ -27,11 +27,11 @@ CharacterMovementComponent::CharacterMovementComponent(GameObject& gameObject, T
 {
 }
 
-CharacterMovementComponent::~CharacterMovementComponent(void)
+CharacterMovement::~CharacterMovement(void)
 {
 }
 
-void CharacterMovementComponent::Update(void)
+void CharacterMovement::Update(void)
 {
 	const float deltaTime = SceneManager::GetInstance().GetDeltaTime();
 
@@ -74,47 +74,47 @@ void CharacterMovementComponent::Update(void)
 	isJumpRequested_ = false;
 }
 
-void CharacterMovementComponent::AddMoveInput(const Vector3& worldDir)
+void CharacterMovement::AddMoveInput(const Vector3& worldDir)
 {
 	moveInput_ += worldDir;
 }
 
-void CharacterMovementComponent::Jump(void)
+void CharacterMovement::Jump(void)
 {
 	isJumpRequested_ = true;
 }
 
-void CharacterMovementComponent::SetCapsule(const ColliderCapsule* capsule)
+void CharacterMovement::SetCapsule(const CapsuleCollider* capsule)
 {
 	capsule_ = capsule;
 }
 
-void CharacterMovementComponent::SetMaxWalkSpeed(float speed)
+void CharacterMovement::SetMaxWalkSpeed(float speed)
 {
 	maxWalkSpeed_ = speed;
 }
 
-void CharacterMovementComponent::SetJumpSpeed(float speed)
+void CharacterMovement::SetJumpSpeed(float speed)
 {
 	jumpSpeed_ = speed;
 }
 
-const Vector3& CharacterMovementComponent::GetVelocity(void) const
+const Vector3& CharacterMovement::GetVelocity(void) const
 {
 	return velocity_;
 }
 
-bool CharacterMovementComponent::IsGrounded(void) const
+bool CharacterMovement::IsGrounded(void) const
 {
 	return isGrounded_;
 }
 
-bool CharacterMovementComponent::IsMoving(void) const
+bool CharacterMovement::IsMoving(void) const
 {
 	return !Vector3(velocity_.x, 0.0f, velocity_.z).IsZero();
 }
 
-void CharacterMovementComponent::RotateToFacing(void)
+void CharacterMovement::RotateToFacing(void)
 {
 	if (facingDir_.IsZero()) { return; }
 
@@ -125,7 +125,7 @@ void CharacterMovementComponent::RotateToFacing(void)
 	transform_.quaRot = Quaternion::Slerp(transform_.quaRot, goalRot, ROTATE_RATE);
 }
 
-void CharacterMovementComponent::ApplyGravity(float deltaTime)
+void CharacterMovement::ApplyGravity(float deltaTime)
 {
 	velocity_.y -= GRAVITY * deltaTime;
 
@@ -133,29 +133,29 @@ void CharacterMovementComponent::ApplyGravity(float deltaTime)
 	velocity_.y = (std::max)(velocity_.y, -FALL_SPEED_MAX);
 }
 
-void CharacterMovementComponent::CollideBoundary(void)
+void CharacterMovement::CollideBoundary(void)
 {
 	// 自分の体の半径
 	float bodyRadius = (capsule_ != nullptr) ? capsule_->GetRadius() : 0.0f;
 
-	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
+	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (hitCol->GetShape() != ColliderBase::SHAPE::CIRCLE_BOUNDARY) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::CIRCLE_BOUNDARY) continue;
 
-		const auto* boundary = static_cast<const ColliderCircleBoundary*>(hitCol);
+		const auto* boundary = static_cast<const CircleBoundaryCollider*>(hitCol);
 		boundary->PushBackInside(transform_.pos, bodyRadius);
 	}
 }
 
-void CharacterMovementComponent::CollideModel(void)
+void CharacterMovement::CollideModel(void)
 {
 	if (capsule_ == nullptr) { return; }
 
-	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
+	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (hitCol->GetShape() != ColliderBase::SHAPE::MODEL) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
 
-		const auto* model = static_cast<const ColliderModel*>(hitCol);
+		const auto* model = static_cast<const ModelCollider*>(hitCol);
 
 		// 指定された回数と距離で三角形の法線方向に押し戻す
 		capsule_->PushBackAlongNormal(
@@ -167,18 +167,18 @@ void CharacterMovementComponent::CollideModel(void)
 	}
 }
 
-void CharacterMovementComponent::CollideGround(void)
+void CharacterMovement::CollideGround(void)
 {
 	isGrounded_ = false;
 
 	// 上昇中は判定しない
 	if (velocity_.y > 0.0f) { return; }
 
-	for (const ColliderBase* hitCol : collisionMng_.GetColliders())
+	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (hitCol->GetShape() != ColliderBase::SHAPE::PLANE) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::PLANE) continue;
 
-		const auto* plane = static_cast<const ColliderPlane*>(hitCol);
+		const auto* plane = static_cast<const PlaneCollider*>(hitCol);
 		float height = plane->GetHeight();
 
 		if (transform_.pos.y <= height)

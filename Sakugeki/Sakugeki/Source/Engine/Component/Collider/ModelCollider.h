@@ -2,16 +2,16 @@
 #include <vector>
 #include <string>
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderBase.h"
+#include "Collider.h"
 
-class ColliderModel : public ColliderBase
+class ModelCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	ColliderModel(TAG tag, const Transform* follow);
+	ModelCollider(TAG tag, const Transform* follow);
 	// デストラクタ
-	~ColliderModel(void) override;
+	~ModelCollider(void) override;
 
 	// 指定されえた文字を含むフレームを衝突判定から除外
 	void AddExcludeFrameIds(const std::wstring& name);

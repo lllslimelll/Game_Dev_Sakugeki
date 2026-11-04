@@ -1,19 +1,19 @@
 #pragma once
 #include <DxLib.h>
-#include "ColliderBase.h"
+#include "Collider.h"
 class Transform;
-class ColliderModel;
+class ModelCollider;
 
-class ColliderLine : public ColliderBase
+class LineCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	ColliderLine(
+	LineCollider(
 		TAG tag, const Transform* follow,
 		const Vector3& localPosStart, const Vector3& localPosEnd);
 	// デストラクタ
-	~ColliderLine(void) override;
+	~LineCollider(void) override;
 
 	// ローカル座標での設定
 	void SetLocalPosStart(const Vector3& pos);
@@ -37,7 +37,7 @@ public:
 
 	// 衝突したポリゴンの上に押し戻す
 	bool PushBackUp(
-		const ColliderModel* colliderModel, Transform& transform,
+		const ModelCollider* colliderModel, Transform& transform,
 		float pushDistance,
 		bool isExclude = false, bool isTarget = false) const;
 

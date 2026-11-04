@@ -1,19 +1,19 @@
 #pragma once
 #include <DxLib.h>
 #include "../../../Engine/Math/Vector3.h"
-#include "ColliderBase.h"
+#include "Collider.h"
 
 class Transform;
 
-class ColliderSphere : public ColliderBase
+class SphereCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	ColliderSphere(
+	SphereCollider(
 		TAG tag, const Transform* follow, const Vector3& localPos, float radius);
 	// デストラクタ
-	~ColliderSphere(void);
+	~SphereCollider(void);
 
 	// 親Transformからの相対位置を取得
 	const Vector3& GetLocalPos(void) const;

@@ -9,7 +9,7 @@
 
 class ResourceManager;
 class SceneManager;
-class ColliderBase;
+class Collider;
 
 class GameObject
 {
@@ -71,13 +71,13 @@ public:
 	Transform& GetTransform();
 
 	// 自身の衝突情報取得
-	const std::map<int, ColliderBase*>& GetOwnColliders() const
+	const std::map<int, Collider*>& GetOwnColliders() const
 	{
 		return ownColliders_;
 	}
 
 	// 特定の自身の衝突情報
-	const ColliderBase* GetOwnCollider(int key) const;
+	const Collider* GetOwnCollider(int key) const;
 
 protected:
 
@@ -89,7 +89,7 @@ protected:
 	Transform transform_;
 
 	// 自身の衝突情報
-	std::map<int, ColliderBase*> ownColliders_;
+	std::map<int, Collider*> ownColliders_;
 
 	// 所有しているコンポーネント
 	std::vector<std::unique_ptr<Component>> components_;

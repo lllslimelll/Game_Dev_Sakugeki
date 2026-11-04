@@ -2,9 +2,9 @@
 #include "../GameObject/GameObject.h"
 #include "../Renderer/Material.h"
 #include "../Renderer/ModelRenderer.h"
-#include "MeshRendererComponent.h"
+#include "MeshRenderer.h"
 
-MeshRendererComponent::MeshRendererComponent(GameObject& gameObject,
+MeshRenderer::MeshRenderer(GameObject& gameObject,
 	ResourceManager::SRC vertexShader, ResourceManager::SRC pixelShader)
 	:
 	Component(gameObject),
@@ -13,11 +13,11 @@ MeshRendererComponent::MeshRendererComponent(GameObject& gameObject,
 {
 }
 
-MeshRendererComponent::~MeshRendererComponent(void)
+MeshRenderer::~MeshRenderer(void)
 {
 }
 
-void MeshRendererComponent::Draw(void)
+void MeshRenderer::Draw(void)
 {
 	renderer_->Draw();
 }

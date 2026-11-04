@@ -1,69 +1,69 @@
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderModel.h"
-#include "ColliderCapsule.h"
+#include "ModelCollider.h"
+#include "CapsuleCollider.h"
 
 
-ColliderCapsule::ColliderCapsule(
+CapsuleCollider::CapsuleCollider(
     TAG tag, const Transform* follow,
     const Vector3& localPosTop, const Vector3& localPosDown, float radius)
     :
-	ColliderBase(SHAPE::CAPSULE, tag, follow),
+	Collider(SHAPE::CAPSULE, tag, follow),
     localPosTop_(localPosTop),
 	localPosDown_(localPosDown),
     radius_(radius)
 {
 }
 
-ColliderCapsule::~ColliderCapsule(void)
+CapsuleCollider::~CapsuleCollider(void)
 {
 }
 
-const Vector3& ColliderCapsule::GetLocalPosTop(void) const
+const Vector3& CapsuleCollider::GetLocalPosTop(void) const
 {
     return localPosTop_;
 }
 
-const Vector3& ColliderCapsule::GetLocalPosDown(void) const
+const Vector3& CapsuleCollider::GetLocalPosDown(void) const
 {
     return localPosDown_;
 }
 
-void ColliderCapsule::SetLocalPosTop(const Vector3& pos)
+void CapsuleCollider::SetLocalPosTop(const Vector3& pos)
 {
     localPosTop_ = pos;
 }
 
-void ColliderCapsule::SetLocalPosDown(const Vector3& pos)
+void CapsuleCollider::SetLocalPosDown(const Vector3& pos)
 {
     localPosDown_ = pos;
 }
 
-Vector3 ColliderCapsule::GetPosTop(void) const
+Vector3 CapsuleCollider::GetPosTop(void) const
 {
     return GetRotPos(localPosTop_);
 }
 
-Vector3 ColliderCapsule::GetPosDown(void) const
+Vector3 CapsuleCollider::GetPosDown(void) const
 {
 	return GetRotPos(localPosDown_);
 }
 
-float ColliderCapsule::GetRadius(void) const
+float CapsuleCollider::GetRadius(void) const
 {
     return radius_;
 }
 
-void ColliderCapsule::SetRadius(float radius)
+void CapsuleCollider::SetRadius(float radius)
 {
     radius_ = radius;
 }
 
-float ColliderCapsule::GetHeight(void) const
+float CapsuleCollider::GetHeight(void) const
 {
     return localPosTop_.y;
 }
 
-Vector3 ColliderCapsule::GetCenter(void) const
+Vector3 CapsuleCollider::GetCenter(void) const
 {
     Vector3 top = GetPosTop();
     Vector3 down = GetPosDown();
@@ -72,8 +72,8 @@ Vector3 ColliderCapsule::GetCenter(void) const
     return down + (diff * 0.5f);
 }
 
-void ColliderCapsule::PushBackAlongNormal(
-    const ColliderModel* colliderModel, Transform& transform,
+void CapsuleCollider::PushBackAlongNormal(
+    const ModelCollider* colliderModel, Transform& transform,
     int maxTryCnt, float pushDistance, bool isExclude, bool isTarget) const
 {
     // モデルとカプセルの衝突判定
@@ -100,12 +100,12 @@ void ColliderCapsule::PushBackAlongNormal(
     MV1CollResultPolyDimTerminate(hits);    
 }
 
-Vector3 ColliderCapsule::GetPosPushBackAlongNormal(
+Vector3 CapsuleCollider::GetPosPushBackAlongNormal(
     const MV1_COLL_RESULT_POLY& hitCollPoly, int maxTryCnt, float pushDistance) const
 {
     // コピー生成
     Transform tmpTransform = *follow_;
-    ColliderCapsule tmpCapsule = *this;
+    CapsuleCollider tmpCapsule = *this;
     tmpCapsule.SetFollow(&tmpTransform);
 
     // 衝突補正処理
@@ -131,7 +131,7 @@ Vector3 ColliderCapsule::GetPosPushBackAlongNormal(
     return tmpTransform.pos;
 }
 
-bool ColliderCapsule::IsHit(const ColliderModel* colliderModel, bool isExclude, bool isTarget) const
+bool CapsuleCollider::IsHit(const ModelCollider* colliderModel, bool isExclude, bool isTarget) const
 {
     bool ret = false;
 
@@ -161,7 +161,7 @@ bool ColliderCapsule::IsHit(const ColliderModel* colliderModel, bool isExclude, 
     return ret;
 }
 
-void ColliderCapsule::DrawDebug(int color)
+void CapsuleCollider::DrawDebug(int color)
 {
     // 上の球体
     Vector3 pos1 = GetPosTop();

@@ -3,7 +3,7 @@
 #include <map>
 #include "Component.h"
 
-class AnimatorComponent : public Component
+class Animator : public Component
 {
 public:
 
@@ -20,10 +20,10 @@ public:
 
     // コンストラクタ
     // gameObject : 持ち主の GameObject
-    explicit AnimatorComponent(GameObject& gameObject);
+    explicit Animator(GameObject& gameObject);
 
     // デストラクタ
-    ~AnimatorComponent(void) override;
+    ~Animator(void) override;
 
     // アニメーションデータを追加
     void Add(int type, float speed, int animHandle);

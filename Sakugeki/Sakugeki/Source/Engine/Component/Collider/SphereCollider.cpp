@@ -1,50 +1,50 @@
 #include "../../../Engine/Common/Transform.h"
-#include "ColliderSphere.h"
+#include "SphereCollider.h"
 
-ColliderSphere::ColliderSphere(
+SphereCollider::SphereCollider(
 	TAG tag, const Transform* follow,
 	const Vector3& localPos, float radius)
 	:
-	ColliderBase(SHAPE::SPHERE, tag, follow),
+	Collider(SHAPE::SPHERE, tag, follow),
 	localPos_(localPos),
 	radius_(radius)
 {
 }
 
-ColliderSphere::~ColliderSphere(void)
+SphereCollider::~SphereCollider(void)
 {
 }
 
-const Vector3& ColliderSphere::GetLocalPos(void) const
+const Vector3& SphereCollider::GetLocalPos(void) const
 {
 	return localPos_;
 }
 
-void ColliderSphere::SetLocalPos(const Vector3& localPos)
+void SphereCollider::SetLocalPos(const Vector3& localPos)
 {
 	localPos_ = localPos;
 }
 
-Vector3 ColliderSphere::GetPos(void) const
+Vector3 SphereCollider::GetPos(void) const
 {
 	return GetRotPos(localPos_);
 }
 
-float ColliderSphere::GetRadius(void) const
+float SphereCollider::GetRadius(void) const
 {
 	return radius_;
 }
 
-void ColliderSphere::SetRadius(float radius)
+void SphereCollider::SetRadius(float radius)
 {
 	radius_ = radius;
 }
 
-Vector3 ColliderSphere::GetPosPushBackAlongNormal(const MV1_COLL_RESULT_POLY& hitPoly, int maxTryCnt, float pushDistance) const
+Vector3 SphereCollider::GetPosPushBackAlongNormal(const MV1_COLL_RESULT_POLY& hitPoly, int maxTryCnt, float pushDistance) const
 {
 	// 追従先の自身のインスタンスをコピー生成
 	Transform tmpTransform = *follow_;
-	ColliderSphere tmpSphere = *this;
+	SphereCollider tmpSphere = *this;
 	tmpSphere.SetFollow(&tmpTransform);
 
 	// 衝突補正処理
@@ -70,7 +70,7 @@ Vector3 ColliderSphere::GetPosPushBackAlongNormal(const MV1_COLL_RESULT_POLY& hi
 	return tmpTransform.pos;
 }
 
-void ColliderSphere::DrawDebug(int color)
+void SphereCollider::DrawDebug(int color)
 {
 	DrawSphere3D(GetPos().ToVECTOR(), radius_, 16, color, color, false);
 }
