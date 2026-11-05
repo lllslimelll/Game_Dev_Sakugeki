@@ -9,7 +9,7 @@ class MeshCollider : public Collider
 public:
 
 	// コンストラクタ
-	MeshCollider(TAG tag, const Transform* follow);
+	MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag);
 	// デストラクタ
 	~MeshCollider(void) override;
 

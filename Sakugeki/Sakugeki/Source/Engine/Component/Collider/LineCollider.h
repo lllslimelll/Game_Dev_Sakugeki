@@ -1,6 +1,5 @@
 #pragma once
 #include <DxLib.h>
-#include "../../../Engine/GameObject/GameObject.h"
 #include "../../../Engine/Component/Collider/Collider.h"
 
 class Transform;

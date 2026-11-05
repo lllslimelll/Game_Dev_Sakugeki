@@ -4,27 +4,24 @@
 
 class StageGround;
 class StageTree;
-class Collider;
+class CollisionManager;
 
 // ステージ管理クラス
 class StageManager
 {
 public:
 
-	StageManager(void);
-	~StageManager(void);
+	StageManager(CollisionManager& collisionMng);
+	~StageManager();
 
-	void Load(void);   
-	void Init(void);    
-	void Update(void);
-	void Draw(void);
-	void Release(void);
-
-	// コライダ取得
-	std::vector<const Collider*> GetColliders(void) const;
+	void Load();   
+	void Init();    
+	void Update();
+	void Draw();
+	void Release();
 
 	// モデルハンドル取得
-	std::vector<int> GetModelIds(void) const;
+	std::vector<int> GetModelIds() const;
 
 private:
 

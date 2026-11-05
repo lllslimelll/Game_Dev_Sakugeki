@@ -12,7 +12,7 @@ StageGround::StageGround(CollisionManager& collisionMng)
 	GameObject()
 {
 	// 平面コライダ
-	AddComponent<PlaneCollider>(collisionMng, Collider::TAG::GROUND, Vector3::ZERO);
+	AddComponent<PlaneCollider>(collisionMng, Collider::TAG::GROUND);
 	// 円周の境界線コライダ
 	AddComponent<CircleBoundaryCollider>(collisionMng, Collider::TAG::WALL, BOUNDARY_RADIUS);
 }

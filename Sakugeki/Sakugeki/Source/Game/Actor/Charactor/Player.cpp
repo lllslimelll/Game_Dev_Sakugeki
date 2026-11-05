@@ -10,7 +10,7 @@
 #include "../../Component/PlayerControllerComponent.h"
 #include "Player.h"
 
-Player::Player(const Camera& camera, const CollisionManager& collisionMng)
+Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	:
 	GameObject(),
 	movementComp_(nullptr)
@@ -25,6 +25,8 @@ Player::Player(const Camera& camera, const CollisionManager& collisionMng)
 	// カプセルコライダ
 	auto* capsule = AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,
 		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS, COL_CAPSULE_RADIUS);
+
+	movementComp_->SetCapsule(capsule);
 }
 
 Player::~Player(void)

@@ -29,7 +29,7 @@ void GameScene::Load()
 
 	camera_ = std::make_unique<Camera>(*collisionMng_);
 
-	stageMng_ = std::make_unique<StageManager>();
+	stageMng_ = std::make_unique<StageManager>(*collisionMng_);
 	stageMng_->Load();
 
 	player_ = std::make_unique<Player>(*camera_, *collisionMng_);

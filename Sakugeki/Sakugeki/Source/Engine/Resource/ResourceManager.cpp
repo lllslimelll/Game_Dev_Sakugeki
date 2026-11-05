@@ -27,20 +27,20 @@ void ResourceManager::Init(void)
 	// モデル
 	//------------------------------------------------------------------------------------------------- 
 	// プレイヤー
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Player/Player.mv1");
+	res = new Resource(Resource::TYPE::MESH, ResourcePath::PATH_MESHS + L"Player/Player.mv1");
 	resourcesMap_.emplace(SRC::PLAYER, res);
 	// 地面
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Stage/Ground.mv1");
+	res = new Resource(Resource::TYPE::MESH, ResourcePath::PATH_MESHS + L"Stage/Ground.mv1");
 	resourcesMap_.emplace(SRC::STAGE_GROUND, res);
 	// 木
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Stage/Tree.mv1");
+	res = new Resource(Resource::TYPE::MESH, ResourcePath::PATH_MESHS + L"Stage/Tree.mv1");
 	resourcesMap_.emplace(SRC::STAGE_TREE, res);
 	//------------------------------------------------------------------------------------------------- 
 
 	// 音源
 	//------------------------------------------------------------------------------------------------- 
 	// タイトルBGM
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_AUDIO + L"BGM/Title.mv1");
+	res = new Resource(Resource::TYPE::MESH, ResourcePath::PATH_AUDIO + L"BGM/Title.mv1");
 	resourcesMap_.emplace(SRC::BGM_TITLE, res);
 	//------------------------------------------------------------------------------------------------- 
 	

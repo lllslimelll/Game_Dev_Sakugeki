@@ -140,6 +140,7 @@ void CharacterMovement::CollideBoundary(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
+		if (!hitCol->IsEnabled()) continue;
 		if (hitCol->GetShape() != Collider::SHAPE::CIRCLE_BOUNDARY) continue;
 
 		const auto* boundary = static_cast<const CircleBoundaryCollider*>(hitCol);
@@ -153,7 +154,8 @@ void CharacterMovement::CollideModel(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
+		if (!hitCol->IsEnabled()) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
 
 		const auto* model = static_cast<const MeshCollider*>(hitCol);
 
@@ -176,6 +178,7 @@ void CharacterMovement::CollideGround(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
+		if (!hitCol->IsEnabled()) continue;
 		if (hitCol->GetShape() != Collider::SHAPE::PLANE) continue;
 
 		const auto* plane = static_cast<const PlaneCollider*>(hitCol);

@@ -1,67 +1,49 @@
-#include "../../../Engine/Component/Collider/Collider.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageGround.h"
 #include "StageTree.h"
 #include "StageManager.h"
 
-StageManager::StageManager(void)
+StageManager::StageManager(CollisionManager& collisionMng)
 {
-}
-
-StageManager::~StageManager(void)
-{
-}
-
-void StageManager::Load(void)
-{
-	ground_ = std::make_unique<StageGround>();
+	ground_ = std::make_unique<StageGround>(collisionMng);
 	tree_ = std::make_unique<StageTree>();
+}
 
+StageManager::~StageManager()
+{
+}
+
+void StageManager::Load()
+{
 	ground_->Load();
 	tree_->Load();
 }
 
-void StageManager::Init(void)
+void StageManager::Init()
 {
 	ground_->Init();
 	tree_->Init();
 }
 
-void StageManager::Update(void)
+void StageManager::Update()
 {
 	ground_->Update();
 	tree_->Update();
 }
 
-void StageManager::Draw(void)
+void StageManager::Draw()
 {
 	ground_->Draw();
 	tree_->Draw();
 }
 
-void StageManager::Release(void)
+void StageManager::Release()
 {
 	if (ground_) { ground_->Release(); }
 	if (tree_) { tree_->Release(); }
 }
 
-std::vector<const Collider*> StageManager::GetColliders(void) const
-{
-	std::vector<const Collider*> ret;
-
-	for (const auto& [type, col] : ground_->GetOwnColliders())
-	{
-		ret.emplace_back(col);
-	}
-	for (const auto& [type, col] : tree_->GetOwnColliders())
-	{
-		ret.emplace_back(col);
-	}
-
-	return ret;
-}
-
-std::vector<int> StageManager::GetModelIds(void) const
+std::vector<int> StageManager::GetModelIds() const
 {
 	return {
 		ground_->GetTransform().modelId,

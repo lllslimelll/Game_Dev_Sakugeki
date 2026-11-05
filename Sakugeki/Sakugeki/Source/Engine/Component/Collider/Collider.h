@@ -18,7 +18,7 @@ public:
 		LINE,
 		SPHERE,
 		CAPSULE,
-		MODEL,
+		MESH,
 		PLANE,
 		CIRCLE_BOUNDARY,
 	};
@@ -52,10 +52,10 @@ public:
 	const Transform& GetTransform() const;
 
 	// 形状
-	SHAPE GetShape(void) const { return shape_; }
+	SHAPE GetShape(void) const;
 
 	// 衝突種別
-	TAG GetTag(void) const { return tag_; }
+	TAG GetTag(void) const;
 
 	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
 	virtual Vector3 GetPosPushBackAlongNormal(

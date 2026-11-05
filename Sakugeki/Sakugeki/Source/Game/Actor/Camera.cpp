@@ -203,7 +203,7 @@ void Camera::Collision(void)
 	for (const auto& hitCol : collisionMng_.GetColliders())
 	{
 		// モデル以外は処理を飛ばす
-		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
 
 		// 派生クラスへキャスト
 		const MeshCollider* colliderModel =

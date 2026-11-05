@@ -1,17 +1,12 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
+class CollisionManager;
+
 // 地面（平面コライダ）
 class StageGround : public GameObject
 {
 public:
-
-	enum class COLLIDER_TYPE
-	{
-		PLANE,
-		BOUNDARY,
-		MAX
-	};
 
 	StageGround(CollisionManager& collisionMng);
 	~StageGround(void) override;
