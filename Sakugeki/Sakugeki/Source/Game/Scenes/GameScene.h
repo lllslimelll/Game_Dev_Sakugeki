@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include "SceneBase.h"
+#include "../UI/DebugHud.h"   
 
 class Camera;
 class StageManager;
@@ -37,6 +38,13 @@ private:
 	std::unique_ptr<StageManager> stageMng_;
 	std::unique_ptr<Player> player_;
 
+	// （既存のメンバの後に追加）
+	// TODO(仮UI)
+	DebugHud debugHud_;
+	HudData debugHudData_;
+
 	// リアルシャドウ描画
 	void DrawShadow(void);
+	bool IsDebugKeyTriggered(int key);
+	bool debugKeyPrev_[];
 };
