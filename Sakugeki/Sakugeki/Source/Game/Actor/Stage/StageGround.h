@@ -3,7 +3,7 @@
 
 class CollisionManager;
 
-// ’n–Êi•½–ÊƒRƒ‰ƒCƒ_j
+// åœ°é¢ï¼ˆå¹³é¢ã‚³ãƒ©ã‚¤ãƒ€ï¼‰
 class StageGround : public GameObject
 {
 public:
@@ -23,6 +23,6 @@ protected:
 
 private:
 
-	// ˆÚ“®‰Â”\‚È”¼Œa
+	// ç§»å‹•å¯èƒ½ãªåŠå¾„
 	static constexpr float BOUNDARY_RADIUS = 2800.0f;
 };

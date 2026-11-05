@@ -69,7 +69,7 @@ void Resource::Load(void)
 		handleId_ = AddFontResourceEx(path_.c_str(), FR_PRIVATE, NULL);
 		break;
 
-	case Resource::TYPE::MESH:
+	case Resource::TYPE::MODEL:
 		// モデル
 		handleId_ = MV1LoadModel(path_.c_str());
 		break;
@@ -126,7 +126,7 @@ void Resource::Release(void)
 		RemoveFontResourceEx(path_.c_str(), FR_PRIVATE, NULL);
 		break;
 
-	case Resource::TYPE::MESH:
+	case Resource::TYPE::MODEL:
 	{
 		// モデル
 		MV1DeleteModel(handleId_);

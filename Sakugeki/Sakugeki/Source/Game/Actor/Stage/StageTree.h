@@ -1,7 +1,7 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
-// –Øi¡‚Í‘S•”‚Ì–Ø‚ğ1‚Â‚Ìƒ‚ƒfƒ‹‚Æ‚µ‚ÄˆêŠ‡ƒ[ƒhj
+// æœ¨ï¼ˆä»Šã¯å…¨éƒ¨ã®æœ¨ã‚’1ã¤ã®ãƒ¢ãƒ‡ãƒ«ã¨ã—ã¦ä¸€æ‹¬ãƒ­ãƒ¼ãƒ‰ï¼‰
 class StageTree : public GameObject
 {
 public:

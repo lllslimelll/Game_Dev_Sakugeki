@@ -21,7 +21,7 @@ Camera::Camera(CollisionManager& collisionMng)
 	targetPos_(Vector3::ZERO),
 	sphereCollider_(nullptr)
 {
-	AddComponent<SphereCollider>(
+	sphereCollider_ = AddComponent<SphereCollider>(
 		collisionMng, Collider::TAG::CAMERA,
 		Vector3::ZERO,
 		COL_SPHERE_SPHERE);
@@ -202,6 +202,8 @@ void Camera::Collision(void)
 
 	for (const auto& hitCol : collisionMng_.GetColliders())
 	{
+		if (!hitCol->IsEnabled()) continue;
+
 		// モデル以外は処理を飛ばす
 		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
 
@@ -214,7 +216,7 @@ void Camera::Collision(void)
 		// 線分とモデルの最近接(startに近い)衝突ポリゴンを取得
 		auto hitPoly = colliderModel->GetNearestHitPolyLine(
 			start, transform_.pos,
-			false, //ブラックリストを使うか否か
+			false, // ブラックリストを使うか否か
 			true   // ホワイトリストを使うか否か
 		);
 

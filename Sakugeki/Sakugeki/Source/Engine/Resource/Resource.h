@@ -15,7 +15,7 @@ public:
 		AUDIO,
 		EFFEKSEER,
 		FONT,
-		MESH,
+		MODEL,
 		SHADER_VS,
 		SHADER_PS,
 		TEXTURE,

@@ -1,5 +1,6 @@
 #pragma once
 #include <functional>
+#include <map>
 #include <DxLib.h>
 #include "../../../../Engine/GameObject/GameObject.h"
 
