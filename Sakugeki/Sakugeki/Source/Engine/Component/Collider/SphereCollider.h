@@ -10,10 +10,10 @@ class SphereCollider : public Collider
 public:
 
 	// コンストラクタ
-	SphereCollider(
-		TAG tag, const Transform* follow, const Vector3& localPos, float radius);
+	SphereCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+				   const Vector3& localPos, float radius);
 	// デストラクタ
-	~SphereCollider(void);
+	~SphereCollider(void) override;
 
 	// 親Transformからの相対位置を取得
 	const Vector3& GetLocalPos(void) const;

@@ -1,12 +1,11 @@
 #pragma once
-#include "../../../Engine/Common/Transform.h"
 #include "Collider.h"
 
 class PlaneCollider : public Collider
 {
 public:
 
-    PlaneCollider(TAG tag, const Transform* follow);
+    PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag);
 
     // 平面（地面）の高さ
     const float GetHeight(void) const;

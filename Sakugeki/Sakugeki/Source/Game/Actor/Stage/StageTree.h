@@ -21,7 +21,6 @@ protected:
 
 	void InitTransform(void) override;
 	void InitRenderer(void) override;
-	void InitCollider(void) override;
 	void InitAnimation(void) override {}
 	void InitPost(void) override {}
 };

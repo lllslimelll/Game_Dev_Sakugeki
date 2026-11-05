@@ -1,17 +1,17 @@
 #include "../../../Engine/Utility/AsoUtility.h"
-#include "ModelCollider.h"
+#include "MeshCollider.h"
 
-ModelCollider::ModelCollider(TAG tag, const Transform* follow)
+MeshCollider::MeshCollider(TAG tag, const Transform* follow)
 	:
 	Collider(SHAPE::MODEL, tag, follow)
 {
 }
 
-ModelCollider::~ModelCollider(void)
+MeshCollider::~MeshCollider(void)
 {
 }
 
-void ModelCollider::AddExcludeFrameIds(const std::wstring& name)
+void MeshCollider::AddExcludeFrameIds(const std::wstring& name)
 {
 	// フレーム数を取得
 	int num = MV1GetFrameNum(follow_->modelId);
@@ -28,12 +28,12 @@ void ModelCollider::AddExcludeFrameIds(const std::wstring& name)
 	}
 }
 
-void ModelCollider::ClearExcludeFrame(void)
+void MeshCollider::ClearExcludeFrame(void)
 {
 	excludeFrameIds_.clear();
 }
 
-bool ModelCollider::IsExcludeFrame(int frameIdx) const
+bool MeshCollider::IsExcludeFrame(int frameIdx) const
 {
 	// 除外判定
 	if (std::find(
@@ -48,7 +48,7 @@ bool ModelCollider::IsExcludeFrame(int frameIdx) const
 	return false;
 }
 
-void ModelCollider::AddTargetFrameIds(const std::wstring& name)
+void MeshCollider::AddTargetFrameIds(const std::wstring& name)
 {
 	// フレーム数を取得
 	int num = MV1GetFrameNum(follow_->modelId);
@@ -65,12 +65,12 @@ void ModelCollider::AddTargetFrameIds(const std::wstring& name)
 	}
 }
 
-void ModelCollider::ClearTargetFrame(void)
+void MeshCollider::ClearTargetFrame(void)
 {
 	targetFrameIds_.clear();
 }
 
-bool ModelCollider::IsTargetFrame(int frameIdx) const
+bool MeshCollider::IsTargetFrame(int frameIdx) const
 {
 	// 対象判定
 	if (std::find(
@@ -85,7 +85,7 @@ bool ModelCollider::IsTargetFrame(int frameIdx) const
 	return false;
 }
 
-MV1_COLL_RESULT_POLY ModelCollider::GetNearestHitPolyLine(
+MV1_COLL_RESULT_POLY MeshCollider::GetNearestHitPolyLine(
 	const Vector3& start, const Vector3& end, bool isExclude, bool isTarget) const
 {
 	MV1_COLL_RESULT_POLY ret = MV1_COLL_RESULT_POLY();

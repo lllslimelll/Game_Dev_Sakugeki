@@ -13,7 +13,7 @@ public:
 		MAX
 	};
 
-	StageGround(void);
+	StageGround(CollisionManager& collisionMng);
 	~StageGround(void) override;
 
 	void Load(void) override;
@@ -23,7 +23,6 @@ protected:
 
 	void InitTransform(void) override;
 	void InitRenderer(void) override;
-	void InitCollider(void) override;
 	void InitAnimation(void) override {}
 	void InitPost(void) override {}
 

@@ -1,4 +1,4 @@
-#include "../../../Engine/Collider/Collider.h"
+#include "../../../Engine/Component/Collider/Collider.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageGround.h"
 #include "StageTree.h"

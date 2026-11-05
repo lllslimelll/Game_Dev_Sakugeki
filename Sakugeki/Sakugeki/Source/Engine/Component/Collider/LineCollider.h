@@ -1,8 +1,10 @@
 #pragma once
 #include <DxLib.h>
-#include "Collider.h"
+#include "../../../Engine/GameObject/GameObject.h"
+#include "../../../Engine/Component/Collider/Collider.h"
+
 class Transform;
-class ModelCollider;
+class MeshCollider;
 
 class LineCollider : public Collider
 {
@@ -10,7 +12,7 @@ public:
 
 	// コンストラクタ
 	LineCollider(
-		TAG tag, const Transform* follow,
+		GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
 		const Vector3& localPosStart, const Vector3& localPosEnd);
 	// デストラクタ
 	~LineCollider(void) override;
@@ -37,7 +39,7 @@ public:
 
 	// 衝突したポリゴンの上に押し戻す
 	bool PushBackUp(
-		const ModelCollider* colliderModel, Transform& transform,
+		const MeshCollider* colliderModel, Transform& transform,
 		float pushDistance,
 		bool isExclude = false, bool isTarget = false) const;
 

@@ -1,6 +1,5 @@
 #include "../../Engine/Resource/ResourceManager.h"
-#include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/Component/Collider/Collider.h"  
+#include "../../Engine/Scene/SceneManager.h" 
 #include "GameObject.h"
 
 GameObject::GameObject()
@@ -22,9 +21,6 @@ void GameObject::Init()
 
 	// 描画設定の初期化
 	InitRenderer();
-
-	// 衝突判定の初期化
-	InitCollider();
 
 	// アニメーションの初期化
 	InitAnimation();
@@ -60,16 +56,6 @@ void GameObject::Draw()
 		if (!component->IsEnabled()) { continue; }
 		component->Draw();
 	}
-
-#ifdef _DEBUG
-
-	// 所有しているコライダの描画
-	for (const auto& own : ownColliders_)
-	{
-	//	own.second->Draw();
-	}
-
-#endif // _DEBUG
 }
 
 void GameObject::Release()
@@ -81,13 +67,6 @@ void GameObject::Release()
 	}
 
 	transform_.Release();
-
-	// 自身のコライダ解放
-	for (auto& own : ownColliders_)
-	{
-		delete own.second;
-	}
-	ownColliders_.clear();
 }
 
 const Transform& GameObject::GetTransform() const
@@ -98,15 +77,4 @@ const Transform& GameObject::GetTransform() const
 Transform& GameObject::GetTransform()
 {
 	return transform_;
-}
-
-
-// 特定の自身の衝突情報
-const Collider* GameObject::GetOwnCollider(int key) const
-{
-	if (ownColliders_.count(key) == 0)
-	{
-		return nullptr;
-	}
-	return ownColliders_.at(key);
 }

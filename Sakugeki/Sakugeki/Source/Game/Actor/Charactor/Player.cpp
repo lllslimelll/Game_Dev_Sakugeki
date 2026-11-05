@@ -1,9 +1,9 @@
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Math/UtilityMath.h"
-#include "../../../Engine/Collider/LineCollider.h"
-#include "../../../Engine/Collider/CapsuleCollider.h"
-#include "../../../Engine/Collider/CollisionManager.h"
+#include "../../../Engine/Component/Collider/LineCollider.h"
+#include "../../../Engine/Component/Collider/CapsuleCollider.h"
+#include "../../../Engine/Component/Collider/CollisionManager.h"
 #include "../../../Engine/Component/CharacterMovement.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Component/Animator.h"
@@ -17,6 +17,14 @@ Player::Player(const Camera& camera, const CollisionManager& collisionMng)
 {
 	AddComponent<PlayerControllerComponent>(camera);
 	movementComp_ = AddComponent<CharacterMovement>(transform_, collisionMng);
+
+	// 線分コライダ
+	AddComponent<LineCollider>(collisionMng, Collider::TAG::PLAYER,
+		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
+
+	// カプセルコライダ
+	auto* capsule = AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,
+		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS, COL_CAPSULE_RADIUS);
 }
 
 Player::~Player(void)
@@ -55,26 +63,6 @@ void Player::InitRenderer()
 	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_PLAYER,
 		ResourceManager::SRC::SHADER_PS_PLAYER);
-}
-
-void Player::InitCollider(void)
-{
-	// 主に地面との衝突で使用する線分コライダ
-	LineCollider* colLine = new LineCollider(
-		Collider::TAG::PLAYER, &transform_,
-		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
-
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::GROUND_LINE), colLine);
-
-	// 主に壁や木などの衝突で使用するカプセルコライダ
-	CapsuleCollider* colCapsule = new CapsuleCollider(
-		Collider::TAG::PLAYER, &transform_,
-		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS, COL_CAPSULE_RADIUS);
-
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::CAPSULE), colCapsule);
-
-	// 移動の押し戻しにカプセルを使う
-	movementComp_->SetCapsule(colCapsule);
 }
 
 void Player::InitAnimation(void)

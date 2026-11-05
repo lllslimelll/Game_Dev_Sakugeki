@@ -40,7 +40,3 @@ void StageTree::InitRenderer(void)
 	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_TREE, ResourceManager::SRC::SHADER_PS_TREE);
 }
-
-void StageTree::InitCollider(void)
-{
-}

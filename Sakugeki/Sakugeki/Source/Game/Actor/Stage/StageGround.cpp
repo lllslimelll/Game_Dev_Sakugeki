@@ -2,14 +2,19 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Common/Transform.h"
-#include "../../../Engine/Collider/PlaneCollider.h"
-#include "../../../Engine/Collider/CircleBoundaryCollider.h" 
+#include "../../../Engine/Component/Collider/CollisionManager.h"
+#include "../../../Engine/Component/Collider/PlaneCollider.h"
+#include "../../../Engine/Component/Collider/CircleBoundaryCollider.h" 
 #include "StageGround.h"
 
-StageGround::StageGround(void)
+StageGround::StageGround(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
+	// 平面コライダ
+	AddComponent<PlaneCollider>(collisionMng, Collider::TAG::GROUND, Vector3::ZERO);
+	// 円周の境界線コライダ
+	AddComponent<CircleBoundaryCollider>(collisionMng, Collider::TAG::WALL, BOUNDARY_RADIUS);
 }
 
 StageGround::~StageGround(void)
@@ -43,18 +48,4 @@ void StageGround::InitRenderer(void)
 {
 	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);
-}
-
-void StageGround::InitCollider(void)
-{
-	// 平面コライダ（地面）
-	PlaneCollider* colPlane =
-		new PlaneCollider(Collider::TAG::GROUND, &transform_);
-
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::PLANE), colPlane);
-
-	// 円周の境界線コライダ（移動制限用の壁）
-	CircleBoundaryCollider* colBoundary =
-		new CircleBoundaryCollider(Collider::TAG::WALL, &transform_, BOUNDARY_RADIUS);
-	ownColliders_.emplace(static_cast<int>(COLLIDER_TYPE::BOUNDARY), colBoundary);
 }

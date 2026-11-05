@@ -1,12 +1,13 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
-#include "ModelCollider.h"
-#include "LineCollider.h"
+#include "../../../Engine/Component/Collider/MeshCollider.h"
+#include "../../../Engine/Component/Collider/LineCollider.h"
 
-LineCollider::LineCollider(TAG tag, const Transform* follow,
+LineCollider::LineCollider(
+	GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
 	const Vector3& localPosStart, const Vector3& localPosEnd)
 	:
-	Collider(SHAPE::LINE, tag, follow),
+	Collider(gameObject, collisionMng, SHAPE::LINE, tag),
 	localPosStart_(localPosStart),
 	localPosEnd_(localPosEnd)
 {
@@ -47,14 +48,14 @@ Vector3 LineCollider::GetPosEnd(void) const
 }
 
 bool LineCollider::PushBackUp(
-	const ModelCollider* colliderModel, Transform& transform,
+	const MeshCollider* colliderModel, Transform& transform,
 	float pushDistance, bool isExclude, bool isTarget) const
 {
 	bool isJump = false;
 
 	// ステージモデル(地面)との衝突
 	auto hits = MV1CollCheck_LineDim(
-		colliderModel->GetFollow()->modelId, -1, GetPosStart().ToVECTOR(), GetPosEnd().ToVECTOR());
+		colliderModel->GetTransform().modelId, -1, GetPosStart().ToVECTOR(), GetPosEnd().ToVECTOR());
 
 	for (int i = 0; i < hits.HitNum; i++)
 	{

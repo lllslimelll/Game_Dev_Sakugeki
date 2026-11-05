@@ -5,21 +5,26 @@
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/UtilityMath.h"
-#include "../../Engine/Collider/Collider.h"
-#include "../../Engine/Collider/ModelCollider.h"
-#include "../../Engine/Collider/SphereCollider.h"
-#include "../../Engine/Collider/CollisionManager.h"
+#include "../../Engine/Component/Collider/Collider.h"
+#include "../../Engine/Component/Collider/MeshCollider.h"
+#include "../../Engine/Component/Collider/SphereCollider.h"
+#include "../../Engine/Component/Collider/CollisionManager.h"
 #include "Camera.h"
 
-Camera::Camera(const CollisionManager& collisionMng)
+Camera::Camera(CollisionManager& collisionMng)
 	:
 	collisionMng_(collisionMng),
 	followTransform_(nullptr),
 	mode_(MODE::NONE),
 	angles_(Vector3::ZERO),
 	rotY_(Quaternion::IDENTITY),
-	targetPos_(Vector3::ZERO)
+	targetPos_(Vector3::ZERO),
+	sphereCollider_(nullptr)
 {
+	AddComponent<SphereCollider>(
+		collisionMng, Collider::TAG::CAMERA,
+		Vector3::ZERO,
+		COL_SPHERE_SPHERE);
 }
 
 Camera::~Camera(void)
@@ -63,25 +68,12 @@ void Camera::DrawDebug(void)
 
 void Camera::Release(void)
 {
+	GameObject::Release();
 }
 
 void Camera::SetFollow(const Transform* follow)
 {
 	followTransform_ = follow;
-}
-
-void Camera::InitCollider(void)
-{
-	// 主にステージとの衝突で使用する球体コライダ
-	SphereCollider* colliderSphere = new SphereCollider(
-		Collider::TAG::CAMERA,
-		&transform_,
-		Vector3::ZERO,
-		COL_CAPSULE_SPHERE);
-
-	// 自分自身の衝突情報に登録
-	ownColliders_.emplace(
-		static_cast<int>(COLLIDER_TYPE::SPHERE), colliderSphere);
 }
 
 void Camera::InitPost(void)
@@ -214,8 +206,8 @@ void Camera::Collision(void)
 		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
 
 		// 派生クラスへキャスト
-		const ModelCollider* colliderModel =
-			dynamic_cast<const ModelCollider*>(hitCol);
+		const MeshCollider* colliderModel =
+			dynamic_cast<const MeshCollider*>(hitCol);
 
 		if (colliderModel == nullptr) continue;
 
@@ -238,15 +230,9 @@ void Camera::Collision(void)
 
 #pragma region 球体の衝突で線分衝突の補助として押し戻す
 
-		// カメラ位置の球体コライダ
-		int typeSphere = static_cast<int>(COLLIDER_TYPE::SPHERE);
-		// 球体コライダがなければ処理を抜ける
-		if (ownColliders_.count(typeSphere) == 0) continue;
-
 		// 指定された回数と距離で三角形の法線方向に押し戻す
-		transform_.pos =
-			ownColliders_.at(typeSphere)->GetPosPushBackAlongNormal(
-				hitPoly, CNT_TRY_COLLISION_CAMERA, COLLISION_BACK_DIS);
+		transform_.pos = sphereCollider_->GetPosPushBackAlongNormal(
+			hitPoly, CNT_TRY_COLLISION_CAMERA, COLLISION_BACK_DIS);
 
 #pragma endregion
 	}
@@ -254,7 +240,7 @@ void Camera::Collision(void)
 
 Vector2 Camera::GetRotMouse()
 {
-	int screenW, screenH = 0;
+	int screenW = 0, screenH = 0;
 	GetDrawScreenSize(&screenW, &screenH);
 	Vector2 center(screenW / 2.0f, screenH / 2.0f);
 

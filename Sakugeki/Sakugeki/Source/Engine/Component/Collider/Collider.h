@@ -1,9 +1,13 @@
 #pragma once
 #include <DxLib.h>
 #include "../../../Engine/Math/Vector3.h"
-class Transform;
+#include "../../../Engine/Component/Component.h"
 
-class Collider
+class Transform;
+class CollisionManager;
+
+// 当たり判定の基底コンポーネント
+class Collider : public Component
 {
 public:
 
@@ -30,18 +34,22 @@ public:
 	};
 
 	// コンストラクタ
-	Collider(SHAPE shape, TAG tag, const Transform* follow);
+	Collider(GameObject& gameObject, CollisionManager& collisionMng, 
+			 SHAPE shape, TAG tag);
 	// デストラクタ
-	virtual ~Collider(void);
+	virtual ~Collider();
+
+	// 初期化
+	void Init() override;
 
 	// 描画
-	void Draw(void);
+	void Draw() override;
+
+	// 解放
+	void Release() override;
 
 	// 追従先の取得
-	const Transform* GetFollow(void) const { return follow_; }
-
-	// 追従先の再設定
-	void SetFollow(Transform* follow);
+	const Transform& GetTransform() const;
 
 	// 形状
 	SHAPE GetShape(void) const { return shape_; }
@@ -58,24 +66,22 @@ public:
 protected:
 
 	// デバッグ表示の色
-	static constexpr int COLOR_VALID = 0xff0000;
-	static constexpr int COLOR_INVALID = 0xaaaaaa;
-
-	// 形状
-	SHAPE shape_;
-
-	// 衝突種別
-	TAG tag_;
-
-	// 追従先
-	const Transform* follow_;
-
-	// 有効フラグ
-	bool isValid_;
+	static constexpr int COLOR_DEBUG = 0xff0000;
 
 	// ローカル座標をワールド座標に変換
 	Vector3 GetRotPos(const Vector3& localPos) const;
 
 	// デバッグ用描画
 	virtual void DrawDebug(int color) = 0;
+
+private:
+
+	// 当たり判定の管理クラス
+	CollisionManager& collisionMng_;
+
+	// 形状
+	SHAPE shape_;
+
+	// 衝突種別
+	TAG tag_;
 };
