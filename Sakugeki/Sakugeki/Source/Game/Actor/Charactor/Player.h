@@ -11,7 +11,7 @@ class Player : public GameObject
 public:
 
 	// camera : 移動方向の基準にするカメラ
-	explicit Player(const Camera& camera, const CollisionManager& collisionMng);
+	explicit Player(const Camera& camera, CollisionManager& collisionMng);
 
 	~Player(void) override;
 
@@ -20,20 +20,11 @@ public:
 
 private:
 
-	enum class COLLIDER_TYPE
-	{
-		GROUND_LINE,
-		CAPSULE,
-		MAX,
-	};
-
 	// 初期化
 	// 大きさ、回転、座標
 	void InitTransform() override;
 	// 描画設定
 	void InitRenderer() override;
-	// 衝突判定
-	void InitCollider() override;
 	// アニメーション
 	void InitAnimation() override;
 	// 個別処理

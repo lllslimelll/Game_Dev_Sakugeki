@@ -1,11 +1,11 @@
 #include "../../../Engine/Common/Transform.h"
-#include "SphereCollider.h"
+#include "../../../Engine/Component/Collider/SphereCollider.h"
 
 SphereCollider::SphereCollider(
-	TAG tag, const Transform* follow,
+	GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
 	const Vector3& localPos, float radius)
 	:
-	Collider(SHAPE::SPHERE, tag, follow),
+	Collider(gameObject, collisionMng, SHAPE::SPHERE, tag),
 	localPos_(localPos),
 	radius_(radius)
 {
@@ -40,34 +40,32 @@ void SphereCollider::SetRadius(float radius)
 	radius_ = radius;
 }
 
-Vector3 SphereCollider::GetPosPushBackAlongNormal(const MV1_COLL_RESULT_POLY& hitPoly, int maxTryCnt, float pushDistance) const
+Vector3 SphereCollider::GetPosPushBackAlongNormal(
+	const MV1_COLL_RESULT_POLY& hitPoly, int maxTryCnt, float pushDistance) const
 {
-	// 追従先の自身のインスタンスをコピー生成
-	Transform tmpTransform = *follow_;
-	SphereCollider tmpSphere = *this;
-	tmpSphere.SetFollow(&tmpTransform);
+	// 持ち主の回転を反映したオフセット
+	const Vector3 basePos = GetTransform().pos;
+	const Vector3 offset = GetPos() - basePos;
+	// 位置
+	Vector3 pos = basePos;
+	// 衝突したポリゴンの法線ベクトル
+	const Vector3 normal = Vector3::GetVector3(hitPoly.Normal);
 
 	// 衝突補正処理
-	int tryCnt = 0;
-	while (tryCnt < maxTryCnt)
+	for (int tryCnt = 0; tryCnt < maxTryCnt; tryCnt++)
 	{
-		// 球体と三角形の当たり判定
 		if (!HitCheck_Sphere_Triangle(
-			tmpSphere.GetPos().ToVECTOR(), tmpSphere.GetRadius(),
+			(pos + offset).ToVECTOR(), radius_,
 			hitPoly.Position[0], hitPoly.Position[1], hitPoly.Position[2]))
 		{
 			break;
 		}
 
-		// 衝突していたら法線方向に押し戻し
-		tmpTransform.pos =
-			tmpTransform.pos + (Vector3::GetVector3(hitPoly.Normal) * pushDistance);
-
-		tryCnt++;
+		// 法線方向に押し戻す
+		pos = pos + (normal * pushDistance);
 	}
 
-	// 押し戻し座標を返す
-	return tmpTransform.pos;
+	return pos;
 }
 
 void SphereCollider::DrawDebug(int color)

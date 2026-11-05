@@ -1,15 +1,14 @@
 #include "../../../Engine/Common/Transform.h"
-#include "ModelCollider.h"
+#include "MeshCollider.h"
 #include "CapsuleCollider.h"
 
-
 CapsuleCollider::CapsuleCollider(
-    TAG tag, const Transform* follow,
+    GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
     const Vector3& localPosTop, const Vector3& localPosDown, float radius)
     :
-	Collider(SHAPE::CAPSULE, tag, follow),
+    Collider(gameObject, collisionMng, SHAPE::CAPSULE, tag),
     localPosTop_(localPosTop),
-	localPosDown_(localPosDown),
+    localPosDown_(localPosDown),
     radius_(radius)
 {
 }
@@ -73,12 +72,12 @@ Vector3 CapsuleCollider::GetCenter(void) const
 }
 
 void CapsuleCollider::PushBackAlongNormal(
-    const ModelCollider* colliderModel, Transform& transform,
+    const MeshCollider* colliderModel, Transform& transform,
     int maxTryCnt, float pushDistance, bool isExclude, bool isTarget) const
 {
     // モデルとカプセルの衝突判定
     auto hits = MV1CollCheck_Capsule(
-        colliderModel->GetFollow()->modelId, -1,
+        colliderModel->GetTransform().modelId, -1,
         GetPosTop().ToVECTOR(), GetPosDown().ToVECTOR(), GetRadius());
 
     // 衝突した複数のポリゴンと衝突回避するまで、位置を移動させる
@@ -101,46 +100,44 @@ void CapsuleCollider::PushBackAlongNormal(
 }
 
 Vector3 CapsuleCollider::GetPosPushBackAlongNormal(
-    const MV1_COLL_RESULT_POLY& hitCollPoly, int maxTryCnt, float pushDistance) const
+    const MV1_COLL_RESULT_POLY& hitPoly, int maxTryCnt, float pushDistance) const
 {
-    // コピー生成
-    Transform tmpTransform = *follow_;
-    CapsuleCollider tmpCapsule = *this;
-    tmpCapsule.SetFollow(&tmpTransform);
+    // 持ち主の回転を反映したオフセット
+    const Vector3& basePos = GetTransform().pos;
+    const Vector3 offsetTop = GetPosTop() - basePos;
+    const Vector3 offsetDown = GetPosDown() - basePos;
+    // 位置
+    Vector3 pos = basePos;
+    // 衝突したポリゴンの法線ベクトル
+    const Vector3 normal = Vector3::GetVector3(hitPoly.Normal);
 
     // 衝突補正処理
-    int tryCnt = 0;
-    while (tryCnt < maxTryCnt)
+    for (int tryCnt = 0; tryCnt < maxTryCnt; tryCnt++)
     {
-        // カプセルと三角形の当たり判定
         if (!HitCheck_Capsule_Triangle(
-            tmpCapsule.GetPosTop().ToVECTOR(), tmpCapsule.GetPosDown().ToVECTOR(), tmpCapsule.GetRadius(),
-            hitCollPoly.Position[0], hitCollPoly.Position[1], hitCollPoly.Position[2]))
+            (pos + offsetTop).ToVECTOR(), (pos + offsetDown).ToVECTOR(), radius_,
+            hitPoly.Position[0], hitPoly.Position[1], hitPoly.Position[2]))
         {
             break;
         }
 
-        // 衝突していたら法線方向に押し戻し
-        tmpTransform.pos =
-            tmpTransform.pos + (Vector3::GetVector3(hitCollPoly.Normal) * pushDistance);
-
-        tryCnt++;
+        // 法線方向に押し戻す
+        pos = pos + (normal * pushDistance);
     }
 
-    // 押し戻した座標を返す
-    return tmpTransform.pos;
+    return pos;
 }
 
-bool CapsuleCollider::IsHit(const ModelCollider* colliderModel, bool isExclude, bool isTarget) const
+bool CapsuleCollider::IsHit(const MeshCollider* colliderModel, bool isExclude, bool isTarget) const
 {
     bool ret = false;
 
     // モデルとカプセルの衝突判定
     auto hits = MV1CollCheck_Capsule(
-        colliderModel->GetFollow()->modelId, -1,
+        colliderModel->GetTransform().modelId, -1,
         GetPosTop().ToVECTOR(), GetPosDown().ToVECTOR(), GetRadius());
 
-    // 衝突した複数のポリゴンと衝突回避するまで、位置を移動させる
+    // 衝突しているポリゴンがあるか調べる
     for (int i = 0; i < hits.HitNum; i++)
     {
         auto hitPoly = hits.Dim[i];
@@ -174,25 +171,25 @@ void CapsuleCollider::DrawDebug(int color)
     Vector3 dir, start, end;
 
     // 球体を繋ぐ線(X+)
-    dir = follow_->GetRight();
+    dir = GetTransform().GetRight();
     start = pos1 + (dir * radius_);
     end = pos2 + (dir * radius_);
     DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
 
     // 球体を繋ぐ線(X-)
-    dir = follow_->GetLeft();
+    dir = GetTransform().GetLeft();
     start = pos1 + (dir *radius_);
     end = pos2 + (dir * radius_);
     DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
 
     // 球体を繋ぐ線(Z+)
-    dir = follow_->GetForward();
+    dir = GetTransform().GetForward();
     start = pos1 + (dir *radius_);
     end = pos2 + (dir * radius_);
     DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
 
     // 球体を繋ぐ線(Z-)
-    dir = follow_->GetBack();
+    dir = GetTransform().GetBack();
     start = pos1 + (dir *radius_);
     end = pos2 + (dir * radius_);
     DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);

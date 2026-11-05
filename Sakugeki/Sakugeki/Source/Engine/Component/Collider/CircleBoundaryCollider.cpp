@@ -2,9 +2,9 @@
 #include "CircleBoundaryCollider.h"
 
 CircleBoundaryCollider::CircleBoundaryCollider(
-	TAG tag, const Transform* follow, float radius)
+	GameObject& gameObject, CollisionManager& collisionMng, TAG tag, float radius)
 	:
-	Collider(SHAPE::CIRCLE_BOUNDARY, tag, follow),
+	Collider(gameObject, collisionMng, SHAPE::CIRCLE_BOUNDARY, tag),
 	radius_(radius)
 {
 }
@@ -20,23 +20,23 @@ float CircleBoundaryCollider::GetRadius(void) const
 
 bool CircleBoundaryCollider::PushBackInside(Vector3& pos, float bodyRadius) const
 {
-	// ‰~‚Ì’†Si’Ç]æ‚ÌÀ•Wj‚©‚ç‚Ì…•½ƒxƒNƒgƒ‹
-	const Vector3& center = follow_->pos;
+	// å††ã®ä¸­å¿ƒï¼ˆè¿½å¾“å…ˆã®åº§æ¨™ï¼‰ã‹ã‚‰ã®æ°´å¹³ãƒ™ã‚¯ãƒˆãƒ«
+	const Vector3& center = GetTransform().pos;
 	float dx = pos.x - center.x;
 	float dz = pos.z - center.z;
 
-	// ‘Ì‚Ì”¼Œa•ª‚¾‚¯“à‘¤‚ğŒÀŠE‚É‚·‚é
+	// ä½“ã®åŠå¾„åˆ†ã ã‘å†…å´ã‚’é™ç•Œã«ã™ã‚‹
 	float limit = radius_ - bodyRadius;
 	if (limit < 0.0f) { limit = 0.0f; }
 
-	// “ñæ‚Å”äŠr‚µ‚ÄAŠO‚Éo‚Ä‚¢‚é‚Æ‚«‚¾‚¯•½•ûª‚ğæ‚é
+	// äºŒä¹—ã§æ¯”è¼ƒã—ã¦ã€å¤–ã«å‡ºã¦ã„ã‚‹ã¨ãã ã‘å¹³æ–¹æ ¹ã‚’å–ã‚‹
 	float dist2 = dx * dx + dz * dz;
 	if (dist2 <= limit * limit)
 	{
 		return false;
 	}
 
-	// ’†S‚©‚çŠOŒü‚«‚Ì•ûŒü‚É‰ˆ‚Á‚Ä‰~üã‚Ö‰Ÿ‚µ–ß‚·i•Ç‰ˆ‚¢‚É©‘R‚ÉŠŠ‚éj
+	// ä¸­å¿ƒã‹ã‚‰å¤–å‘ãã®æ–¹å‘ã«æ²¿ã£ã¦å††å‘¨ä¸Šã¸æŠ¼ã—æˆ»ã™ï¼ˆå£æ²¿ã„ã«è‡ªç„¶ã«æ»‘ã‚‹ï¼‰
 	float dist = sqrtf(dist2);
 	pos.x = center.x + dx / dist * limit;
 	pos.z = center.z + dz / dist * limit;

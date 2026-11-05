@@ -4,14 +4,14 @@
 #include "../../../Engine/Common/Transform.h"
 #include "Collider.h"
 
-class ModelCollider : public Collider
+class MeshCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	ModelCollider(TAG tag, const Transform* follow);
+	MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag);
 	// デストラクタ
-	~ModelCollider(void) override;
+	~MeshCollider(void) override;
 
 	// 指定されえた文字を含むフレームを衝突判定から除外
 	void AddExcludeFrameIds(const std::wstring& name);

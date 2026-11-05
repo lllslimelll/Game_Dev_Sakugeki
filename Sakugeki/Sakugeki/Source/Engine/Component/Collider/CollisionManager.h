@@ -3,32 +3,32 @@
 
 class Collider;
 
-// “–‚½‚è”»’è‚ÌŠÇ—ƒNƒ‰ƒX
+// å½“ãŸã‚Šåˆ¤å®šã®ç®¡ç†ã‚¯ãƒ©ã‚¹
 class CollisionManager
 {
 public:
 
-	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	CollisionManager(void);
 
-	// ƒfƒXƒgƒ‰ƒNƒ^
+	// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	~CollisionManager(void);
 
-	// ƒRƒs[‹Ö~
+	// ã‚³ãƒ”ãƒ¼ç¦æ­¢
 	CollisionManager(const CollisionManager&) = delete;
 	CollisionManager& operator=(const CollisionManager&) = delete;
 
-	// ƒRƒ‰ƒCƒ_[‚ğ“o˜^
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’ç™»éŒ²
 	void Register(const Collider* collider);
 
-	// ƒRƒ‰ƒCƒ_[‚Ì“o˜^‚ğ‰ğœ
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®ç™»éŒ²ã‚’è§£é™¤
 	void Unregister(const Collider* collider);
 
-	// ƒRƒ‰ƒCƒ_[‚ğæ“¾
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’å–å¾—
 	const std::vector<const Collider*>& GetColliders(void) const;
 
 private:
 
-	// ƒRƒ‰ƒCƒ_[
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 	std::vector<const Collider*> colliders_;
 };

@@ -8,7 +8,7 @@ class Collider;
 class CapsuleCollider;
 class CollisionManager;
 
-/// キャラクターの移動を担当するコンポーネント
+// キャラクターの移動を担当するコンポーネント
 class CharacterMovement : public Component
 {
 public:

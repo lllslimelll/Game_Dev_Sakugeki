@@ -4,7 +4,7 @@
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/UtilityMath.h"
-#include "../../Engine/Collider/CollisionManager.h"
+#include "../../Engine/Component/Collider/CollisionManager.h"
 #include "../Actor/Charactor/Player.h"
 #include "../Actor/Stage/StageManager.h"
 #include "../Actor/Camera.h"
@@ -29,7 +29,7 @@ void GameScene::Load()
 
 	camera_ = std::make_unique<Camera>(*collisionMng_);
 
-	stageMng_ = std::make_unique<StageManager>();
+	stageMng_ = std::make_unique<StageManager>(*collisionMng_);
 	stageMng_->Load();
 
 	player_ = std::make_unique<Player>(*camera_, *collisionMng_);
@@ -48,12 +48,6 @@ void GameScene::Init(void)
 	// 初期化
 	stageMng_->Init();
 	player_->Init();
-
-	// ステージ側の全コライダをキャラに登録
-	for (const Collider* col : stageMng_->GetColliders())
-	{
-		collisionMng_->Register(col);
-	}
 }
 
 void GameScene::Update(void)

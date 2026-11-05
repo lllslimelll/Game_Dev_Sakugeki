@@ -1,19 +1,14 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
-// ’n–Êi•½–ÊƒRƒ‰ƒCƒ_j
+class CollisionManager;
+
+// åœ°é¢ï¼ˆå¹³é¢ã‚³ãƒ©ã‚¤ãƒ€ï¼‰
 class StageGround : public GameObject
 {
 public:
 
-	enum class COLLIDER_TYPE
-	{
-		PLANE,
-		BOUNDARY,
-		MAX
-	};
-
-	StageGround(void);
+	StageGround(CollisionManager& collisionMng);
 	~StageGround(void) override;
 
 	void Load(void) override;
@@ -23,12 +18,11 @@ protected:
 
 	void InitTransform(void) override;
 	void InitRenderer(void) override;
-	void InitCollider(void) override;
 	void InitAnimation(void) override {}
 	void InitPost(void) override {}
 
 private:
 
-	// ˆÚ“®‰Â”\‚È”¼Œa
+	// ç§»å‹•å¯èƒ½ãªåŠå¾„
 	static constexpr float BOUNDARY_RADIUS = 2800.0f;
 };

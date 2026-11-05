@@ -2,12 +2,12 @@
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/Quaternion.h"
 #include "../../Engine/Scene/SceneManager.h"
-#include "../../Engine/Collider/Collider.h"
-#include "../../Engine/Collider/CapsuleCollider.h"
-#include "../../Engine/Collider/CircleBoundaryCollider.h"
-#include "../../Engine/Collider/ModelCollider.h"
-#include "../../Engine/Collider/PlaneCollider.h"
-#include "../../Engine/Collider/CollisionManager.h"
+#include "../../Engine/Component/Collider/Collider.h"
+#include "../../Engine/Component/Collider/CapsuleCollider.h"
+#include "../../Engine/Component/Collider/CircleBoundaryCollider.h"
+#include "../../Engine/Component/Collider/MeshCollider.h"
+#include "../../Engine/Component/Collider/PlaneCollider.h"
+#include "../../Engine/Component/Collider/CollisionManager.h"
 #include "../../Engine/Component/CharacterMovement.h"
 
 CharacterMovement::CharacterMovement(GameObject& gameObject, Transform& transform,
@@ -140,6 +140,7 @@ void CharacterMovement::CollideBoundary(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
+		if (!hitCol->IsEnabled()) continue;
 		if (hitCol->GetShape() != Collider::SHAPE::CIRCLE_BOUNDARY) continue;
 
 		const auto* boundary = static_cast<const CircleBoundaryCollider*>(hitCol);
@@ -153,9 +154,10 @@ void CharacterMovement::CollideModel(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (hitCol->GetShape() != Collider::SHAPE::MODEL) continue;
+		if (!hitCol->IsEnabled()) continue;
+		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
 
-		const auto* model = static_cast<const ModelCollider*>(hitCol);
+		const auto* model = static_cast<const MeshCollider*>(hitCol);
 
 		// 指定された回数と距離で三角形の法線方向に押し戻す
 		capsule_->PushBackAlongNormal(
@@ -176,6 +178,7 @@ void CharacterMovement::CollideGround(void)
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
+		if (!hitCol->IsEnabled()) continue;
 		if (hitCol->GetShape() != Collider::SHAPE::PLANE) continue;
 
 		const auto* plane = static_cast<const PlaneCollider*>(hitCol);

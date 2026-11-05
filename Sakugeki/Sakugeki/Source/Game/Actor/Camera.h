@@ -50,15 +50,8 @@ public:
 		FOLLOW,
 	};
 
-	// 衝突判定種別
-	enum class COLLIDER_TYPE
-	{
-		SPHERE,
-		MAX,
-	};
-
 	// コンストラクタ
-	explicit Camera(const CollisionManager& collisionMng);
+	explicit Camera(CollisionManager& collisionMng);
 
 	// デストラクタ
 	~Camera(void) override;
@@ -109,9 +102,6 @@ private:
 	// 描画設定の初期化
 	void InitRenderer() override {};
 
-	// 衝突判定の初期化
-	void InitCollider(void) override;
-
 	// アニメーションの初期化
 	void InitAnimation(void) override {}
 
@@ -146,12 +136,13 @@ private:
 	static constexpr float COLLISION_BACK_DIS = 2.0f;
 
 	// 衝突判定用球体判定
-	static constexpr float COL_CAPSULE_SPHERE = 50.0f;
+	static constexpr float COL_SPHERE_SPHERE = 50.0f;
 
 	// カメラの補完移動率
 	static constexpr float LERP_RATE_MOVE = 0.1f;
 
 	const CollisionManager& collisionMng_;
+	SphereCollider* sphereCollider_;
 
 	// カメラの更新前位置
 	Vector3 prePos_;

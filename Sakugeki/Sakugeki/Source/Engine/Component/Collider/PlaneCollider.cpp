@@ -1,12 +1,13 @@
+#include "../../../Engine/Common/Transform.h"
 #include "PlaneCollider.h"
 
-PlaneCollider::PlaneCollider(TAG tag, const Transform* follow)
+PlaneCollider::PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag)
 	:
-	Collider(SHAPE::PLANE, tag, follow)
+	Collider(gameObject, collisionMng, SHAPE::PLANE, tag)
 {
 }
 
 const float PlaneCollider::GetHeight() const
 {
-	return follow_->pos.y;
+	return GetTransform().pos.y;
 }

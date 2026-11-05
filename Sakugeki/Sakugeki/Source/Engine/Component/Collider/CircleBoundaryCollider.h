@@ -1,24 +1,25 @@
 #pragma once
 #include <DxLib.h>
 #include "../../../Engine/Common/Transform.h"
-#include "Collider.h"
+#include "../../../Engine/Component/Collider/Collider.h"
 
-// ‰~ü‚Ì‹«ŠEƒRƒ‰ƒCƒ_
+// å††å‘¨ã®å¢ƒç•Œã‚³ãƒ©ã‚¤ãƒ€
 class CircleBoundaryCollider : public Collider
 {
 public:
 
-	CircleBoundaryCollider(TAG tag, const Transform* follow, float radius);
+	CircleBoundaryCollider(
+		GameObject& gameObject, CollisionManager& collisionMng, TAG tag, float radius);
 	~CircleBoundaryCollider(void) override;
 
-	// §ŒÀ”¼Œa
+	// åˆ¶é™åŠå¾„
 	float GetRadius(void) const;
 
-	// pos ‚ğ‰~‚Ì“à‘¤‚É‰Ÿ‚µ–ß‚·iXZ •½–Ê‚Ì‚İjB‰Ÿ‚µ–ß‚µ‚½‚ç true
-	// bodyRadius: ‰Ÿ‚µ–ß‚·‘¤‚Ì‘Ì‚Ì”¼Œa
+	// pos ã‚’å††ã®å†…å´ã«æŠ¼ã—æˆ»ã™ï¼ˆXZ å¹³é¢ã®ã¿ï¼‰ã€‚æŠ¼ã—æˆ»ã—ãŸã‚‰ true
+	// bodyRadius: æŠ¼ã—æˆ»ã™å´ã®ä½“ã®åŠå¾„
 	bool PushBackInside(Vector3& pos, float bodyRadius) const;
 
-	// ‚±‚ÌƒNƒ‰ƒX‚Å‚ÍÀ‘•‚µ‚È‚¢ƒˆ‰¼‘zŠÖ”
+	// ã“ã®ã‚¯ãƒ©ã‚¹ã§ã¯å®Ÿè£…ã—ãªã„ç´”ç²‹ä»®æƒ³é–¢æ•°
 	Vector3 GetPosPushBackAlongNormal(
 		const MV1_COLL_RESULT_POLY& hitPoly,
 		int maxTryCnt,
@@ -26,11 +27,11 @@ public:
 
 protected:
 
-	// ƒfƒoƒbƒO•\¦
+	// ãƒ‡ãƒãƒƒã‚°è¡¨ç¤º
 	void DrawDebug(int color) override {}
 
 private:
 
-	// §ŒÀ”¼Œa
+	// åˆ¶é™åŠå¾„
 	float radius_;
 };

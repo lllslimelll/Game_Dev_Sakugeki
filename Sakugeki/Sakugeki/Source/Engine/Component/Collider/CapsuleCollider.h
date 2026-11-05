@@ -1,18 +1,20 @@
+#pragma once
 #include <DxLib.h>
-#include "Collider.h"
+#include "../../../Engine/Component/Collider/Collider.h"
+
 class Transform;
-class ModelCollider;
+class MeshCollider;
 
 class CapsuleCollider : public Collider
 {
 public:
 
 	// コンストラクタ
-	CapsuleCollider(TAG tag, const Transform* follow,
+	CapsuleCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
 		const Vector3& localPosTop, const Vector3& localPosDown, float radius);
 
 	// デストラクタ
-	~CapsuleCollider(void);
+	~CapsuleCollider(void) override;
 
 	// 親Transformからの相対位置を取得
 	const Vector3& GetLocalPosTop(void) const;
@@ -38,7 +40,7 @@ public:
 
 	// 指定された回数と距離で三角形の法線方向に押し戻す
 	void PushBackAlongNormal(
-		const ModelCollider* colliderModel, Transform& transform,
+		const MeshCollider* colliderModel, Transform& transform,
 		int maxTryCnt, float pushDistance,
 		bool isExclude = false, bool isTarget = false) const;
 
@@ -48,8 +50,8 @@ public:
 		int maxTryCnt,
 		float pushDistance) const override;
 
-	// 衝突してるか否か（対モデル）
-	bool IsHit(const ModelCollider* colliderModel,
+	// メッシュと衝突しているか
+	bool IsHit(const MeshCollider* colliderModel,
 		bool isExclude = false, bool isTarget = false) const;
 
 protected:

@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include <map>
 #include <memory>
 #include <type_traits>
 #include <utility>
@@ -9,7 +8,6 @@
 
 class ResourceManager;
 class SceneManager;
-class Collider;
 
 class GameObject
 {
@@ -70,15 +68,6 @@ public:
 	const Transform& GetTransform() const;
 	Transform& GetTransform();
 
-	// 自身の衝突情報取得
-	const std::map<int, Collider*>& GetOwnColliders() const
-	{
-		return ownColliders_;
-	}
-
-	// 特定の自身の衝突情報
-	const Collider* GetOwnCollider(int key) const;
-
 protected:
 
 	// シングルトン参照
@@ -88,9 +77,6 @@ protected:
 	// モデル制御の基本情報
 	Transform transform_;
 
-	// 自身の衝突情報
-	std::map<int, Collider*> ownColliders_;
-
 	// 所有しているコンポーネント
 	std::vector<std::unique_ptr<Component>> components_;
 
@@ -99,9 +85,6 @@ protected:
 
 	// 描画設定の初期化
 	virtual void InitRenderer() = 0;
-
-	// 衝突判定の初期化
-	virtual void InitCollider() = 0;
 
 	// アニメーションの初期化
 	virtual void InitAnimation() = 0;

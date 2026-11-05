@@ -15,16 +15,16 @@ void CollisionManager::Register(const Collider* collider)
 {
 	if (collider == nullptr) { return; }
 
-	// “o˜^Ï‚İ‚È‚ç‰½‚à‚µ‚È‚¢
+	// ç™»éŒ²æ¸ˆã¿ãªã‚‰ä½•ã‚‚ã—ãªã„
 	if (std::find(colliders_.begin(), colliders_.end(), collider) != colliders_.end()) { return; }
 
-	// ƒRƒ‰ƒCƒ_[‚ğ’Ç‰Á
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’è¿½åŠ 
 	colliders_.emplace_back(collider);
 }
 
 void CollisionManager::Unregister(const Collider* collider)
 {
-	// ƒRƒ‰ƒCƒ_[‚ğíœ
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã‚’å‰Šé™¤
 	colliders_.erase(
 		std::remove(colliders_.begin(), colliders_.end(), collider),
 		colliders_.end());
