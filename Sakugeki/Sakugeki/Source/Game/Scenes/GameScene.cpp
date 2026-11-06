@@ -9,16 +9,19 @@
 #include "../Actor/Charactor/Player.h"
 #include "../Actor/Stage/StageManager.h"
 #include "../Actor/Camera.h"
+#include "../../Engine/Component/Health.h"
+#include "../../Game/UI/Player/HPGauge.h"
 #include "GameScene.h"
 
-GameScene::GameScene(void)
+GameScene::GameScene()
 	:
 	SceneBase()
 {
 }
 
-GameScene::~GameScene(void)
+GameScene::~GameScene()
 {
+	if (hpGauge_) { hpGauge_->Release(); }
 	if (player_) { player_->Release(); }
 	if (stageMng_) { stageMng_->Release(); }
 	debugHud_.Release();
@@ -36,6 +39,10 @@ void GameScene::Load()
 
 	player_ = std::make_unique<Player>(*camera_, *collisionMng_);
 	player_->Load();
+
+	// プレイヤーの HP ゲージ
+	const Health* health = player_->GetComponent<Health>();
+	hpGauge_ = std::make_unique<HPGauge>(*health);
 }
 
 void GameScene::Init(void)
@@ -50,6 +57,7 @@ void GameScene::Init(void)
 	// 初期化
 	stageMng_->Init();
 	player_->Init();
+	hpGauge_->Init();
 
 	debugHud_.Init();
 	debugHudData_.hp = 100;
@@ -65,6 +73,7 @@ void GameScene::Update(void)
 {
 	stageMng_->Update();
 	player_->Update();
+	hpGauge_->Update(sceMng_.GetDeltaTime());
 	camera_->Update();
 
 	// シーン遷移
@@ -73,6 +82,8 @@ void GameScene::Update(void)
 	{
 		sceMng_.PushOverlay(SceneManager::SCENE_ID::PAUSE);
 	}
+
+	if (CheckHitKey(KEY_INPUT_F1)) player_->GetComponent<Health>()->TakeDamage(1);
 
 
 	// TODO(仮UI) 動作確認用
@@ -98,7 +109,7 @@ void GameScene::Update(void)
 	}
 
 	// 以下はゲームのルールの代わり（本来はゲージや技リストのクラスが決める）
-	constexpr int HEAL_GUIDE_HP = 50;   // これ以下なら回復を勧める
+	constexpr int HEAL_GUIDE_HPGauge = 50;   // これ以下なら回復を勧める
 	hud.isBloom = !hud.moves.empty() &&
 		std::all_of(hud.moves.begin(), hud.moves.end(), [](const HudMove& m) { return m.isDone; });
 
@@ -108,7 +119,7 @@ void GameScene::Update(void)
 	}
 	else
 	{
-		hud.guide = (hud.hp <= HEAL_GUIDE_HP) ? HudData::GUIDE::HEAL : HudData::GUIDE::FINISHER;
+		hud.guide = (hud.hp <= HEAL_GUIDE_HPGauge) ? HudData::GUIDE::HEAL : HudData::GUIDE::FINISHER;
 	}
 	debugHud_.Update(debugHudData_, sceMng_.GetDeltaTime());
 }
@@ -121,11 +132,12 @@ void GameScene::Draw(void)
 
 	stageMng_->Draw();
 	player_->Draw();
+	hpGauge_->Draw();
 
 	// 影描画
 	//DrawShadow();
 
-	debugHud_.Draw(debugHudData_);
+	//debugHud_.Draw(debugHudData_);
 }
 
 // リアルシャドウ描画

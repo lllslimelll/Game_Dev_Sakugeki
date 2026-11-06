@@ -50,7 +50,7 @@ void DebugHud::Update(const HudData& data, float deltaTime)
 {
 	time_ += deltaTime;
 
-	// ---- 遅れて減る HP ----
+	// ---- 遅れて減る HPGauge ----
 	if (lastHp_ < 0)
 	{
 		// 最初の1回
@@ -125,18 +125,18 @@ void DebugHud::DrawHp(const HudData& data) const
 {
 	const float rate = Rate(static_cast<float>(data.hp), static_cast<float>(data.maxHp));
 	const float lagRate = Rate(lagHp_, static_cast<float>(data.maxHp));
-	const bool isLow = rate < LOW_HP_RATE;
+	const bool isLow = rate < LOW_HPGauge_RATE;
 
-	const int barX = MARGIN_X + HP_ICON_R * 2 + 10;
-	const int barY = MARGIN_TOP + HP_BAR_TOP;
+	const int barX = MARGIN_X + HPGauge_ICON_R * 2 + 10;
+	const int barY = MARGIN_TOP + HPGauge_BAR_TOP;
 
 	// ---- ハートのアイコン（ゲージの下端より少し下まで出す） ----
-	const float iconX = static_cast<float>(MARGIN_X + HP_ICON_R);
-	const float iconY = static_cast<float>(barY + HP_BAR_H + 12 - HP_ICON_R);
+	const float iconX = static_cast<float>(MARGIN_X + HPGauge_ICON_R);
+	const float iconY = static_cast<float>(barY + HPGauge_BAR_H + 12 - HPGauge_ICON_R);
 	SetAlpha(184);
-	DrawCircleAA(iconX, iconY, HP_ICON_R, 32, COL_PANEL, TRUE);
+	DrawCircleAA(iconX, iconY, HPGauge_ICON_R, 32, COL_PANEL, TRUE);
 	SetAlpha(90);
-	DrawCircleAA(iconX, iconY, HP_ICON_R, 32, COL_INK, FALSE, 1.5f);
+	DrawCircleAA(iconX, iconY, HPGauge_ICON_R, 32, COL_INK, FALSE, 1.5f);
 	SetAlpha(255);
 	DrawCircleAA(iconX - 4.5f, iconY - 2.5f, 5.5f, 16, 0xff6f91, TRUE);
 	DrawCircleAA(iconX + 4.5f, iconY - 2.5f, 5.5f, 16, 0xff6f91, TRUE);
@@ -145,22 +145,22 @@ void DebugHud::DrawHp(const HudData& data) const
 	// ---- ゲージ ----
 	// 背景と枠
 	SetAlpha(115);
-	DrawBox(barX, barY, barX + HP_BAR_W, barY + HP_BAR_H, 0x000000, TRUE);
+	DrawBox(barX, barY, barX + HPGauge_BAR_W, barY + HPGauge_BAR_H, 0x000000, TRUE);
 	// 遅れて減る部分
 	SetAlpha(140);
-	DrawBox(barX, barY, barX + static_cast<int>(HP_BAR_W * lagRate), barY + HP_BAR_H, COL_PETAL, TRUE);
+	DrawBox(barX, barY, barX + static_cast<int>(HPGauge_BAR_W * lagRate), barY + HPGauge_BAR_H, COL_PETAL, TRUE);
 	SetAlpha(255);
-	// 現在の HP
+	// 現在の HPGauge
 	if (isLow)
 	{
-		DrawGauge(barX, barY, HP_BAR_W, HP_BAR_H, rate, 0xa3362a, COL_EMBER);
+		DrawGauge(barX, barY, HPGauge_BAR_W, HPGauge_BAR_H, rate, 0xa3362a, COL_EMBER);
 	}
 	else
 	{
-		DrawGauge(barX, barY, HP_BAR_W, HP_BAR_H, rate, 0x4f9a4a, COL_LEAF);
+		DrawGauge(barX, barY, HPGauge_BAR_W, HPGauge_BAR_H, rate, 0x4f9a4a, COL_LEAF);
 	}
 	SetAlpha(64);
-	DrawBox(barX, barY, barX + HP_BAR_W, barY + HP_BAR_H, COL_INK, FALSE);
+	DrawBox(barX, barY, barX + HPGauge_BAR_W, barY + HPGauge_BAR_H, COL_INK, FALSE);
 	SetAlpha(255);
 
 	// ---- 吹き出し（先端がゲージの末端を指す） ----
@@ -169,7 +169,7 @@ void DebugHud::DrawHp(const HudData& data) const
 	const int numH = GetFontSizeToHandle(fontNum_);
 	const int bubbleW = numW + 18;
 	const int bubbleH = numH + 7;
-	const int tipX = barX + static_cast<int>(HP_BAR_W * rate);
+	const int tipX = barX + static_cast<int>(HPGauge_BAR_W * rate);
 	const int bubbleX = tipX - bubbleW / 2;
 	const int bubbleY = MARGIN_TOP;
 	const unsigned int bubbleCol = isLow ? COL_EMBER : COL_INK;
@@ -189,8 +189,8 @@ void DebugHud::DrawSpirit(const HudData& data) const
 	const float rate = Rate(data.spirit, data.maxSpirit);
 	const bool isFull = rate >= 1.0f;
 
-	// HP の行の下
-	const int rowTop = MARGIN_TOP + HP_BAR_TOP + HP_BAR_H + 12 + 8;
+	// HPGauge の行の下
+	const int rowTop = MARGIN_TOP + HPGauge_BAR_TOP + HPGauge_BAR_H + 12 + 8;
 	const int centerY = rowTop + SP_ICON_R;
 
 	// ---- 精霊のアイコン ----

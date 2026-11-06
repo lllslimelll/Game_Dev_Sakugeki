@@ -82,7 +82,7 @@ void EnemyManager::LoadCsvData(void)
 		data.id = stoi(strSplit[idx++]);
 		// 種別
 		data.type = static_cast<EnemyBase::TYPE>(stoi(strSplit[idx++]));
-		// HP
+		// HPGauge
 		data.hp = stoi(strSplit[idx++]);
 		// 初期座標
 		data.defaultPos =

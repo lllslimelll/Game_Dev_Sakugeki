@@ -36,6 +36,9 @@ private:
 	// ジャンプの初速（単位 / 秒）
 	static constexpr float JUMP_SPEED = 350.0f;
 
+	// 最大体力
+	static constexpr int MAX_HPGauge = 100;
+
 	// 衝突判定用線分開始
 	static inline const Vector3 COL_LINE_START_LOCAL_POS = { 0.0f, 80.0f, 0.0f };
 	// 衝突判定用線分終了

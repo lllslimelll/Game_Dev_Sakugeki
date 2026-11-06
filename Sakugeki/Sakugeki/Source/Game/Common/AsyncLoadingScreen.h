@@ -2,7 +2,7 @@
 #include <memory>
 
 class SceneBase;
-class UILoading;
+class Loading;
 
 // 非同期ロード画面
 class AsyncLoadingScreen
@@ -10,7 +10,7 @@ class AsyncLoadingScreen
 public:
 
 	AsyncLoadingScreen(void);
-	~AsyncLoadingScreen(void);   // unique_ptr<UILoading> のため .cpp で定義
+	~AsyncLoadingScreen(void);   // unique_ptr<Loading> のため .cpp で定義
 
 	// 画面用リソースの読み込み（同期）
 	void Load(void);
@@ -30,7 +30,7 @@ public:
 private:
 
 	// 描画
-	std::unique_ptr<UILoading> ui_;
+	std::unique_ptr<Loading> ui_;
 
 	// 発行した非同期ロードの数（進捗の分母）
 	int total_;

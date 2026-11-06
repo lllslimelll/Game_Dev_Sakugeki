@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <DxLib.h>
 #include "../Scenes/SceneBase.h"
-#include "../UI/UILoading.h"
+#include "../UI/Loading.h"
 #include "AsyncLoadingScreen.h"
 
 namespace
@@ -32,7 +32,7 @@ AsyncLoadingScreen::~AsyncLoadingScreen(void)
 void AsyncLoadingScreen::Load(void)
 {
 	// UI
-	ui_ = std::make_unique<UILoading>();
+	ui_ = std::make_unique<Loading>();
 	ui_->Load();
 }
 

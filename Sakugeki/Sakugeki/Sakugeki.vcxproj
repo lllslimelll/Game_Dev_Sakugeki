@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\UI\Player\HPGauge.cpp" />
     <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\NarrowPhase.cpp" />
     <ClCompile Include="Source\Game\UI\DebugHud.cpp" />
@@ -207,11 +208,13 @@
     <ClCompile Include="Source\Engine\Core\main.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageGround.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageTree.cpp" />
-    <ClCompile Include="Source\Game\UI\UILoading.cpp" />
+    <ClCompile Include="Source\Game\UI\Loading.cpp" />
     <ClCompile Include="Source\Engine\Math\Vector3.cpp" />
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
+    <ClCompile Include="Source\Game\UI\UIDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\UI\Player\HPGauge.h" />
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
     <ClInclude Include="Source\Engine\Component\Collider\ContactPoint.h" />
     <ClInclude Include="Source\Engine\Component\Collider\NarrowPhase.h" />
@@ -265,9 +268,10 @@
     <ClInclude Include="Source\Game\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Game\Actor\Stage\StageGround.h" />
     <ClInclude Include="Source\Game\Actor\Stage\StageTree.h" />
-    <ClInclude Include="Source\Game\UI\UILoading.h" />
+    <ClInclude Include="Source\Game\UI\Loading.h" />
     <ClInclude Include="Source\Engine\Math\Vector3.h" />
     <ClInclude Include="Source\Engine\Math\UtilityMath.h" />
+    <ClInclude Include="Source\Game\UI\UIDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Game\Shader\Model\Stage\GroundPS.hlsl">

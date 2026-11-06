@@ -4,7 +4,7 @@
 
 // TODO(仮UI) 本物の UI ができたら差し替える
 // 見た目はモック「桜蔓」の HUD に合わせている
-//   左上：HP と精霊の加護 / 右上：技リスト / 右下：蕾（技リストの達成度）
+//   左上：HPGauge と精霊の加護 / 右上：技リスト / 右下：蕾（技リストの達成度）
 
 // 技リストの1項目
 struct HudMove
@@ -49,7 +49,7 @@ public:
 	// 初期化（フォントの作成）
 	void Init(void);
 
-	// 更新（遅れて減る HP や点滅など、見た目だけの状態）
+	// 更新（遅れて減る HPGauge や点滅など、見た目だけの状態）
 	void Update(const HudData& data, float deltaTime);
 
 	// 描画
@@ -92,12 +92,12 @@ private:
 	static constexpr int MARGIN_X = 22;			// 左右の余白
 	static constexpr int MARGIN_TOP = 14;		// 上の余白
 	static constexpr int MARGIN_BOTTOM = 18;	// 下の余白
-	static constexpr int HP_ICON_R = 19;		// ハートのアイコンの半径
-	static constexpr int HP_BAR_W = 260;
-	static constexpr int HP_BAR_H = 14;
-	static constexpr int HP_BAR_TOP = 40;		// HP ゲージの上にある吹き出しの領域
+	static constexpr int HPGauge_ICON_R = 19;		// ハートのアイコンの半径
+	static constexpr int HPGauge_BAR_W = 260;
+	static constexpr int HPGauge_BAR_H = 14;
+	static constexpr int HPGauge_BAR_TOP = 40;		// HPGauge ゲージの上にある吹き出しの領域
 	static constexpr int SP_ICON_R = 14;		// 精霊のアイコンの半径
-	static constexpr int SP_BAR_W = 65;			// HP ゲージの 1/4
+	static constexpr int SP_BAR_W = 65;			// HPGauge ゲージの 1/4
 	static constexpr int SP_BAR_H = 7;
 	static constexpr int MOVE_ROW_H = 28;		// 技リストの1行の高さ
 	static constexpr int MOVE_ROW_GAP = 6;
@@ -106,21 +106,21 @@ private:
 	static constexpr int BUD_SIZE = 150;		// 蕾の直径
 
 	// ---- 演出 ----
-	static constexpr float LOW_HP_RATE = 0.3f;	// これ未満で HP を赤くする
-	static constexpr float LAG_DELAY = 0.15f;	// 遅れて減る HP が減り始めるまで（秒）
-	static constexpr float LAG_SPEED = 4.0f;	// 遅れて減る HP の追従の速さ
+	static constexpr float LOW_HPGauge_RATE = 0.3f;	// これ未満で HPGauge を赤くする
+	static constexpr float LAG_DELAY = 0.15f;	// 遅れて減る HPGauge が減り始めるまで（秒）
+	static constexpr float LAG_SPEED = 4.0f;	// 遅れて減る HPGauge の追従の速さ
 	static constexpr float FLASH_TIME = 0.6f;	// 技を達成したときの点灯時間（秒）
 
 	// フォント
 	int fontSmall_;		// ラベル
 	int fontGuide_;		// ゲージのガイド、蕾のラベル
 	int fontMove_;		// 技リスト
-	int fontNum_;		// HP の数値
+	int fontNum_;		// HPGauge の数値
 
 	// 経過時間（点滅用）
 	float time_;
 
-	// 遅れて減る HP
+	// 遅れて減る HPGauge
 	float lagHp_;
 	float lagWait_;
 	int lastHp_;
