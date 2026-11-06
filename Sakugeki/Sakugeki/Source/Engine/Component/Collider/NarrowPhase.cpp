@@ -5,6 +5,7 @@
 #include "CapsuleCollider.h"
 #include "MeshCollider.h"
 #include "CircleBoundaryCollider.h"
+#include "SphereCollider.h" 
 #include "ContactPoint.h"
 #include "NarrowPhase.h"
 
@@ -91,4 +92,59 @@ bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const Circle
 	outContactPoint.depth = dist - limit;
 	outContactPoint.other = &boundary;
 	return true;
+}
+
+bool NarrowPhase::SphereVsMesh(const SphereCollider& sphere, const MeshCollider& mesh, ContactPoint& outContactPoint)
+{
+	const VECTOR center = sphere.GetPos().ToVECTOR();
+	const float radius = sphere.GetRadius();
+
+	// 当たっている可能性のあるポリゴンを集める
+	MV1_COLL_RESULT_POLY_DIM hits = MV1CollCheck_Sphere(
+		mesh.GetTransform().modelId, -1, center, radius);
+
+	bool isHit = false;
+	float maxDepth = 0.0f;
+
+	for (int i = 0; i < hits.HitNum; i++)
+	{
+		const MV1_COLL_RESULT_POLY& poly = hits.Dim[i];
+
+		// 除外フレームは無視する
+		if (mesh.IsExcludeFrame(poly.FrameIndex)) { continue; }
+
+		// 球の中心と三角形の最も近い点
+		TRIANGLE_POINT_RESULT result;
+		Triangle_Point_Analyse(
+			&poly.Position[0], &poly.Position[1], &poly.Position[2], &center, &result);
+
+		const float dist = std::sqrt(result.Tri_Pnt_MinDist_Square);
+		const float depth = radius - dist;
+
+		// 当たっていない、または今までより浅いなら無視する
+		if (depth <= maxDepth) { continue; }
+
+		// 三角形側の点 → 球の中心 の向きが、押し戻す方向
+		Vector3 normal;
+		if (dist > MIN_DISTANCE)
+		{
+			normal = (Vector3::GetVector3(center) - Vector3::GetVector3(result.Tri_MinDist_Pos)) / dist;
+		}
+		else
+		{
+			// 中心が三角形の上にあるので、ポリゴンの法線を使う
+			normal = Vector3::GetVector3(poly.Normal);
+		}
+
+		maxDepth = depth;
+		outContactPoint.normal = normal;
+		outContactPoint.depth = depth;
+		outContactPoint.other = &mesh;
+		isHit = true;
+	}
+
+	// 検出したポリゴン情報の後始末
+	MV1CollResultPolyDimTerminate(hits);
+
+	return isHit;
 }

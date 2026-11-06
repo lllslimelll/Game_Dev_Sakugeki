@@ -9,6 +9,7 @@
 #include "../../Engine/Component/Collider/MeshCollider.h"
 #include "../../Engine/Component/Collider/SphereCollider.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
+#include "../../Engine/Component/Collider/ContactPoint.h"
 #include "Camera.h"
 
 Camera::Camera(CollisionManager& collisionMng)
@@ -200,28 +201,23 @@ void Camera::Collision(void)
 	// プレイヤーのルートフレーム
 	Vector3 start = Vector3::GetVector3(MV1GetFramePosition(followTransform_->modelId, 1));
 
-	for (const auto& hitCol : collisionMng_.GetColliders())
+	// プレイヤーとの間を遮るもの
+	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (!hitCol->IsEnabled()) continue;
+		if (!hitCol->IsEnabled()) { continue; }
+		if (hitCol->GetShape() != Collider::SHAPE::MESH) { continue; }
 
-		// モデル以外は処理を飛ばす
-		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
+		const auto* mesh = static_cast<const MeshCollider*>(hitCol);
 
-		// 派生クラスへキャスト
-		const MeshCollider* colliderModel =
-			dynamic_cast<const MeshCollider*>(hitCol);
-
-		if (colliderModel == nullptr) continue;
-
-		// 線分とモデルの最近接(startに近い)衝突ポリゴンを取得
-		auto hitPoly = colliderModel->GetNearestHitPolyLine(
+		// 線分とメッシュの最近接(startに近い)衝突ポリゴンを取得
+		auto hitPoly = mesh->GetNearestHitPolyLine(
 			start, transform_.pos,
-			false, // ブラックリストを使うか否か
-			true   // ホワイトリストを使うか否か
+			false,	// ブラックリストを使うか否か
+			false	// ホワイトリストを使うか否か
 		);
 
 		// 線分が衝突していなければ次のコライダへ
-		if (!hitPoly.HitFlag) continue;
+		if (!hitPoly.HitFlag) { continue; }
 
 		// カメラ位置から注視点への方向
 		Vector3 dirToTarget = (targetPos_ - transform_.pos).Normalized();
@@ -229,14 +225,36 @@ void Camera::Collision(void)
 		// 衝突点の少し手前にカメラを置く
 		transform_.pos =
 			Vector3::GetVector3(hitPoly.HitPosition) + (dirToTarget * COLLISION_BACK_DIS);
+	}
 
-#pragma region 球体の衝突で線分衝突の補助として押し戻す
+	// +めり込みの解消（球）
+	ResolvePenetration();
+}
 
-		// 指定された回数と距離で三角形の法線方向に押し戻す
-		transform_.pos = sphereCollider_->GetPosPushBackAlongNormal(
-			hitPoly, CNT_TRY_COLLISION_CAMERA, COLLISION_BACK_DIS);
+void Camera::ResolvePenetration(void)
+{
+	for (int i = 0; i < MAX_RESOLVE_ITERATIONS; i++)
+	{
+		bool isHitAny = false;
 
-#pragma endregion
+		for (const Collider* hitCol : collisionMng_.GetColliders())
+		{
+			if (!hitCol->IsEnabled()) { continue; }
+
+			// 自分のコライダーは無視する
+			if (&hitCol->GetGameObject() == this) { continue; }
+
+			// 検出
+			ContactPoint contact;
+			if (!collisionMng_.ComputePenetration(*sphereCollider_, *hitCol, contact)) { continue; }
+
+			// めり込んだ分だけ押し戻す
+			transform_.pos += contact.normal * contact.depth;
+			isHitAny = true;
+		}
+
+		// どれにも当たらなくなったら終了
+		if (!isHitAny) { break; }
 	}
 }
 
