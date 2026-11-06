@@ -27,7 +27,7 @@ CharacterMover::~CharacterMover(void)
 void CharacterMover::Init(void)
 {
 	characterController_ = gameObject_.GetComponent<CharacterController>();
-	assert(controller_ != nullptr && "CharacterMover には CharacterController が必要です");
+	assert(characterController_ != nullptr && "CharacterMover には CharacterController が必要です");
 }
 
 void CharacterMover::Update(void)

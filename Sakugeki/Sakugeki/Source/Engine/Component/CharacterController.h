@@ -5,7 +5,7 @@
 class CapsuleCollider;
 class CollisionManager;
 
-// 衝突を解決しながらキャラクターを動かすコンポーネントクラス
+// 衝突を考慮しながらキャラクターを動かすコンポーネントクラス
 class CharacterController : public Component
 {
 public:

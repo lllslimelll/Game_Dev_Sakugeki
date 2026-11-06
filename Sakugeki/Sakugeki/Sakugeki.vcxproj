@@ -212,6 +212,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\ContactPoint.h" />
     <ClInclude Include="Source\Game\UI\DebugHud.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CollisionManager.h" />
     <ClInclude Include="Source\Engine\Component\MeshRenderer.h" />

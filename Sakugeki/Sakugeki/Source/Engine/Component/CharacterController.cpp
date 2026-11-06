@@ -75,7 +75,7 @@ bool CharacterController::CollideModel(void)
 {
 	Transform& transform = gameObject_.GetTransform();
 
-	// ★ 押し戻し関数は結果を返さないので、位置が変わったかで判定する
+	// 押し戻し関数は結果を返さないので、位置が変わったかで判定する
 	const Vector3 prevPos = transform.pos;
 
 	for (const Collider* hitCol : collisionMng_.GetColliders())
@@ -115,7 +115,7 @@ bool CharacterController::CollideGround(bool isRising)
 		if (pos.y <= height)
 		{
 			pos.y = height;
-			// ★ velocity_.y = 0 はここではしない（速度は CharacterMover が持つ）
+		
 			isHit = true;
 		}
 	}
