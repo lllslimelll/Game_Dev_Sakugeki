@@ -1,6 +1,6 @@
 #include <DxLib.h>
 #include "../../Engine/Core/Application.h"
-#include "UILoading.h"
+#include "Loading.h"
 
 namespace
 {
@@ -15,12 +15,12 @@ namespace
 	constexpr int TEXT_Y = 100;
 }
 
-void UILoading::Load(void)
+void Loading::Load(void)
 {
 	// 画像を使う段階でここに読み込みを書く
 }
 
-void UILoading::Draw(float progress, float time) const
+void Loading::Draw(float progress, float time) const
 {
 	// 背景
 	DrawBox(0, 0, Application::SCREEN_SIZE_X, Application::SCREEN_SIZE_Y, 0x000000, true);

@@ -1,7 +1,7 @@
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Resource/ResourceManager.h"
+#include "../../../Engine/Scene/SceneManager.h"
 #include "../../../Engine/Math/UtilityMath.h"
-#include "../../../Engine/Component/Collider/LineCollider.h"
 #include "../../../Engine/Component/Collider/CapsuleCollider.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
 #include "../../../Engine/Component/MeshRenderer.h"
@@ -9,19 +9,24 @@
 #include "../../../Game/Component/PlayerController.h"
 #include "../../../Engine/Component/CharacterMover.h"
 #include "../../../Engine/Component/CharacterController.h"
+#include "../../../Engine/Component/Health.h"  
 #include "../../../Game/Actor/Charactor/Player.h"
 
 Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	:
 	GameObject()
 {
-	AddComponent<PlayerController>(camera);
+	auto* controller = AddComponent<PlayerController>(camera);
 	auto* mover = AddComponent<CharacterMover>();
 	AddComponent<CharacterController>(collisionMng);
 
-	// 線分コライダ
-	AddComponent<LineCollider>(collisionMng, Collider::TAG::PLAYER,
-		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
+	// 体力。死んだら操作を受け付けない
+	auto* health = AddComponent<Health>(MAX_HPGauge);
+	health->SetOnDeath([controller]() 
+		{ 
+		SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::TITLE);
+		controller->SetEnabled(false); 
+		});
 
 	// カプセルコライダ
 	AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,

@@ -1,5 +1,5 @@
 #pragma once
-class UILoading
+class Loading
 {
 public:
 

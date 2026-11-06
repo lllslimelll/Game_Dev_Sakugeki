@@ -8,16 +8,17 @@ class Camera;
 class StageManager;
 class Player;
 class CollisionManager;
+class HPGauge;
 
 class GameScene : public SceneBase
 {
 public:
 	
 	// コンストラクタ
-	GameScene(void);
+	GameScene();
 
 	// デストラクタ
-	~GameScene(void) override;
+	~GameScene() override;
 
 	// ロード
 	void Load() override;
@@ -36,6 +37,7 @@ private:
 	std::unique_ptr<CollisionManager> collisionMng_;
 	std::unique_ptr<Camera> camera_;
 	std::unique_ptr<StageManager> stageMng_;
+	std::unique_ptr<HPGauge> hpGauge_;
 	std::unique_ptr<Player> player_;
 
 	// （既存のメンバの後に追加）
@@ -45,6 +47,8 @@ private:
 
 	// リアルシャドウ描画
 	void DrawShadow(void);
+
+
 	bool IsDebugKeyTriggered(int key);
 	bool debugKeyPrev_[];
 };
