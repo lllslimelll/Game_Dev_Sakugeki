@@ -6,7 +6,7 @@
 StageManager::StageManager(CollisionManager& collisionMng)
 {
 	ground_ = std::make_unique<StageGround>(collisionMng);
-	tree_ = std::make_unique<StageTree>();
+	tree_ = std::make_unique<StageTree>(collisionMng);
 }
 
 StageManager::~StageManager()

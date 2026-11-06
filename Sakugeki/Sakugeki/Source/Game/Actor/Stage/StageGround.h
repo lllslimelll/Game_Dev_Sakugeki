@@ -23,6 +23,4 @@ protected:
 
 private:
 
-	// 移動可能な半径
-	static constexpr float BOUNDARY_RADIUS = 2800.0f;
 };

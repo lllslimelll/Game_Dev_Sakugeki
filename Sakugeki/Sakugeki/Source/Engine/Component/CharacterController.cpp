@@ -3,10 +3,9 @@
 #include "../../Engine/GameObject/GameObject.h"
 #include "../../Engine/Component/Collider/Collider.h"
 #include "../../Engine/Component/Collider/CapsuleCollider.h"
-#include "../../Engine/Component/Collider/CircleBoundaryCollider.h"
-#include "../../Engine/Component/Collider/MeshCollider.h"
 #include "../../Engine/Component/Collider/PlaneCollider.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
+#include "../../Engine/Component/Collider/ContactPoint.h"
 #include "../../Engine/Component/CharacterController.h"
 
 CharacterController::CharacterController(GameObject& gameObject, const CollisionManager& collisionMng)
@@ -35,9 +34,7 @@ CharacterController::MoveResult CharacterController::Move(const Vector3& delta)
 
 	// 水平方向の移動と衝突
 	transform.pos += Vector3(delta.x, 0.0f, delta.z);
-	const bool isHitBoundary = CollideBoundary();
-	const bool isHitModel = CollideModel();
-	result.isSides = isHitBoundary || isHitModel;
+	result.isSides = ResolveCollisions(); 
 
 	// 垂直方向の移動と接地
 	transform.pos += Vector3(0.0f, delta.y, 0.0f);
@@ -52,48 +49,37 @@ bool CharacterController::IsGrounded(void) const
 	return isGrounded_;
 }
 
-bool CharacterController::CollideBoundary(void)
+bool CharacterController::ResolveCollisions(void)
 {
 	Vector3& pos = gameObject_.GetTransform().pos;
+	bool isResolved = false;
 
-	// 自分の体の半径
-	const float bodyRadius = capsule_->GetRadius();
-
-	bool isHit = false;
-	for (const Collider* hitCol : collisionMng_.GetColliders())
+	for (int i = 0; i < MAX_RESOLVE_ITERATIONS; i++)
 	{
-		if (!hitCol->IsEnabled()) continue;
-		if (hitCol->GetShape() != Collider::SHAPE::CIRCLE_BOUNDARY) continue;
+		bool isHitAny = false;
 
-		const auto* boundary = static_cast<const CircleBoundaryCollider*>(hitCol);
-		if (boundary->PushBackInside(pos, bodyRadius)) { isHit = true; }
+		for (const Collider* hitCol : collisionMng_.GetColliders())
+		{
+			if (!hitCol->IsEnabled()) { continue; }
+
+			// 自分のコライダーは無視する
+			if (&hitCol->GetGameObject() == &gameObject_) { continue; }
+
+			// 衝突していなければ無視する
+			ContactPoint contactPoint;
+			if (!collisionMng_.ComputePenetration(*capsule_, *hitCol, contactPoint)) { continue; }
+
+			// めり込んだ分だけ押し戻す
+			pos += contactPoint.normal * contactPoint.depth;
+			isHitAny = true;
+		}
+
+		// どれにも当たらなくなったら終了
+		if (!isHitAny) { break; }
+		isResolved = true;
 	}
-	return isHit;
-}
 
-bool CharacterController::CollideModel(void)
-{
-	Transform& transform = gameObject_.GetTransform();
-
-	// ★ 押し戻し関数は結果を返さないので、位置が変わったかで判定する
-	const Vector3 prevPos = transform.pos;
-
-	for (const Collider* hitCol : collisionMng_.GetColliders())
-	{
-		if (!hitCol->IsEnabled()) continue;
-		if (hitCol->GetShape() != Collider::SHAPE::MESH) continue;
-
-		const auto* model = static_cast<const MeshCollider*>(hitCol);
-
-		// 指定された回数と距離で三角形の法線方向に押し戻す
-		capsule_->PushBackAlongNormal(
-			model, transform,
-			CNT_TRY_COLLISION, DIS_COLLISION_BACK,
-			true,	// ブラックリスト使用許可
-			false	// ホワイトリスト使用許可
-		);
-	}
-	return (transform.pos - prevPos).SquareMagnitude() > 0.0f;
+	return isResolved;
 }
 
 bool CharacterController::CollideGround(bool isRising)
@@ -115,7 +101,7 @@ bool CharacterController::CollideGround(bool isRising)
 		if (pos.y <= height)
 		{
 			pos.y = height;
-			// ★ velocity_.y = 0 はここではしない（速度は CharacterMover が持つ）
+		
 			isHit = true;
 		}
 	}

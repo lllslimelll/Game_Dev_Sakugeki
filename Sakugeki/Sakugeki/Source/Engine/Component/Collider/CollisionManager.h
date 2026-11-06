@@ -2,6 +2,7 @@
 #include <vector>
 
 class Collider;
+struct ContactPoint;
 
 // 当たり判定の管理クラス
 class CollisionManager
@@ -26,6 +27,11 @@ public:
 
 	// コライダーを取得
 	const std::vector<const Collider*>& GetColliders(void) const;
+
+	// 最小の押し戻し方向と距離を計算
+	// a が b にめり込んでいれば true を返し、
+	// a を b から押し戻す方向と距離を outContactPoint に入れる
+	bool ComputePenetration(const Collider& a, const Collider& b, ContactPoint& outContactPoint) const;
 
 private:
 

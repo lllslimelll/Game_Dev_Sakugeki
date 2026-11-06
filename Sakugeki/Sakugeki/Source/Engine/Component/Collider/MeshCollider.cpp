@@ -11,6 +11,15 @@ MeshCollider::~MeshCollider(void)
 {
 }
 
+void MeshCollider::Init(void)
+{
+	// CollisionManager への登録
+	Collider::Init();
+
+	// モデルの衝突情報を構築する
+	MV1SetupCollInfo(GetTransform().modelId, -1);
+}
+
 void MeshCollider::AddExcludeFrameIds(const std::wstring& name)
 {
 	// フレーム数を取得

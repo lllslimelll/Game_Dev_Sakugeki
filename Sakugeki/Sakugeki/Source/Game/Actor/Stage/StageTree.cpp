@@ -1,13 +1,16 @@
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Component/MeshRenderer.h"
+#include "../../../Engine/Component/Collider/CircleBoundaryCollider.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
 #include "StageTree.h"
 
-StageTree::StageTree(void)
+StageTree::StageTree(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
+	// ‰~ü‚Ì‹«ŠEüƒRƒ‰ƒCƒ_
+	AddComponent<CircleBoundaryCollider>(collisionMng, Collider::TAG::WALL, BOUNDARY_RADIUS);
 }
 
 StageTree::~StageTree(void)

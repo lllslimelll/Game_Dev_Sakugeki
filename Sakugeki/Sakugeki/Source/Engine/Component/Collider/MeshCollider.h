@@ -13,6 +13,8 @@ public:
 	// デストラクタ
 	~MeshCollider(void) override;
 
+	void Init(void) override;
+
 	// 指定されえた文字を含むフレームを衝突判定から除外
 	void AddExcludeFrameIds(const std::wstring& name);
 
