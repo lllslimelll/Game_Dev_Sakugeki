@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
+    <ClCompile Include="Source\Engine\Component\Collider\NarrowPhase.cpp" />
     <ClCompile Include="Source\Game\UI\DebugHud.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\CollisionManager.cpp" />
     <ClCompile Include="Source\Engine\Component\MeshRenderer.cpp" />
@@ -213,6 +214,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
     <ClInclude Include="Source\Engine\Component\Collider\ContactPoint.h" />
+    <ClInclude Include="Source\Engine\Component\Collider\NarrowPhase.h" />
     <ClInclude Include="Source\Game\UI\DebugHud.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CollisionManager.h" />
     <ClInclude Include="Source\Engine\Component\MeshRenderer.h" />

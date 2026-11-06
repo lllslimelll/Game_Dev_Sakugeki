@@ -9,8 +9,8 @@ class CircleBoundaryCollider;
 namespace NarrowPhase
 {
 	// カプセルがメッシュにめり込んでいれば true。一番深いめり込みを out に入れる
-	bool CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& out);
+	bool CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& outContactPoint);
 
 	// カプセルが円の境界からはみ出していれば true
-	bool CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& out);
+	bool CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& outContactPoint);
 }

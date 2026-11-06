@@ -14,7 +14,7 @@ namespace
 	constexpr float MIN_DISTANCE = 0.0001f;
 }
 
-bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& out)
+bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& outContactPoint)
 {
 	const VECTOR top = capsule.GetPosTop().ToVECTOR();
 	const VECTOR down = capsule.GetPosDown().ToVECTOR();
@@ -59,9 +59,9 @@ bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollid
 		}
 
 		maxDepth = depth;
-		out.normal = normal;
-		out.depth = depth;
-		out.other = &mesh;
+		outContactPoint.normal = normal;
+		outContactPoint.depth = depth;
+		outContactPoint.other = &mesh;
 		isHit = true;
 	}
 
@@ -71,7 +71,7 @@ bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollid
 	return isHit;
 }
 
-bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& out)
+bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& outContactPoint)
 {
 	// XZ 平面で判定する（境界は、無限に高い円筒の壁）
 	const Vector3& pos = capsule.GetTransform().pos;
@@ -87,8 +87,8 @@ bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const Circle
 	if (dist2 <= limit * limit) { return false; }
 
 	const float dist = std::sqrt(dist2);
-	out.normal = Vector3(-dx / dist, 0.0f, -dz / dist);	// 中心へ向かう
-	out.depth = dist - limit;
-	out.other = &boundary;
+	outContactPoint.normal = Vector3(-dx / dist, 0.0f, -dz / dist);	// 中心へ向かう
+	outContactPoint.depth = dist - limit;
+	outContactPoint.other = &boundary;
 	return true;
 }
