@@ -48,7 +48,7 @@ protected:
 
 	// 種別
 	TYPE type_;
-	// HPGauge
+	// 体力
 	int hp_;
 	// 初期位置
 	const Vector3 defaultPos_;

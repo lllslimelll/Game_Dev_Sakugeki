@@ -3,6 +3,7 @@
 #include "CapsuleCollider.h"
 #include "MeshCollider.h"
 #include "CircleBoundaryCollider.h"
+#include "SphereCollider.h"
 #include "ContactPoint.h"
 #include "NarrowPhase.h"
 #include "CollisionManager.h"
@@ -57,6 +58,11 @@ bool CollisionManager::ComputePenetration(const Collider& a, const Collider& b, 
 	{
 		return NarrowPhase::CapsuleVsBoundary(
 			static_cast<const CapsuleCollider&>(a), static_cast<const CircleBoundaryCollider&>(b), outContactPoint);
+	}
+	if (shapeA == SHAPE::SPHERE && shapeB == SHAPE::MESH)
+	{
+		return NarrowPhase::SphereVsMesh(
+			static_cast<const SphereCollider&>(a), static_cast<const MeshCollider&>(b), outContactPoint);
 	}
 
 	return false;

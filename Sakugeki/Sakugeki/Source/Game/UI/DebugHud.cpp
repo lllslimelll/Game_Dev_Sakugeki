@@ -101,7 +101,6 @@ void DebugHud::Draw(const HudData& data) const
 	int screenW = 0, screenH = 0;
 	GetDrawScreenSize(&screenW, &screenH);
 
-	DrawHp(data);
 	DrawSpirit(data);
 	DrawMoves(data, screenW);
 	DrawBud(data, screenW, screenH);

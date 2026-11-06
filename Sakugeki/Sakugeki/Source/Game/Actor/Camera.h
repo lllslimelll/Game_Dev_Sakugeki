@@ -129,8 +129,11 @@ private:
 	// 衝突判定
 	void Collision(void);
 
-	// 衝突時の押し戻し試行回数
-	static constexpr int CNT_TRY_COLLISION_CAMERA = 30;
+	// カメラの球を、めり込んだメッシュから押し出す
+	void ResolvePenetration(void);
+
+	// めり込みの押し戻しを繰り返す最大回数
+	static constexpr int MAX_RESOLVE_ITERATIONS = 4;
 
 	// 衝突時の押し戻し量
 	static constexpr float COLLISION_BACK_DIS = 2.0f;
