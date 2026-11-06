@@ -35,12 +35,6 @@ public:
 
 private:
 
-	// 衝突時の押し戻し試行回数
-	static constexpr int CNT_TRY_COLLISION = 20;
-
-	// 衝突時の押し戻し量
-	static constexpr float DIS_COLLISION_BACK = 1.0f;
-
 	// 当たり判定の管理クラス
 	const CollisionManager& collisionMng_;
 
@@ -50,11 +44,14 @@ private:
 	// 接地しているか
 	bool isGrounded_;
 
-	// 円周の境界の内側に押し戻す（押し戻したら true）
-	bool CollideBoundary(void);
+	// 押し戻しを繰り返す最大回数
+	static constexpr int MAX_RESOLVE_ITERATIONS = 4;
 
-	// メッシュから押し戻す（押し戻したら true）
-	bool CollideModel(void);
+	// めり込んでいるコライダーから押し出す（押し戻したら true）
+	bool ResolveCollisions(void);
+
+	// 地面との判定（接地したら true）
+	bool CollideGround(bool isRising);
 
 	// 地面との判定（接地したら true）
 	bool CollideGround(bool isRising);
