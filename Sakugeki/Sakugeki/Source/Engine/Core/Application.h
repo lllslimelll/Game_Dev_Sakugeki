@@ -8,8 +8,8 @@ class Application
 
 public:
 	// スクリーンサイズ
-	static constexpr int SCREEN_SIZE_X = 1920;
-	static constexpr int SCREEN_SIZE_Y = 1080;
+	static constexpr int SCREEN_SIZE_X = 900;
+	static constexpr int SCREEN_SIZE_Y = 900;
 	// スクリーンの色深度
 	static constexpr int COLOR_BIT_DEPTH = 32;
 

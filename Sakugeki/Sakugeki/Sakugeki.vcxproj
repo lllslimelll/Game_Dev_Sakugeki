@@ -155,13 +155,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
     <ClCompile Include="Source\Game\UI\DebugHud.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\CollisionManager.cpp" />
     <ClCompile Include="Source\Engine\Component\MeshRenderer.cpp" />
     <ClCompile Include="Source\Engine\Component\Health.cpp" />
     <ClCompile Include="Source\Engine\Component\Component.cpp" />
-    <ClCompile Include="Source\Game\Component\PlayerControllerComponent.cpp" />
-    <ClCompile Include="Source\Engine\Component\CharacterMovement.cpp" />
+    <ClCompile Include="Source\Game\Component\PlayerController.cpp" />
+    <ClCompile Include="Source\Engine\Component\CharacterMover.cpp" />
     <ClCompile Include="Source\Engine\Math\Matrix3D.cpp" />
     <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp" />
     <ClCompile Include="Source\Game\UI\Menu.cpp" />
@@ -202,7 +203,7 @@
     <ClCompile Include="Source\Game\Scenes\PauseScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\SceneBase.cpp" />
     <ClCompile Include="Source\Game\Scenes\TitleScene.cpp" />
-    <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\Engine\Core\main.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageGround.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\StageTree.cpp" />
     <ClCompile Include="Source\Game\UI\UILoading.cpp" />
@@ -210,13 +211,14 @@
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\Component\CharacterController.h" />
     <ClInclude Include="Source\Game\UI\DebugHud.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CollisionManager.h" />
     <ClInclude Include="Source\Engine\Component\MeshRenderer.h" />
     <ClInclude Include="Source\Engine\Component\Health.h" />
     <ClInclude Include="Source\Engine\Component\Component.h" />
-    <ClInclude Include="Source\Game\Component\PlayerControllerComponent.h" />
-    <ClInclude Include="Source\Engine\Component\CharacterMovement.h" />
+    <ClInclude Include="Source\Game\Component\PlayerController.h" />
+    <ClInclude Include="Source\Engine\Component\CharacterMover.h" />
     <ClInclude Include="Source\Engine\Math\Matrix3D.h" />
     <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h" />
     <ClInclude Include="Source\Game\UI\Menu.h" />

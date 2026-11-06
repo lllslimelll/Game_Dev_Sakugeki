@@ -3,7 +3,6 @@
 #include "../../../Engine/GameObject/GameObject.h"
 
 class Camera;
-class CharacterMovement;
 class CollisionManager;
 
 class Player : public GameObject
@@ -11,12 +10,13 @@ class Player : public GameObject
 public:
 
 	// camera : 移動方向の基準にするカメラ
+	// collisionMng : コライダーの登録先
 	explicit Player(const Camera& camera, CollisionManager& collisionMng);
 
 	~Player(void) override;
 
 	// リソースロード
-	virtual void Load() override;
+	void Load() override;
 
 private:
 
@@ -47,7 +47,4 @@ private:
 	static inline const Vector3 COL_CAPSULE_DOWN_LOCAL_POS = { 0.0f, 30.0f, 0.0f };
 	// 衝突判定用カプセル
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
-
-	// 移動
-	CharacterMovement* movementComp_;
 };
