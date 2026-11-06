@@ -31,6 +31,7 @@ public:
 		PLAYER,
 		CAMERA,
 		ENEMY,
+		TREE,
 	};
 
 	// コンストラクタ

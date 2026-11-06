@@ -52,7 +52,4 @@ private:
 
 	// 地面との判定（接地したら true）
 	bool CollideGround(bool isRising);
-
-	// 地面との判定（接地したら true）
-	bool CollideGround(bool isRising);
 };

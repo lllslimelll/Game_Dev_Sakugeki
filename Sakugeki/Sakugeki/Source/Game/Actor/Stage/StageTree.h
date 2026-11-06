@@ -1,6 +1,8 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
+class CollisionManager;
+
 // 木（今は全部の木を1つのモデルとして一括ロード）
 class StageTree : public GameObject
 {
@@ -11,7 +13,7 @@ public:
 		MAX
 	};
 
-	StageTree(void);
+	StageTree(CollisionManager& collisionMng);
 	~StageTree(void) override;
 
 	void Load(void) override;
@@ -23,4 +25,9 @@ protected:
 	void InitRenderer(void) override;
 	void InitAnimation(void) override {}
 	void InitPost(void) override {}
+
+private:
+
+	// 移動可能な半径
+	static constexpr float BOUNDARY_RADIUS = 2800.0f;
 };
