@@ -3,9 +3,10 @@
 
 class Camera;
 class Animator;
+class CharacterMover;
 
-// プレイヤーの操作を行うクラス
-class PlayerControllerComponent : public Component
+// プレイヤーの操作を行うコンポーネントクラス
+class PlayerController : public Component
 {
 public:
 
@@ -22,16 +23,16 @@ public:
 	/// gameObject : 持ち主の GameObject
 	/// camera    : 移動方向の基準にするカメラ
 	/// </summary>
-	PlayerControllerComponent(GameObject& gameObject, const Camera& camera);
+	PlayerController(GameObject& gameObject, const Camera& camera);
 
 	// デストラクタ
-	~PlayerControllerComponent(void);
+	~PlayerController(void) override; 
 
 	// 初期化
 	void Init(void) override;
 
 	// 更新
-	void Update(void);
+	void Update(void) override;  
 
 private:
 
@@ -39,7 +40,7 @@ private:
 	const Camera& camera_;
 
 	// 移動用コンポーネント
-	CharacterMovement* movementComp_;
+	CharacterMover* movementComp_;
 
 	// アニメーション
 	Animator* animatorComp_;

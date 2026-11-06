@@ -4,29 +4,31 @@
 #include "../../../Engine/Component/Collider/LineCollider.h"
 #include "../../../Engine/Component/Collider/CapsuleCollider.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
-#include "../../../Engine/Component/CharacterMovement.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Component/Animator.h"
-#include "../../Component/PlayerControllerComponent.h"
-#include "Player.h"
+#include "../../../Game/Component/PlayerController.h"
+#include "../../../Engine/Component/CharacterMover.h"
+#include "../../../Engine/Component/CharacterController.h"
+#include "../../../Game/Actor/Charactor/Player.h"
 
 Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	:
-	GameObject(),
-	movementComp_(nullptr)
+	GameObject()
 {
-	AddComponent<PlayerControllerComponent>(camera);
-	movementComp_ = AddComponent<CharacterMovement>(transform_, collisionMng);
+	AddComponent<PlayerController>(camera);
+	auto* mover = AddComponent<CharacterMover>();
+	AddComponent<CharacterController>(collisionMng);
 
 	// 線分コライダ
 	AddComponent<LineCollider>(collisionMng, Collider::TAG::PLAYER,
 		COL_LINE_START_LOCAL_POS, COL_LINE_END_LOCAL_POS);
 
 	// カプセルコライダ
-	auto* capsule = AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,
+	AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,
 		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS, COL_CAPSULE_RADIUS);
 
-	movementComp_->SetCapsule(capsule);
+	mover->SetMaxWalkSpeed(MAX_WALK_SPEED);
+	mover->SetJumpSpeed(JUMP_SPEED);
 }
 
 Player::~Player(void)
@@ -69,7 +71,7 @@ void Player::InitRenderer()
 
 void Player::InitAnimation(void)
 {
-	using AnimType = PlayerControllerComponent::ANIM_TYPE;
+	using AnimType = PlayerController::ANIM_TYPE;
 
 	// アニメーターコンポーネントを追加（このあとは使わないので、ローカル変数で持つ）
 	auto* animator = AddComponent<Animator>();
@@ -85,9 +87,5 @@ void Player::InitAnimation(void)
 
 void Player::InitPost(void)
 {
-	// 移動のパラメータ
-	movementComp_->SetMaxWalkSpeed(MAX_WALK_SPEED);
-	movementComp_->SetJumpSpeed(JUMP_SPEED);
-
 	transform_.Update();
 }

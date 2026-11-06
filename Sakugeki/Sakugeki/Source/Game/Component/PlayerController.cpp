@@ -3,12 +3,12 @@
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/Quaternion.h"
 #include "../../Engine/GameObject/GameObject.h"
-#include "../../Engine/Component/CharacterMovement.h"
+#include "../../Engine/Component/CharacterMover.h"
 #include "../../Engine/Component/Animator.h"
-#include "../Actor/Camera.h"
-#include "PlayerControllerComponent.h"
+#include "../Actor/Camera.h" 
+#include "../../Game/Component/PlayerController.h"
 
-PlayerControllerComponent::PlayerControllerComponent(GameObject& gameObject, const Camera& camera)
+PlayerController::PlayerController(GameObject& gameObject, const Camera& camera)
 	:
 	Component(gameObject),
 	camera_(camera),
@@ -17,24 +17,24 @@ PlayerControllerComponent::PlayerControllerComponent(GameObject& gameObject, con
 {
 }
 
-PlayerControllerComponent::~PlayerControllerComponent(void)
+PlayerController::~PlayerController(void)
 {
 }
 
-void PlayerControllerComponent::Init(void)
+void PlayerController::Init(void)
 {
 	// コンポーネントの取得
-	movementComp_ = gameObject_.GetComponent<CharacterMovement>();
+	movementComp_ = gameObject_.GetComponent<CharacterMover>();
 	animatorComp_ = gameObject_.GetComponent<Animator>();
 }
 
-void PlayerControllerComponent::Update(void)
+void PlayerController::Update(void)
 {
 	UpdateMove();
 	UpdateAnimation();
 }
 
-void PlayerControllerComponent::UpdateMove(void)
+void PlayerController::UpdateMove(void)
 {
 	auto& ins = Input::GetInstance();
 
@@ -54,7 +54,7 @@ void PlayerControllerComponent::UpdateMove(void)
 	}
 }
 
-void PlayerControllerComponent::UpdateAnimation(void)
+void PlayerController::UpdateAnimation(void)
 {
 	// 移動の状態から選ぶ
 	ANIM_TYPE type = ANIM_TYPE::IDLE;

@@ -42,7 +42,7 @@ struct Vector3
 	// 長さ
 	float Magnitude(void) const;
 
-	// 長さの2乗（比較だけなら sqrt 不要でこちらが速い）
+	// 長さの2乗
 	float SquareMagnitude(void) const;
 
 	// 正規化したベクトル
