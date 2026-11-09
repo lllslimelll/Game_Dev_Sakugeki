@@ -1,12 +1,12 @@
 #include "../../../Engine/Common/Transform.h"
-#include "StageGround.h"
-#include "StageTree.h"
+#include "Ground.h"
+#include "Tree.h"
 #include "StageManager.h"
 
 StageManager::StageManager(CollisionManager& collisionMng)
 {
-	ground_ = std::make_unique<StageGround>(collisionMng);
-	tree_ = std::make_unique<StageTree>(collisionMng);
+	ground_ = std::make_unique<Ground>(collisionMng);
+	tree_ = std::make_unique<Tree>(collisionMng);
 }
 
 StageManager::~StageManager()

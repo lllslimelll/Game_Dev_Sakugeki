@@ -4,9 +4,9 @@
 #include "../../../Engine/Component/Collider/MeshCollider.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
-#include "StageTree.h"
+#include "Tree.h"
 
-StageTree::StageTree(CollisionManager& collisionMng)
+Tree::Tree(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
@@ -15,11 +15,11 @@ StageTree::StageTree(CollisionManager& collisionMng)
 	AddComponent<MeshCollider>(collisionMng, Collider::TAG::TREE);
 }
 
-StageTree::~StageTree(void)
+Tree::~Tree(void)
 {
 }
 
-void StageTree::Load(void)
+void Tree::Load(void)
 {
 	transform_.SetModel(
 		resMng_.Load(ResourceManager::SRC::STAGE_TREE).handleId_);
@@ -28,11 +28,11 @@ void StageTree::Load(void)
 	resMng_.Load(ResourceManager::SRC::SHADER_PS_TREE);
 }
 
-void StageTree::Update(void)
+void Tree::Update(void)
 {
 }
 
-void StageTree::InitTransform(void)
+void Tree::InitTransform(void)
 {
 	transform_.scl = Vector3::ONE;
 	transform_.pos = Vector3::ZERO;
@@ -40,7 +40,7 @@ void StageTree::InitTransform(void)
 	transform_.Update();
 }
 
-void StageTree::InitRenderer(void)
+void Tree::InitRenderer(void)
 {
 	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_TREE, ResourceManager::SRC::SHADER_PS_TREE);

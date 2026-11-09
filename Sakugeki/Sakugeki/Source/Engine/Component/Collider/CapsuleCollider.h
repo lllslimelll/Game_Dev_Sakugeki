@@ -1,5 +1,4 @@
 #pragma once
-#include <DxLib.h>
 #include "../../../Engine/Component/Collider/Collider.h"
 
 class Transform;
