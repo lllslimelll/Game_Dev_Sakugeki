@@ -187,7 +187,7 @@
     <ClCompile Include="Source\Engine\Utility\AsoUtility.cpp" />
     <ClCompile Include="Source\Engine\GameObject\GameObject.cpp" />
     <ClCompile Include="Source\Game\Actor\Camera.cpp" />
-    <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.cpp" />
+    <ClCompile Include="Source\Game\Actor\Charactor\Enemy\Enemy.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.cpp" />
     <ClCompile Include="Source\Game\Actor\Charactor\Player.cpp" />
     <ClCompile Include="Source\Game\Actor\SkyBox.cpp" />
@@ -248,7 +248,7 @@
     <ClInclude Include="Source\Engine\Utility\AsoUtility.h" />
     <ClInclude Include="Source\Engine\GameObject\GameObject.h" />
     <ClInclude Include="Source\Game\Actor\Camera.h" />
-    <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.h" />
+    <ClInclude Include="Source\Game\Actor\Charactor\Enemy\Enemy.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.h" />
     <ClInclude Include="Source\Game\Actor\Charactor\Player.h" />
     <ClInclude Include="Source\Game\Actor\SkyBox.h" />

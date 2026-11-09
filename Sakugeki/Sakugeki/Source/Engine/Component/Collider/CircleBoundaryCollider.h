@@ -15,16 +15,6 @@ public:
 	// 制限半径
 	float GetRadius(void) const;
 
-	// pos を円の内側に押し戻す（XZ 平面のみ）。押し戻したら true
-	// bodyRadius: 押し戻す側の体の半径
-	bool PushBackInside(Vector3& pos, float bodyRadius) const;
-
-	// このクラスでは実装しない純粋仮想関数
-	Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const override { return Vector3();}
-
 protected:
 
 	// デバッグ表示

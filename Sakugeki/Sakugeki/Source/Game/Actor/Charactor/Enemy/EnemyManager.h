@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "EnemyBase.h"
+#include "Enemy.h"
 #include "../../../../Engine/Component/Collider/Collider.h"
 class Collider;
 class Player;
@@ -27,10 +27,10 @@ public:
 	void LoadCsvData(void);
 
 	// エネミー生成
-	EnemyBase* Create(const EnemyBase::EnemyData& data);
+	Enemy* Create(const Enemy::EnemyData& data);
 
 	// エネミー取得
-	const std::vector<EnemyBase*>& GetEnemies(void) const { return enemies_; }
+	const std::vector<Enemy*>& GetEnemies(void) const { return enemies_; }
 
 private:
 
@@ -38,6 +38,6 @@ private:
 	Player* player_;
 
 	// エネミーリスト
-	std::vector<EnemyBase*> enemies_;
+	std::vector<Enemy*> enemies_;
 };
 

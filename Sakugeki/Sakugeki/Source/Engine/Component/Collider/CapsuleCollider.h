@@ -38,22 +38,6 @@ public:
 	// カプセルの中心座標
 	Vector3 GetCenter(void) const;
 
-	// 指定された回数と距離で三角形の法線方向に押し戻す
-	void PushBackAlongNormal(
-		const MeshCollider* colliderModel, Transform& transform,
-		int maxTryCnt, float pushDistance,
-		bool isExclude = false, bool isTarget = false) const;
-
-	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
-	Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const override;
-
-	// メッシュと衝突しているか
-	bool IsHit(const MeshCollider* colliderModel,
-		bool isExclude = false, bool isTarget = false) const;
-
 protected:
 
 	// デバッグ用描画
