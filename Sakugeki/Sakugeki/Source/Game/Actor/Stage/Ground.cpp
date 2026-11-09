@@ -5,9 +5,9 @@
 #include "../../../Engine/Component/Collider/CollisionManager.h"
 #include "../../../Engine/Component/Collider/PlaneCollider.h"
 #include "../../../Engine/Component/Collider/CircleBoundaryCollider.h" 
-#include "StageGround.h"
+#include "Ground.h"
 
-StageGround::StageGround(CollisionManager& collisionMng)
+Ground::Ground(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
@@ -15,11 +15,11 @@ StageGround::StageGround(CollisionManager& collisionMng)
 	AddComponent<PlaneCollider>(collisionMng, Collider::TAG::GROUND);
 }
 
-StageGround::~StageGround(void)
+Ground::~Ground(void)
 {
 }
 
-void StageGround::Load(void)
+void Ground::Load(void)
 {
 	// モデル
 	transform_.SetModel(
@@ -30,11 +30,11 @@ void StageGround::Load(void)
 	resMng_.Load(ResourceManager::SRC::SHADER_PS_GROUND);
 }
 
-void StageGround::Update(void)
+void Ground::Update(void)
 {
 }
 
-void StageGround::InitTransform(void)
+void Ground::InitTransform(void)
 {
 	transform_.scl = Vector3::ONE;
 	transform_.pos = Vector3::ZERO;
@@ -42,7 +42,7 @@ void StageGround::InitTransform(void)
 	transform_.Update();
 }
 
-void StageGround::InitRenderer(void)
+void Ground::InitRenderer(void)
 {
 	AddComponent<MeshRenderer>(
 		ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);

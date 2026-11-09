@@ -3,13 +3,18 @@
 
 class CollisionManager;
 
-// 地面（平面コライダ）
-class StageGround : public GameObject
+// 木（今は全部の木を1つのモデルとして一括ロード）
+class Tree : public GameObject
 {
 public:
 
-	StageGround(CollisionManager& collisionMng);
-	~StageGround(void) override;
+	enum class COLLIDER_TYPE
+	{
+		MAX
+	};
+
+	Tree(CollisionManager& collisionMng);
+	~Tree(void) override;
 
 	void Load(void) override;
 	void Update(void) override;
@@ -23,4 +28,6 @@ protected:
 
 private:
 
+	// 移動可能な半径
+	static constexpr float BOUNDARY_RADIUS = 2800.0f;
 };

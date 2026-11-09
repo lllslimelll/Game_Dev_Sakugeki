@@ -206,8 +206,8 @@
     <ClCompile Include="Source\Game\Scenes\SceneBase.cpp" />
     <ClCompile Include="Source\Game\Scenes\TitleScene.cpp" />
     <ClCompile Include="Source\Engine\Core\main.cpp" />
-    <ClCompile Include="Source\Game\Actor\Stage\StageGround.cpp" />
-    <ClCompile Include="Source\Game\Actor\Stage\StageTree.cpp" />
+    <ClCompile Include="Source\Game\Actor\Stage\Ground.cpp" />
+    <ClCompile Include="Source\Game\Actor\Stage\Tree.cpp" />
     <ClCompile Include="Source\Game\UI\Loading.cpp" />
     <ClCompile Include="Source\Engine\Math\Vector3.cpp" />
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
@@ -266,8 +266,8 @@
     <ClInclude Include="Source\Game\Scenes\PauseScene.h" />
     <ClInclude Include="Source\Game\Scenes\SceneBase.h" />
     <ClInclude Include="Source\Game\Scenes\TitleScene.h" />
-    <ClInclude Include="Source\Game\Actor\Stage\StageGround.h" />
-    <ClInclude Include="Source\Game\Actor\Stage\StageTree.h" />
+    <ClInclude Include="Source\Game\Actor\Stage\Ground.h" />
+    <ClInclude Include="Source\Game\Actor\Stage\Tree.h" />
     <ClInclude Include="Source\Game\UI\Loading.h" />
     <ClInclude Include="Source\Engine\Math\Vector3.h" />
     <ClInclude Include="Source\Engine\Math\UtilityMath.h" />

@@ -2,8 +2,8 @@
 #include <memory>
 #include <vector>
 
-class StageGround;
-class StageTree;
+class Ground;
+class Tree;
 class CollisionManager;
 
 // ステージ管理クラス
@@ -25,6 +25,6 @@ public:
 
 private:
 
-	std::unique_ptr<StageGround> ground_;
-	std::unique_ptr<StageTree>   tree_;
+	std::unique_ptr<Ground> ground_;
+	std::unique_ptr<Tree>   tree_;
 };
