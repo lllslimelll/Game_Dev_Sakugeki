@@ -1,7 +1,7 @@
 #include "../../../../Engine/Utility/AsoUtility.h"
-#include "EnemyBase.h"
+#include "Enemy.h"
 
-EnemyBase::EnemyBase(const EnemyBase::EnemyData& data, Player* player)
+Enemy::Enemy(const Enemy::EnemyData& data, Player* player)
 	:
 	GameObject(),
 	player_(player),
@@ -14,11 +14,11 @@ EnemyBase::EnemyBase(const EnemyBase::EnemyData& data, Player* player)
 	transform_.pos = data.defaultPos;
 }
 
-EnemyBase::~EnemyBase(void)
+Enemy::~Enemy(void)
 {
 }
 
-void EnemyBase::Draw(void)
+void Enemy::Draw(void)
 {
 	GameObject::Draw();
 
@@ -30,7 +30,7 @@ void EnemyBase::Draw(void)
 #endif // _DEBUG
 }
 
-void EnemyBase::ChangeState(int state)
+void Enemy::ChangeState(int state)
 {
 	stateBase_ = state;
 

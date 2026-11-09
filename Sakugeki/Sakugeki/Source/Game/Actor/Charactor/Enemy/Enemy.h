@@ -6,7 +6,7 @@
 
 class Player;
 
-class EnemyBase : public GameObject
+class Enemy : public GameObject
 {
 public:
 
@@ -19,15 +19,15 @@ public:
 	struct EnemyData
 	{
 		int id;				  // 識別ID
-		EnemyBase::TYPE type; // 種類
+		Enemy::TYPE type; // 種類
 		int hp;				  // 体力
 		Vector3 defaultPos;    // 初期座標
 	};
 
 	// コンストラクタ
-	EnemyBase(const EnemyBase::EnemyData& data, Player* player);
+	Enemy(const Enemy::EnemyData& data, Player* player);
 	// デストラクタ
-	virtual ~EnemyBase(void) override;
+	virtual ~Enemy(void) override;
 
 	// 描画
 	virtual void Draw(void) override;

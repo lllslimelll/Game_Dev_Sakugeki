@@ -28,14 +28,6 @@ public:
 	Vector3 GetPosStart(void) const;
 	Vector3 GetPosEnd(void) const;
 
-	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
-	Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const override {
-		return Vector3();
-	}
-
 	// 衝突したポリゴンの上に押し戻す
 	bool PushBackUp(
 		const MeshCollider* colliderModel, Transform& transform,

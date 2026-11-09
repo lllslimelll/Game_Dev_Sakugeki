@@ -28,12 +28,6 @@ public:
 	float GetRadius(void) const;
 	void SetRadius(float radius);
 
-	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
-	Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const override;
-
 protected:
 
 	// デバッグ用描画

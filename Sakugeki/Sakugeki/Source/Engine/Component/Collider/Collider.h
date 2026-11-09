@@ -58,12 +58,6 @@ public:
 	// 衝突種別
 	TAG GetTag(void) const;
 
-	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
-	virtual Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const = 0;
-
 protected:
 
 	// デバッグ表示の色

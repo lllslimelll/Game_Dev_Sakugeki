@@ -38,12 +38,6 @@ public:
 		const Vector3& start, const Vector3& end,
 		bool isExclude = false, bool isTarget = false) const;
 
-	// 指定された回数と距離で三角形の法線方向に押し戻した座標を取得
-	Vector3 GetPosPushBackAlongNormal(
-		const MV1_COLL_RESULT_POLY& hitPoly,
-		int maxTryCnt,
-		float pushDistance) const override {return Vector3();}
-
 protected:
 
 	// 衝突判定から除外するフレーム番号

@@ -75,7 +75,7 @@
     <ClCompile Include="Source\Game\Scenes\TitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.cpp">
+    <ClCompile Include="Source\Game\Actor\Charactor\Enemy\Enemy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.cpp">
@@ -251,7 +251,7 @@
     <ClInclude Include="Source\Engine\Resource\ResourcePath.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyBase.h">
+    <ClInclude Include="Source\Game\Actor\Charactor\Enemy\Enemy.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game\Actor\Charactor\Enemy\EnemyManager.h">

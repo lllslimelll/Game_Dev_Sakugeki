@@ -73,15 +73,15 @@ void EnemyManager::LoadCsvData(void)
 		// １行をカンマ区切りで分割
 		strSplit = AsoUtility::Split(line, ',');
 
-		EnemyBase* enemy = nullptr;
+		Enemy* enemy = nullptr;
 
 		// 構造体に合わせて読み込みデータを格納
-		EnemyBase::EnemyData data = EnemyBase::EnemyData();
+		Enemy::EnemyData data = Enemy::EnemyData();
 		int idx = 0;
 		// ID
 		data.id = stoi(strSplit[idx++]);
 		// 種別
-		data.type = static_cast<EnemyBase::TYPE>(stoi(strSplit[idx++]));
+		data.type = static_cast<Enemy::TYPE>(stoi(strSplit[idx++]));
 		// HPGauge
 		data.hp = stoi(strSplit[idx++]);
 		// 初期座標
@@ -98,9 +98,9 @@ void EnemyManager::LoadCsvData(void)
 	ifs.close();
 }
 
-EnemyBase* EnemyManager::Create(const EnemyBase::EnemyData& data)
+Enemy* EnemyManager::Create(const Enemy::EnemyData& data)
 {
-	EnemyBase* enemy = nullptr;
+	Enemy* enemy = nullptr;
 
 	// 種別事に敵を生成
 	switch (data.type)
