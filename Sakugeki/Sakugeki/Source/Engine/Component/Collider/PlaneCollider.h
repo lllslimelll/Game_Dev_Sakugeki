@@ -5,7 +5,7 @@ class PlaneCollider : public Collider
 {
 public:
 
-    PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag);
+    PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer);
 
     // 平面（地面）の高さ
     const float GetHeight(void) const;

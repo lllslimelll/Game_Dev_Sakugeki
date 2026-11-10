@@ -1,4 +1,6 @@
 #pragma once
+#include <array>
+#include <cstdint>
 #include <vector>
 
 class Collider;
@@ -33,8 +35,23 @@ public:
 	// a を b から押し戻す方向と距離を outContactPoint に入れる
 	bool ComputePenetration(const Collider& a, const Collider& b, ContactPoint& outContactPoint) const;
 
+	// レイヤー a と レイヤー b が当たるかを設定する
+	void SetLayerCollision(int a, int b, bool isCollide);
+
+	// レイヤー a と レイヤー b が当たるか
+	bool IsLayerCollide(int a, int b) const;
+
+	// 2つのコライダーが当たり判定の対象か
+	bool CanCollide(const Collider& a, const Collider& b) const;
+
+	// レイヤーの最大数
+	static constexpr int MAX_LAYERS = 32;
+
 private:
 
 	// コライダー
 	std::vector<const Collider*> colliders_;
+
+	// 衝突表
+	std::array<std::uint32_t, MAX_LAYERS> layerMasks_;
 };

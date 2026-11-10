@@ -10,6 +10,7 @@
 #include "../../Engine/Component/Collider/SphereCollider.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
 #include "../../Engine/Component/Collider/ContactPoint.h"
+#include "../../Game/Common/CollisionLayer.h"
 #include "Camera.h"
 
 Camera::Camera(CollisionManager& collisionMng)
@@ -23,7 +24,7 @@ Camera::Camera(CollisionManager& collisionMng)
 	sphereCollider_(nullptr)
 {
 	sphereCollider_ = AddComponent<SphereCollider>(
-		collisionMng, Collider::TAG::CAMERA,
+		collisionMng, CollisionLayer::CAMERA,
 		Vector3::ZERO,
 		COL_SPHERE_SPHERE);
 }
@@ -204,8 +205,13 @@ void Camera::Collision(void)
 	// プレイヤーとの間を遮るもの
 	for (const Collider* hitCol : collisionMng_.GetColliders())
 	{
-		if (!hitCol->IsEnabled()) { continue; }
-		if (hitCol->GetShape() != Collider::SHAPE::MESH) { continue; }
+		// コライダーが無効・メッシュ以外・当たらないレイヤーなら無視する
+		if (!hitCol->IsEnabled() ||
+			hitCol->GetShape() != Collider::SHAPE::MESH ||
+			!collisionMng_.CanCollide(*sphereCollider_, *hitCol))
+		{
+			continue;
+		}
 
 		const auto* mesh = static_cast<const MeshCollider*>(hitCol);
 
@@ -227,7 +233,7 @@ void Camera::Collision(void)
 			Vector3::GetVector3(hitPoly.HitPosition) + (dirToTarget * COLLISION_BACK_DIS);
 	}
 
-	// +めり込みの解消（球）
+	// めり込みの解消（球）
 	ResolvePenetration();
 }
 
@@ -239,10 +245,13 @@ void Camera::ResolvePenetration(void)
 
 		for (const Collider* hitCol : collisionMng_.GetColliders())
 		{
-			if (!hitCol->IsEnabled()) { continue; }
-
-			// 自分のコライダーは無視する
-			if (&hitCol->GetGameObject() == this) { continue; }
+			// コライダーが無効・自分のコライダー・当たらないレイヤーなら無視する
+			if (!hitCol->IsEnabled() ||
+				&hitCol->GetGameObject() == this ||
+				!collisionMng_.CanCollide(*sphereCollider_, *hitCol)) 
+			{ 
+				continue; 
+			}
 
 			// 検出
 			ContactPoint contact;

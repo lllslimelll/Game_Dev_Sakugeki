@@ -4,6 +4,7 @@
 #include "../../../Engine/Component/Collider/MeshCollider.h"
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Common/Transform.h"
+#include "../../../Game/Common/CollisionLayer.h"
 #include "Tree.h"
 
 Tree::Tree(CollisionManager& collisionMng)
@@ -12,7 +13,7 @@ Tree::Tree(CollisionManager& collisionMng)
 {
 	// ‰~ü‚Ì‹«ŠEüƒRƒ‰ƒCƒ_
 	//AddComponent<CircleBoundaryCollider>(collisionMng, Collider::TAG::WALL, BOUNDARY_RADIUS);
-	AddComponent<MeshCollider>(collisionMng, Collider::TAG::TREE);
+	AddComponent<MeshCollider>(collisionMng, CollisionLayer::TREE);
 }
 
 Tree::~Tree(void)

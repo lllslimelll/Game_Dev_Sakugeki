@@ -4,10 +4,10 @@
 #include "CapsuleCollider.h"
 
 CapsuleCollider::CapsuleCollider(
-    GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+    GameObject& gameObject, CollisionManager& collisionMng, int layer,
     const Vector3& localPosTop, const Vector3& localPosDown, float radius)
     :
-    Collider(gameObject, collisionMng, SHAPE::CAPSULE, tag),
+    Collider(gameObject, collisionMng, SHAPE::CAPSULE, layer),
     localPosTop_(localPosTop),
     localPosDown_(localPosDown),
     radius_(radius)

@@ -60,10 +60,13 @@ bool CharacterController::ResolveCollisions(void)
 
 		for (const Collider* hitCol : collisionMng_.GetColliders())
 		{
-			if (!hitCol->IsEnabled()) { continue; }
-
-			// 自分のコライダーは無視する
-			if (&hitCol->GetGameObject() == &gameObject_) { continue; }
+			// コライダーが無効・自分のコライダー・当たらないレイヤーなら無視する
+			if (!hitCol->IsEnabled() ||
+				&hitCol->GetGameObject() == &gameObject_ ||
+				!collisionMng_.CanCollide(*capsule_, *hitCol)) 
+			{ 
+				continue; 
+			}
 
 			// 衝突していなければ無視する
 			ContactPoint contactPoint;

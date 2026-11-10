@@ -10,7 +10,7 @@ class SphereCollider : public Collider
 public:
 
 	// コンストラクタ
-	SphereCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+	SphereCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer,
 				   const Vector3& localPos, float radius);
 	// デストラクタ
 	~SphereCollider(void) override;

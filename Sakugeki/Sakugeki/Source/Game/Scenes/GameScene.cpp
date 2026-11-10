@@ -11,6 +11,7 @@
 #include "../Actor/Camera.h"
 #include "../../Engine/Component/Health.h"
 #include "../../Game/UI/Player/HPGauge.h"
+#include "../../Game/Common/CollisionLayer.h"
 #include "GameScene.h"
 
 GameScene::GameScene()
@@ -31,6 +32,7 @@ void GameScene::Load()
 {
 	// 当たり判定の管理クラス
 	collisionMng_ = std::make_unique<CollisionManager>();
+	CollisionLayer::SetupMatrix(*collisionMng_);
 
 	camera_ = std::make_unique<Camera>(*collisionMng_);
 
@@ -143,7 +145,7 @@ void GameScene::Draw(void)
 // リアルシャドウ描画
 void GameScene::DrawShadow(void)
 {
-	const std::vector<int> stageModels = stageMng_->GetModelIds();
+	const std::vector<int> slayereModels = stageMng_->GetModelIds();
 	// シャドウマップハンドルの作成
 	int ShadowMapHandle = MakeShadowMap(1024, 1024);
 	// シャドウマップが想定するライトの方向もセット
@@ -157,7 +159,7 @@ void GameScene::DrawShadow(void)
 	ShadowMap_DrawSetup(ShadowMapHandle);
 
 	// シャドウマップへステージモデルの描画
-	for (int model : stageModels) { MV1DrawModel(model); }
+	for (int model : slayereModels) { MV1DrawModel(model); }
 	// シャドウマップへキャラクターモデルの描画
 	MV1DrawModel(player_->GetTransform().modelId);
 
@@ -168,7 +170,7 @@ void GameScene::DrawShadow(void)
 	SetUseShadowMap(0, ShadowMapHandle);
 
 	// ステージモデルの描画
-	for (int model : stageModels) { MV1DrawModel(model); }
+	for (int model : slayereModels) { MV1DrawModel(model); }
 	// キャラクターモデルの描画
 	MV1DrawModel(player_->GetTransform().modelId);
 

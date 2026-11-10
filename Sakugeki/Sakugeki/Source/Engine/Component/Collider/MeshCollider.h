@@ -9,7 +9,7 @@ class MeshCollider : public Collider
 public:
 
 	// コンストラクタ
-	MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag);
+	MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer);
 	// デストラクタ
 	~MeshCollider(void) override;
 

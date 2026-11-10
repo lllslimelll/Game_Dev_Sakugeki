@@ -22,20 +22,9 @@ public:
 		CIRCLE_BOUNDARY,
 	};
 
-	// 衝突種別
-	enum class TAG
-	{
-		GROUND,
-		WALL,
-		PLAYER,
-		CAMERA,
-		ENEMY,
-		TREE,
-	};
-
 	// コンストラクタ
 	Collider(GameObject& gameObject, CollisionManager& collisionMng, 
-			 SHAPE shape, TAG tag);
+			 SHAPE shape, int layer);
 	// デストラクタ
 	virtual ~Collider();
 
@@ -55,7 +44,7 @@ public:
 	SHAPE GetShape(void) const;
 
 	// 衝突種別
-	TAG GetTag(void) const;
+	int GetLayer() const;
 
 protected:
 
@@ -77,5 +66,5 @@ private:
 	SHAPE shape_;
 
 	// 衝突種別
-	TAG tag_;
+	int layer_;
 };

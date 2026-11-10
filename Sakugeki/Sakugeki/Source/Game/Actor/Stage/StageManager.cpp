@@ -45,7 +45,8 @@ void StageManager::Release()
 
 std::vector<int> StageManager::GetModelIds() const
 {
-	return {
+	return 
+	{
 		ground_->GetTransform().modelId,
 		tree_->GetTransform().modelId
 	};

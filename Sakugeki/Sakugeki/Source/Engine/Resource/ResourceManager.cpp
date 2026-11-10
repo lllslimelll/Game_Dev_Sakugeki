@@ -30,10 +30,10 @@ void ResourceManager::Init(void)
 	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Player/Player.mv1");
 	resourcesMap_.emplace(SRC::PLAYER, res);
 	// 地面
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Stage/Ground.mv1");
+	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Slayere/Ground.mv1");
 	resourcesMap_.emplace(SRC::STAGE_GROUND, res);
 	// 木
-	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Stage/Tree.mv1");
+	res = new Resource(Resource::TYPE::MODEL, ResourcePath::PATH_MODELS + L"Slayere/Tree.mv1");
 	resourcesMap_.emplace(SRC::STAGE_TREE, res);
 	//------------------------------------------------------------------------------------------------- 
 

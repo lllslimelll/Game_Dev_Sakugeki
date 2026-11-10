@@ -1,3 +1,4 @@
+#include <cassert>
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/GameObject/GameObject.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
@@ -5,13 +6,14 @@
 
 
 Collider::Collider(GameObject& gameObject, CollisionManager& collisionMng,
-				   SHAPE shape, TAG tag)
+				   SHAPE shape, int layer)
 	:
 	Component(gameObject),
+	collisionMng_(collisionMng),
 	shape_(shape),
-	tag_(tag),
-	collisionMng_(collisionMng)
+	layer_(layer)
 {
+	assert(0 <= layer && layer < CollisionManager::MAX_LAYERS && "layer の範囲外です");
 }
 
 Collider::~Collider(void)
@@ -41,9 +43,9 @@ Collider::SHAPE Collider::GetShape(void) const
 	return shape_;
 }
 
-Collider::TAG Collider::GetTag(void) const
+int Collider::GetLayer(void) const
 {
-	return tag_;
+	return layer_;
 }
 
 const Transform& Collider::GetTransform(void) const

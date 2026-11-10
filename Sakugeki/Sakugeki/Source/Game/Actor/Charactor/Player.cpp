@@ -10,6 +10,7 @@
 #include "../../../Engine/Component/CharacterMover.h"
 #include "../../../Engine/Component/CharacterController.h"
 #include "../../../Engine/Component/Health.h"  
+#include "../../../Game/Common/CollisionLayer.h"
 #include "../../../Game/Actor/Charactor/Player.h"
 
 Player::Player(const Camera& camera, CollisionManager& collisionMng)
@@ -29,7 +30,7 @@ Player::Player(const Camera& camera, CollisionManager& collisionMng)
 		});
 
 	// カプセルコライダ
-	AddComponent<CapsuleCollider>(collisionMng, Collider::TAG::PLAYER,
+	AddComponent<CapsuleCollider>(collisionMng, CollisionLayer::PLAYER,
 		COL_CAPSULE_TOP_LOCAL_POS, COL_CAPSULE_DOWN_LOCAL_POS, COL_CAPSULE_RADIUS);
 
 	mover->SetMaxWalkSpeed(MAX_WALK_SPEED);

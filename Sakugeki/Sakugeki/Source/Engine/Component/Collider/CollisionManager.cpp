@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cassert>
 #include "Collider.h"
 #include "CapsuleCollider.h"
 #include "MeshCollider.h"
@@ -10,8 +11,11 @@
 
 CollisionManager::CollisionManager(void)
 	:
-	colliders_()
+	colliders_(),
+	layerMasks_()
 {
+	// 衝突表を初期化（すべてのレイヤー同士が衝突する）
+	layerMasks_.fill(0xFFFFFFFFu);
 }
 
 CollisionManager::~CollisionManager(void)
@@ -66,4 +70,34 @@ bool CollisionManager::ComputePenetration(const Collider& a, const Collider& b, 
 	}
 
 	return false;
+}
+
+void CollisionManager::SetLayerCollision(int a, int b, bool isCollide)
+{
+	assert(0 <= a && a < MAX_LAYERS && 0 <= b && b < MAX_LAYERS);
+
+	const std::uint32_t bitA = 1u << a;
+	const std::uint32_t bitB = 1u << b;
+
+	// 衝突表を対象にする
+	if (isCollide)
+	{
+		layerMasks_[a] |= bitB;
+		layerMasks_[b] |= bitA;
+	}
+	else
+	{
+		layerMasks_[a] &= ~bitB;
+		layerMasks_[b] &= ~bitA;
+	}
+}
+
+bool CollisionManager::IsLayerCollide(int a, int b) const
+{
+	return (layerMasks_[a] & (1u << b)) != 0;
+}
+
+bool CollisionManager::CanCollide(const Collider& a, const Collider& b) const
+{
+	return IsLayerCollide(a.GetLayer(), b.GetLayer());
 }
