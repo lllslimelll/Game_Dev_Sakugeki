@@ -145,7 +145,7 @@ void GameScene::Draw(void)
 // リアルシャドウ描画
 void GameScene::DrawShadow(void)
 {
-	const std::vector<int> slayereModels = stageMng_->GetModelIds();
+	const std::vector<int> stageeModels = stageMng_->GetModelIds();
 	// シャドウマップハンドルの作成
 	int ShadowMapHandle = MakeShadowMap(1024, 1024);
 	// シャドウマップが想定するライトの方向もセット
@@ -159,7 +159,7 @@ void GameScene::DrawShadow(void)
 	ShadowMap_DrawSetup(ShadowMapHandle);
 
 	// シャドウマップへステージモデルの描画
-	for (int model : slayereModels) { MV1DrawModel(model); }
+	for (int model : stageeModels) { MV1DrawModel(model); }
 	// シャドウマップへキャラクターモデルの描画
 	MV1DrawModel(player_->GetTransform().modelId);
 
@@ -170,7 +170,7 @@ void GameScene::DrawShadow(void)
 	SetUseShadowMap(0, ShadowMapHandle);
 
 	// ステージモデルの描画
-	for (int model : slayereModels) { MV1DrawModel(model); }
+	for (int model : stageeModels) { MV1DrawModel(model); }
 	// キャラクターモデルの描画
 	MV1DrawModel(player_->GetTransform().modelId);
 
