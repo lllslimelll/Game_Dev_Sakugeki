@@ -4,10 +4,10 @@
 #include "../../../Engine/Component/Collider/LineCollider.h"
 
 LineCollider::LineCollider(
-	GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+	GameObject& gameObject, CollisionManager& collisionMng, int layer,
 	const Vector3& localPosStart, const Vector3& localPosEnd)
 	:
-	Collider(gameObject, collisionMng, SHAPE::LINE, tag),
+	Collider(gameObject, collisionMng, SHAPE::LINE, layer),
 	localPosStart_(localPosStart),
 	localPosEnd_(localPosEnd)
 {

@@ -1,9 +1,9 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "MeshCollider.h"
 
-MeshCollider::MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag)
+MeshCollider::MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer)
 	:
-	Collider(gameObject, collisionMng, SHAPE::MESH, tag)
+	Collider(gameObject, collisionMng, SHAPE::MESH, layer)
 {
 }
 

@@ -1,9 +1,9 @@
 #include "../../../Engine/Common/Transform.h"
 #include "PlaneCollider.h"
 
-PlaneCollider::PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag)
+PlaneCollider::PlaneCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer)
 	:
-	Collider(gameObject, collisionMng, SHAPE::PLANE, tag)
+	Collider(gameObject, collisionMng, SHAPE::PLANE, layer)
 {
 }
 

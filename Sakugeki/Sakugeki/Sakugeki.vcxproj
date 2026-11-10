@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Game\Common\CollisionLayer.cpp" />
     <ClCompile Include="Source\Game\UI\Player\HPGauge.cpp" />
     <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\NarrowPhase.cpp" />
@@ -214,6 +215,7 @@
     <ClCompile Include="Source\Game\UI\UIDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Game\Common\CollisionLayer.h" />
     <ClInclude Include="Source\Game\UI\Player\HPGauge.h" />
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
     <ClInclude Include="Source\Engine\Component\Collider\ContactPoint.h" />

@@ -318,9 +318,9 @@ void DebugHud::DrawMoves(const HudData& data, int screenW) const
 void DebugHud::DrawBud(const HudData& data, int screenW, int screenH) const
 {
 	const int count = static_cast<int>(data.moves.size());
-	const int stage = static_cast<int>(std::count_if(data.moves.begin(), data.moves.end(),
+	const int slayere = static_cast<int>(std::count_if(data.moves.begin(), data.moves.end(),
 		[](const HudMove& m) { return m.isDone; }));
-	const float open = (count > 0) ? static_cast<float>(stage) / count : 0.0f;
+	const float open = (count > 0) ? static_cast<float>(slayere) / count : 0.0f;
 	const bool isBloom = data.isBloom;
 
 	// ---- 配置（右下。蕾の下にラベル） ----
@@ -410,7 +410,7 @@ void DebugHud::DrawBud(const HudData& data, int screenW, int screenH) const
 	// ---- ラベル ----
 	const std::wstring label = isBloom
 		? L"必殺技 L3+R3"
-		: std::to_wstring(stage) + L" / " + std::to_wstring(count);
+		: std::to_wstring(slayere) + L" / " + std::to_wstring(count);
 	const int labelW = GetDrawStringWidthToHandle(label.c_str(), static_cast<int>(label.size()), fontGuide_);
 	DrawStringToHandle(static_cast<int>(cx) - labelW / 2, labelY, label.c_str(),
 		isBloom ? COL_PETAL : COL_DIM, fontGuide_);

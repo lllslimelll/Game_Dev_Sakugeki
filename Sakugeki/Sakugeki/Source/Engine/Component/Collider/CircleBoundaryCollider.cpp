@@ -2,9 +2,9 @@
 #include "CircleBoundaryCollider.h"
 
 CircleBoundaryCollider::CircleBoundaryCollider(
-	GameObject& gameObject, CollisionManager& collisionMng, TAG tag, float radius)
+	GameObject& gameObject, CollisionManager& collisionMng, int layer, float radius)
 	:
-	Collider(gameObject, collisionMng, SHAPE::CIRCLE_BOUNDARY, tag),
+	Collider(gameObject, collisionMng, SHAPE::CIRCLE_BOUNDARY, layer),
 	radius_(radius)
 {
 }

@@ -9,7 +9,7 @@ class CircleBoundaryCollider : public Collider
 public:
 
 	CircleBoundaryCollider(
-		GameObject& gameObject, CollisionManager& collisionMng, TAG tag, float radius);
+		GameObject& gameObject, CollisionManager& collisionMng, int layer, float radius);
 	~CircleBoundaryCollider(void) override;
 
 	// 制限半径

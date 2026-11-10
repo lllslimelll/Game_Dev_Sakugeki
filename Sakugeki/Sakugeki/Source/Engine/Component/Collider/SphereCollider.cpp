@@ -1,11 +1,12 @@
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Component/Collider/SphereCollider.h"
+#include "../../../Engine/Component/Collider/CollisionManager.h"
 
 SphereCollider::SphereCollider(
-	GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+	GameObject& gameObject, CollisionManager& collisionMng, int layer,
 	const Vector3& localPos, float radius)
 	:
-	Collider(gameObject, collisionMng, SHAPE::SPHERE, tag),
+	Collider(gameObject, collisionMng, SHAPE::SPHERE, layer),
 	localPos_(localPos),
 	radius_(radius)
 {

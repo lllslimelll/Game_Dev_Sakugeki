@@ -11,7 +11,7 @@ public:
 
 	// コンストラクタ
 	LineCollider(
-		GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+		GameObject& gameObject, CollisionManager& collisionMng, int layer,
 		const Vector3& localPosStart, const Vector3& localPosEnd);
 	// デストラクタ
 	~LineCollider(void) override;

@@ -9,7 +9,7 @@ class CapsuleCollider : public Collider
 public:
 
 	// コンストラクタ
-	CapsuleCollider(GameObject& gameObject, CollisionManager& collisionMng, TAG tag,
+	CapsuleCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer,
 		const Vector3& localPosTop, const Vector3& localPosDown, float radius);
 
 	// デストラクタ
