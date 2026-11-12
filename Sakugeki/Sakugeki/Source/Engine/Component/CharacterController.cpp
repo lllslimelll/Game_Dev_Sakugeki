@@ -1,11 +1,13 @@
 #include <cassert>
+#include <cmath>
+#include "../../Engine/Math/UtilityMath.h"
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/GameObject/GameObject.h"
 #include "../../Engine/Component/Collider/Collider.h"
 #include "../../Engine/Component/Collider/CapsuleCollider.h"
-#include "../../Engine/Component/Collider/PlaneCollider.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
 #include "../../Engine/Component/Collider/ContactPoint.h"
+#include "../../Engine/Component/Collider/RaycastHit.h"
 #include "../../Engine/Component/CharacterController.h"
 
 CharacterController::CharacterController(GameObject& gameObject, const CollisionManager& collisionMng)
@@ -37,8 +39,9 @@ CharacterController::MoveResult CharacterController::Move(const Vector3& delta)
 	result.isSides = ResolveCollisions(); 
 
 	// 垂直方向の移動と接地
+	const float prevY = transform.pos.y; // 動く前の高さ
 	transform.pos += Vector3(0.0f, delta.y, 0.0f);
-	result.isBelow = CollideGround(delta.y > 0.0f);
+	result.isBelow = CollideGround(prevY, delta.y > 0.0f);
 
 	isGrounded_ = result.isBelow;
 	return result;
@@ -56,7 +59,7 @@ bool CharacterController::ResolveCollisions(void)
 
 	for (int i = 0; i < MAX_RESOLVE_ITERATIONS; i++)
 	{
-		bool isHitAny = false;
+		bool isPushedSide = false;
 
 		for (const Collider* hitCol : collisionMng_.GetColliders())
 		{
@@ -72,41 +75,56 @@ bool CharacterController::ResolveCollisions(void)
 			ContactPoint contactPoint;
 			if (!collisionMng_.ComputePenetration(*capsule_, *hitCol, contactPoint)) { continue; }
 
-			// めり込んだ分だけ押し戻す
-			pos += contactPoint.normal * contactPoint.depth;
-			isHitAny = true;
+			if (IsWalkable(contactPoint.normal))
+			{
+				// 床の向きなら、真上にだけ押し戻す
+				pos.y += contactPoint.depth / contactPoint.normal.y;
+			}
+			else
+			{
+				// 壁や天井は、法線の向きに押し戻す
+				pos += contactPoint.normal * contactPoint.depth;
+				isPushedSide = true;
+			}
 		}
 
 		// どれにも当たらなくなったら終了
-		if (!isHitAny) { break; }
+		if (!isPushedSide) { break; }
 		isResolved = true;
 	}
 
 	return isResolved;
 }
 
-bool CharacterController::CollideGround(bool isRising)
+bool CharacterController::CollideGround(float prevY, bool isRising)
 {
 	// 上昇中は判定しない
 	if (isRising) { return false; }
 
 	Vector3& pos = gameObject_.GetTransform().pos;
 
-	bool isHit = false;
-	for (const Collider* hitCol : collisionMng_.GetColliders())
-	{
-		if (!hitCol->IsEnabled()) continue;
-		if (hitCol->GetShape() != Collider::SHAPE::PLANE) continue;
+	// 動く前の高さの少し上から、今の足元（接地中なら少し下）までレイを飛ばす
+	const float snap = isGrounded_ ? GROUND_SNAP : 0.0f;
+	const Vector3 start(pos.x, prevY + GROUND_RAY_UP, pos.z);
+	const Vector3 end(pos.x, pos.y - snap, pos.z);
 
-		const auto* plane = static_cast<const PlaneCollider*>(hitCol);
-		const float height = plane->GetHeight();
+	// 自分の体と同じ相手（地面・壁・木）を調べる
+	const CollisionManager::LayerMask mask = collisionMng_.GetCollisionMask(capsule_->GetLayer());
 
-		if (pos.y <= height)
-		{
-			pos.y = height;
-		
-			isHit = true;
-		}
-	}
-	return isHit;
+	RaycastHit hit;
+	if (!collisionMng_.Linecast(start, end, mask, hit, &gameObject_)) { return false; }
+
+	// 急すぎる坂には立てない
+	if (!IsWalkable(hit.normal)) { return false; }
+
+	// 足元を地面の高さに合わせる
+	pos.y = hit.point.y;
+	return true;
+}
+
+bool CharacterController::IsWalkable(const Vector3& normal)
+{
+	// 法線と真上の角度が SLOPE_LIMIT_DEG 以内なら立てる
+	static const float minNormalY = std::cos(UtilityMath::DegToRadF(SLOPE_LIMIT_DEG));
+	return normal.y >= minNormalY;
 }

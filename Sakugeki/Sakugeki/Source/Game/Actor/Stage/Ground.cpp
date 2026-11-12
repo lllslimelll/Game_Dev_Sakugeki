@@ -3,7 +3,7 @@
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
-#include "../../../Engine/Component/Collider/PlaneCollider.h"
+#include "../../../Engine/Component/Collider/MeshCollider.h"
 #include "../../../Engine/Component/Collider/CircleBoundaryCollider.h" 
 #include "../../../Game/Common/CollisionLayer.h"
 #include "Ground.h"
@@ -12,8 +12,8 @@ Ground::Ground(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
-	// 平面コライダ
-	AddComponent<PlaneCollider>(collisionMng, CollisionLayer::GROUND);
+	// メッシュコライダ
+	AddComponent<MeshCollider>(collisionMng, CollisionLayer::GROUND);
 }
 
 Ground::~Ground(void)
