@@ -7,6 +7,7 @@
 #include "CircleBoundaryCollider.h"
 #include "SphereCollider.h" 
 #include "ContactPoint.h"
+#include "RaycastHit.h"
 #include "NarrowPhase.h"
 
 namespace
@@ -15,7 +16,43 @@ namespace
 	constexpr float MIN_DISTANCE = 0.0001f;
 }
 
-bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& outContactPoint)
+bool NarrowPhase::LineVsMesh(const Vector3& start, const Vector3& end, const MeshCollider& mesh, RaycastHit& hitResult)
+{
+	// 線分と当たったポリゴンをすべて集める
+	MV1_COLL_RESULT_POLY_DIM hits = MV1CollCheck_LineDim(
+		mesh.GetTransform().modelId, -1, start.ToVECTOR(), end.ToVECTOR());
+
+	bool isHit = false;
+	float minDist = 0.0f;
+
+	for (int i = 0; i < hits.HitNum; i++)
+	{
+		const MV1_COLL_RESULT_POLY& poly = hits.Dim[i];
+
+		// 除外フレームは無視する
+		if (mesh.IsExcludeFrame(poly.FrameIndex)) { continue; }
+
+		// 始点に一番近い当たりを残す
+		const Vector3 point = Vector3::GetVector3(poly.HitPosition);
+		const float dist = static_cast<float>(Vector3::Distance(start, point));
+		if (isHit && dist >= minDist) { continue; }
+
+		minDist = dist;
+		hitResult.point = point;
+		hitResult.normal = Vector3::GetVector3(poly.Normal);
+		hitResult.distance = dist;
+		hitResult.other = &mesh;
+
+		isHit = true;
+	}
+
+	// 検出したポリゴン情報の後始末
+	MV1CollResultPolyDimTerminate(hits);
+
+	return isHit;
+}
+
+bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& contactPoint)
 {
 	const VECTOR top = capsule.GetPosTop().ToVECTOR();
 	const VECTOR down = capsule.GetPosDown().ToVECTOR();
@@ -60,9 +97,10 @@ bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollid
 		}
 
 		maxDepth = depth;
-		outContactPoint.normal = normal;
-		outContactPoint.depth = depth;
-		outContactPoint.other = &mesh;
+		contactPoint.point = Vector3::GetVector3(result.Tri_MinDist_Pos);
+		contactPoint.normal = normal;
+		contactPoint.depth = depth;
+		contactPoint.other = &mesh;
 		isHit = true;
 	}
 
@@ -72,7 +110,7 @@ bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollid
 	return isHit;
 }
 
-bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& outContactPoint)
+bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& contactPoint)
 {
 	// XZ 平面で判定する（境界は、無限に高い円筒の壁）
 	const Vector3& pos = capsule.GetTransform().pos;
@@ -87,14 +125,16 @@ bool NarrowPhase::CapsuleVsBoundary(const CapsuleCollider& capsule, const Circle
 	const float dist2 = dx * dx + dz * dz;
 	if (dist2 <= limit * limit) { return false; }
 
+	const float wallRadius = boundary.GetRadius();
 	const float dist = std::sqrt(dist2);
-	outContactPoint.normal = Vector3(-dx / dist, 0.0f, -dz / dist);	// 中心へ向かう
-	outContactPoint.depth = dist - limit;
-	outContactPoint.other = &boundary;
+	contactPoint.point = Vector3(center.x + dx / dist * wallRadius, pos.y, center.z + dz / dist * wallRadius);
+	contactPoint.normal = Vector3(-dx / dist, 0.0f, -dz / dist);	// 中心へ向かう
+	contactPoint.depth = dist - limit;
+	contactPoint.other = &boundary;
 	return true;
 }
 
-bool NarrowPhase::SphereVsMesh(const SphereCollider& sphere, const MeshCollider& mesh, ContactPoint& outContactPoint)
+bool NarrowPhase::SphereVsMesh(const SphereCollider& sphere, const MeshCollider& mesh, ContactPoint& contactPoint)
 {
 	const VECTOR center = sphere.GetPos().ToVECTOR();
 	const float radius = sphere.GetRadius();
@@ -137,9 +177,10 @@ bool NarrowPhase::SphereVsMesh(const SphereCollider& sphere, const MeshCollider&
 		}
 
 		maxDepth = depth;
-		outContactPoint.normal = normal;
-		outContactPoint.depth = depth;
-		outContactPoint.other = &mesh;
+		contactPoint.point = Vector3::GetVector3(result.Tri_MinDist_Pos);
+		contactPoint.normal = normal;
+		contactPoint.depth = depth;
+		contactPoint.other = &mesh;
 		isHit = true;
 	}
 

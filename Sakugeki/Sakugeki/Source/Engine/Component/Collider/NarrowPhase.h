@@ -1,20 +1,25 @@
 #pragma once
 
 struct ContactPoint;
+struct RaycastHit;
+class Vector3;
 class CapsuleCollider;
 class MeshCollider;
 class CircleBoundaryCollider;
 class SphereCollider;
 
-// 形状の組み合わせごとの詳細な当たり判定
+// 形状の組み合わせごとの詳細な衝突判定
 namespace NarrowPhase
 {
-	// カプセルがメッシュにめり込んでいれば true。一番深いめり込みを outContactPoint に入れる
-	bool CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& outContactPoint);
+	// 線分 x メッシュ
+	bool LineVsMesh(const Vector3& start, const Vector3& end, const MeshCollider& mesh, RaycastHit& hitResult);
 
-	// カプセルが円の境界からはみ出していれば true
-	bool CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& outContactPoint);
+	// カプセル x メッシュ
+	bool CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollider& mesh, ContactPoint& contactPoint);
 
-	// 球がメッシュにめり込んでいれば true。一番深いめり込みを outContactPoint に入れる
-	bool SphereVsMesh(const SphereCollider& sphere, const MeshCollider& mesh, ContactPoint& outContactPoint);
+	// カプセル x 円周の境界
+	bool CapsuleVsBoundary(const CapsuleCollider& capsule, const CircleBoundaryCollider& boundary, ContactPoint& contactPoint);
+
+	// 球 x メッシュ
+	bool SphereVsMesh(const SphereCollider& sphere, const MeshCollider& mesh, ContactPoint& contactPoint);
 }

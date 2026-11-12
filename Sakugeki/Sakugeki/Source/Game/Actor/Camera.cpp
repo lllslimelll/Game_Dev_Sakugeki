@@ -6,10 +6,10 @@
 #include "../../Engine/Common/Transform.h"
 #include "../../Engine/Math/UtilityMath.h"
 #include "../../Engine/Component/Collider/Collider.h"
-#include "../../Engine/Component/Collider/MeshCollider.h"
 #include "../../Engine/Component/Collider/SphereCollider.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
 #include "../../Engine/Component/Collider/ContactPoint.h"
+#include "../../Engine/Component/Collider/RaycastHit.h"
 #include "../../Game/Common/CollisionLayer.h"
 #include "Camera.h"
 
@@ -200,37 +200,21 @@ void Camera::SetBeforeDrawFollow(void)
 void Camera::Collision(void)
 {
 	// プレイヤーのルートフレーム
-	Vector3 start = Vector3::GetVector3(MV1GetFramePosition(followTransform_->modelId, 1));
+	const Vector3 start = Vector3::GetVector3(MV1GetFramePosition(followTransform_->modelId, 1));
 
-	// プレイヤーとの間を遮るもの
-	for (const Collider* hitCol : collisionMng_.GetColliders())
+	// カメラの体（球）と同じ相手に、視線も遮られる
+	const CollisionManager::LayerMask mask =
+		collisionMng_.GetCollisionMask(sphereCollider_->GetLayer());
+
+	// プレイヤーとカメラの間を遮るもののうち、一番プレイヤーに近いもの
+	RaycastHit hit;
+	if (collisionMng_.Linecast(start, transform_.pos, mask, hit, this))
 	{
-		// コライダーが無効・メッシュ以外・当たらないレイヤーなら無視する
-		if (!hitCol->IsEnabled() ||
-			hitCol->GetShape() != Collider::SHAPE::MESH ||
-			!collisionMng_.CanCollide(*sphereCollider_, *hitCol))
-		{
-			continue;
-		}
-
-		const auto* mesh = static_cast<const MeshCollider*>(hitCol);
-
-		// 線分とメッシュの最近接(startに近い)衝突ポリゴンを取得
-		auto hitPoly = mesh->GetNearestHitPolyLine(
-			start, transform_.pos,
-			false,	// ブラックリストを使うか否か
-			false	// ホワイトリストを使うか否か
-		);
-
-		// 線分が衝突していなければ次のコライダへ
-		if (!hitPoly.HitFlag) { continue; }
-
 		// カメラ位置から注視点への方向
-		Vector3 dirToTarget = (targetPos_ - transform_.pos).Normalized();
+		const Vector3 dirToTarget = (targetPos_ - transform_.pos).Normalized();
 
 		// 衝突点の少し手前にカメラを置く
-		transform_.pos =
-			Vector3::GetVector3(hitPoly.HitPosition) + (dirToTarget * COLLISION_BACK_DIS);
+		transform_.pos = hit.point + (dirToTarget * COLLISION_BACK_DIS);
 	}
 
 	// めり込みの解消（球）
@@ -254,11 +238,11 @@ void Camera::ResolvePenetration(void)
 			}
 
 			// 検出
-			ContactPoint contact;
-			if (!collisionMng_.ComputePenetration(*sphereCollider_, *hitCol, contact)) { continue; }
+			ContactPoint contactPoint;
+			if (!collisionMng_.ComputePenetration(*sphereCollider_, *hitCol, contactPoint)) { continue; }
 
 			// めり込んだ分だけ押し戻す
-			transform_.pos += contact.normal * contact.depth;
+			transform_.pos += contactPoint.normal * contactPoint.depth;
 			isHitAny = true;
 		}
 
