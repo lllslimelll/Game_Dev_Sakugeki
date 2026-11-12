@@ -3,11 +3,11 @@
 
 class Collider;
 
-// ƒŒƒC‚ÌÕ“Ëî•ñ
+// ãƒ¬ã‚¤ã®è¡çªæƒ…å ±
 struct RaycastHit
 {
-	Vector3 point = Vector3::ZERO;		// Õ“Ë“_
-	Vector3 normal = Vector3::ZERO;		// Õ“Ë–Ê‚Ì–@ü
-	float distance = 0.0f;				// ƒŒƒC‚Ìn“_‚©‚çÕ“Ë“_‚Ü‚Å‚Ì‹——£
-	const Collider* other = nullptr;	// Õ“Ë‘Šè‚ÌƒRƒ‰ƒCƒ_[
+	Vector3 point = Vector3::ZERO;		// è¡çªç‚¹
+	Vector3 normal = Vector3::ZERO;		// è¡çªé¢ã®æ³•ç·š
+	float distance = 0.0f;				// ãƒ¬ã‚¤ã®å§‹ç‚¹ã‹ã‚‰è¡çªç‚¹ã¾ã§ã®è·é›¢
+	const Collider* other = nullptr;	// è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 };

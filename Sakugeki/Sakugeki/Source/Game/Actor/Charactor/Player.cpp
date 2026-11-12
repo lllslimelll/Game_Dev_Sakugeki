@@ -22,7 +22,7 @@ Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	AddComponent<CharacterController>(collisionMng);
 
 	// 体力。死んだら操作を受け付けない
-	auto* health = AddComponent<Health>(MAX_HPGauge);
+	auto* health = AddComponent<Health>(MAX_HP);
 	health->SetOnDeath([controller]() 
 		{ 
 		SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::TITLE);

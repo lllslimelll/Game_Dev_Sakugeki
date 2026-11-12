@@ -14,7 +14,6 @@ public:
 	enum class SHAPE
 	{
 		NONE,
-		LINE,
 		SPHERE,
 		CAPSULE,
 		MESH,

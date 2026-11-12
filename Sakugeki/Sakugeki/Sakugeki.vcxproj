@@ -194,7 +194,6 @@
     <ClCompile Include="Source\Game\Actor\Stage\StageManager.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\Collider.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\CapsuleCollider.cpp" />
-    <ClCompile Include="Source\Engine\Component\Collider\LineCollider.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\MeshCollider.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\SphereCollider.cpp" />
     <ClCompile Include="Source\Engine\Component\Animator.cpp" />
@@ -256,7 +255,6 @@
     <ClInclude Include="Source\Game\Actor\Stage\StageManager.h" />
     <ClInclude Include="Source\Engine\Component\Collider\Collider.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CapsuleCollider.h" />
-    <ClInclude Include="Source\Engine\Component\Collider\LineCollider.h" />
     <ClInclude Include="Source\Engine\Component\Collider\MeshCollider.h" />
     <ClInclude Include="Source\Engine\Component\Collider\SphereCollider.h" />
     <ClInclude Include="Source\Engine\Component\Animator.h" />
