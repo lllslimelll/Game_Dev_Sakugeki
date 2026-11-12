@@ -18,7 +18,6 @@ public:
 		SPHERE,
 		CAPSULE,
 		MESH,
-		PLANE,
 		CIRCLE_BOUNDARY,
 	};
 
