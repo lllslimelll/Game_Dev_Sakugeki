@@ -63,8 +63,6 @@ bool LineCollider::PushBackUp(
 
 		// 除外フレームは無視する
 		if (isExclude && colliderModel->IsExcludeFrame(hit.FrameIndex)) continue;
-		// 指定フレーム以外は無視する
-		if (isTarget && !colliderModel->IsTargetFrame(hit.FrameIndex)) continue;
 
 		// 衝突地点から、少し上に移動
 		if (transform.pos.y < hit.HitPosition.y)

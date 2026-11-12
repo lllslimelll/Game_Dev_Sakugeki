@@ -6,6 +6,7 @@
 #include "CircleBoundaryCollider.h"
 #include "SphereCollider.h"
 #include "ContactPoint.h"
+#include "RaycastHit.h"
 #include "NarrowPhase.h"
 #include "CollisionManager.h"
 
@@ -46,7 +47,7 @@ const std::vector<const Collider*>& CollisionManager::GetColliders(void) const
 	return colliders_;
 }
 
-bool CollisionManager::ComputePenetration(const Collider& a, const Collider& b, ContactPoint& outContactPoint) const
+bool CollisionManager::ComputePenetration(const Collider& a, const Collider& b, ContactPoint& contactPoint) const
 {
 	using SHAPE = Collider::SHAPE;
 	const SHAPE shapeA = a.GetShape();
@@ -56,28 +57,78 @@ bool CollisionManager::ComputePenetration(const Collider& a, const Collider& b, 
 	if (shapeA == SHAPE::CAPSULE && shapeB == SHAPE::MESH)
 	{
 		return NarrowPhase::CapsuleVsMesh(
-			static_cast<const CapsuleCollider&>(a), static_cast<const MeshCollider&>(b), outContactPoint);
+			static_cast<const CapsuleCollider&>(a), static_cast<const MeshCollider&>(b), contactPoint);
 	}
 	if (shapeA == SHAPE::CAPSULE && shapeB == SHAPE::CIRCLE_BOUNDARY)
 	{
 		return NarrowPhase::CapsuleVsBoundary(
-			static_cast<const CapsuleCollider&>(a), static_cast<const CircleBoundaryCollider&>(b), outContactPoint);
+			static_cast<const CapsuleCollider&>(a), static_cast<const CircleBoundaryCollider&>(b), contactPoint);
 	}
 	if (shapeA == SHAPE::SPHERE && shapeB == SHAPE::MESH)
 	{
 		return NarrowPhase::SphereVsMesh(
-			static_cast<const SphereCollider&>(a), static_cast<const MeshCollider&>(b), outContactPoint);
+			static_cast<const SphereCollider&>(a), static_cast<const MeshCollider&>(b), contactPoint);
 	}
 
 	return false;
+}
+
+bool CollisionManager::Linecast(const Vector3& start, const Vector3& end, LayerMask layerMask, RaycastHit& hitResult, const GameObject* ignore) const
+{
+	bool isHit = false;
+
+	for (const Collider* col : colliders_)
+	{
+		// 無効・対象外の Layer・無視する GameObject のコライダーは飛ばす
+		if (!col->IsEnabled() ||
+			(layerMask & (1u << col->GetLayer())) == 0 ||
+			&col->GetGameObject() == ignore)
+		{
+			continue;
+		}
+
+		// 形状ごとの判定
+		RaycastHit hit;
+		bool isHitCol = false;
+		switch (col->GetShape())
+		{
+		case Collider::SHAPE::MESH:
+			isHitCol = NarrowPhase::LineVsMesh(start, end, static_cast<const MeshCollider&>(*col), hit);
+			break;
+		default:
+			// 未対応の形状
+			break;
+		}
+
+		// 一番近い当たりを残す
+		if (isHitCol && (!isHit || hit.distance < hitResult.distance))
+		{
+			hitResult = hit;
+			isHit = true;
+		}
+	}
+
+	return isHit;
+}
+
+bool CollisionManager::Raycast(const Vector3& start, const Vector3& dir, float maxDistance, LayerMask layerMask, RaycastHit& hitResult, const GameObject* ignore) const
+{
+	// 終点に変換して、Linecast に任せる
+	return Linecast(start, start + dir * maxDistance, layerMask, hitResult, ignore);
+}
+
+std::uint32_t CollisionManager::GetCollisionMask(int layer) const
+{
+	assert(0 <= layer && layer < MAX_LAYERS);
+	return layerMasks_[layer];
 }
 
 void CollisionManager::SetLayerCollision(int a, int b, bool isCollide)
 {
 	assert(0 <= a && a < MAX_LAYERS && 0 <= b && b < MAX_LAYERS);
 
-	const std::uint32_t bitA = 1u << a;
-	const std::uint32_t bitB = 1u << b;
+	LayerMask bitA = 1u << a;
+	LayerMask bitB = 1u << b;
 
 	// 衝突表を対象にする
 	if (isCollide)

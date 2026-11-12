@@ -3,10 +3,11 @@
 
 class Collider;
 
-// Õ“Ëî•ñ
+// è¡çªæƒ…å ±
 struct ContactPoint
 {
-	Vector3 normal = Vector3::ZERO;		// ‰Ÿ‚µ–ß‚·•ûŒü
-	float depth = 0.0f;					// ‚ß‚è‚İ—Ê
-	const Collider* other = nullptr;	// ‘Šè
+	Vector3 point = Vector3::ZERO;		// è¡çªç‚¹
+	Vector3 normal = Vector3::ZERO;		// æ³•ç·šï¼ˆæŠ¼ã—æˆ»ã™æ–¹å‘ï¼‰
+	float depth = 0.0f;					// ã‚ã‚Šè¾¼ã¿é‡
+	const Collider* other = nullptr;	// è¡çªç›¸æ‰‹ã®ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼
 };
