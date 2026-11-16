@@ -4,6 +4,7 @@
 #include "../../../Engine/Math/UtilityMath.h"
 #include "../../../Engine/Component/Collider/CapsuleCollider.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
+#include "../../../Engine/Component/Mesh.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Component/Animator.h"
 #include "../../../Game/Component/PlayerController.h"
@@ -15,8 +16,10 @@
 
 Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	:
-	GameObject()
+	GameObject(),
+	mesh_(nullptr)
 {
+	mesh_ = AddComponent<Mesh>();
 	auto* controller = AddComponent<PlayerController>(camera);
 	auto* mover = AddComponent<CharacterMover>();
 	AddComponent<CharacterController>(collisionMng);
@@ -44,8 +47,8 @@ Player::~Player(void)
 void Player::Load()
 {
 	// モデル
-	transform_.SetModel(resMng_.Load(
-		ResourceManager::SRC::PLAYER).handleId_);
+	mesh_->SetHandle(
+		resMng_.Load(ResourceManager::SRC::STAGE_GROUND).handleId_);
 
 	// シェーダー
 	resMng_.Load(ResourceManager::SRC::SHADER_VS_PLAYER);
@@ -71,6 +74,7 @@ void Player::InitTransform(void)
 void Player::InitRenderer()
 {
 	AddComponent<MeshRenderer>(
+		*mesh_,
 		ResourceManager::SRC::SHADER_VS_PLAYER,
 		ResourceManager::SRC::SHADER_PS_PLAYER);
 }

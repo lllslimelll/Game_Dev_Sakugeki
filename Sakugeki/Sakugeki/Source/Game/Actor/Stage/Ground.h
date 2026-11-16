@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
+class Mesh;
 class CollisionManager;
 
 // 地面（平面コライダ）
@@ -23,4 +24,5 @@ protected:
 
 private:
 
+	Mesh* mesh_;
 };
