@@ -132,6 +132,9 @@ private:
 	// カメラの球を、めり込んだメッシュから押し出す
 	void ResolvePenetration(void);
 
+	// 追従対象の目線の高さ
+	static constexpr float FOLLOW_EYE_HEIGHT = 100.0f;
+
 	// めり込みの押し戻しを繰り返す最大回数
 	static constexpr int MAX_RESOLVE_ITERATIONS = 4;
 

@@ -1,6 +1,6 @@
 #include "ModelRenderer.h"
 
-ModelRenderer::ModelRenderer(Material& material, int& modelH)
+ModelRenderer::ModelRenderer(Material& material)
 	:
 	material_(material)
 {

@@ -12,10 +12,10 @@ Tree::Tree(CollisionManager& collisionMng)
 	:
 	GameObject()
 {
-	AddComponent<Mesh>();
+	mesh_ = AddComponent<Mesh>();
 	// ‰~ü‚Ì‹«ŠEüƒRƒ‰ƒCƒ_
 	//AddComponent<CircleBoundaryCollider>(collisionMng, Collider::TAG::WALL, BOUNDARY_RADIUS);
-	AddComponent<MeshCollider>(collisionMng, CollisionLayer::TREE);
+	AddComponent<MeshCollider>(*mesh_, collisionMng, CollisionLayer::TREE);
 }
 
 Tree::~Tree(void)
@@ -25,7 +25,7 @@ Tree::~Tree(void)
 void Tree::Load(void)
 {
 	mesh_->SetHandle(
-		resMng_.Load(ResourceManager::SRC::STAGE_GROUND).handleId_);
+		resMng_.Load(ResourceManager::SRC::STAGE_TREE).handleId_);
 
 	resMng_.Load(ResourceManager::SRC::SHADER_VS_TREE);
 	resMng_.Load(ResourceManager::SRC::SHADER_PS_TREE);

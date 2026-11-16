@@ -20,7 +20,7 @@ bool NarrowPhase::LineVsMesh(const Vector3& start, const Vector3& end, const Mes
 {
 	// 線分と当たったポリゴンをすべて集める
 	MV1_COLL_RESULT_POLY_DIM hits = MV1CollCheck_LineDim(
-		mesh.GetTransform().modelId, -1, start.ToVECTOR(), end.ToVECTOR());
+		mesh.GetMeshHandle(), -1, start.ToVECTOR(), end.ToVECTOR());
 
 	bool isHit = false;
 	float minDist = 0.0f;
@@ -60,7 +60,7 @@ bool NarrowPhase::CapsuleVsMesh(const CapsuleCollider& capsule, const MeshCollid
 
 	// 当たっている可能性のあるポリゴンを集める
 	MV1_COLL_RESULT_POLY_DIM hits = MV1CollCheck_Capsule(
-		mesh.GetTransform().modelId, -1, top, down, radius);
+		mesh.GetMeshHandle(), -1, top, down, radius);
 
 	bool isHit = false;
 	float maxDepth = 0.0f;
@@ -141,7 +141,7 @@ bool NarrowPhase::SphereVsMesh(const SphereCollider& sphere, const MeshCollider&
 
 	// 当たっている可能性のあるポリゴンを集める
 	MV1_COLL_RESULT_POLY_DIM hits = MV1CollCheck_Sphere(
-		mesh.GetTransform().modelId, -1, center, radius);
+		mesh.GetMeshHandle(), -1, center, radius);
 
 	bool isHit = false;
 	float maxDepth = 0.0f;

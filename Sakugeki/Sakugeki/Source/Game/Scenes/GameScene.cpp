@@ -145,40 +145,40 @@ void GameScene::Draw(void)
 // リアルシャドウ描画
 void GameScene::DrawShadow(void)
 {
-	const std::vector<int> stageeModels = stageMng_->GetModelIds();
-	// シャドウマップハンドルの作成
-	int ShadowMapHandle = MakeShadowMap(1024, 1024);
-	// シャドウマップが想定するライトの方向もセット
-	SetShadowMapLightDirection(ShadowMapHandle, { 0.3f, -0.7f, 0.8f });
-	// シャドウマップに描画する範囲を設定
-	SetShadowMapDrawArea(ShadowMapHandle,
-		VGet(player_->GetTransform().pos.x - 1000.0f, player_->GetTransform().pos.y - 1.0f, player_->GetTransform().pos.z - 1000.0f),
-		VGet(player_->GetTransform().pos.x + 1000.0f, player_->GetTransform().pos.y + 1000.0f, player_->GetTransform().pos.z + 1000.0f));
+	//const std::vector<int> stageeModels = stageMng_->GetModelIds();
+	//// シャドウマップハンドルの作成
+	//int ShadowMapHandle = MakeShadowMap(1024, 1024);
+	//// シャドウマップが想定するライトの方向もセット
+	//SetShadowMapLightDirection(ShadowMapHandle, { 0.3f, -0.7f, 0.8f });
+	//// シャドウマップに描画する範囲を設定
+	//SetShadowMapDrawArea(ShadowMapHandle,
+	//	VGet(player_->GetTransform().pos.x - 1000.0f, player_->GetTransform().pos.y - 1.0f, player_->GetTransform().pos.z - 1000.0f),
+	//	VGet(player_->GetTransform().pos.x + 1000.0f, player_->GetTransform().pos.y + 1000.0f, player_->GetTransform().pos.z + 1000.0f));
 
-	// シャドウマップへの描画の準備
-	ShadowMap_DrawSetup(ShadowMapHandle);
+	//// シャドウマップへの描画の準備
+	//ShadowMap_DrawSetup(ShadowMapHandle);
 
-	// シャドウマップへステージモデルの描画
-	for (int model : stageeModels) { MV1DrawModel(model); }
-	// シャドウマップへキャラクターモデルの描画
-	MV1DrawModel(player_->GetTransform().modelId);
+	//// シャドウマップへステージモデルの描画
+	//for (int model : stageeModels) { MV1DrawModel(model); }
+	//// シャドウマップへキャラクターモデルの描画
+	//MV1DrawModel(player_->GetTransform().modelId);
 
-	// シャドウマップへの描画を終了
-	ShadowMap_DrawEnd();
+	//// シャドウマップへの描画を終了
+	//ShadowMap_DrawEnd();
 
-	// 描画に使用するシャドウマップを設定
-	SetUseShadowMap(0, ShadowMapHandle);
+	//// 描画に使用するシャドウマップを設定
+	//SetUseShadowMap(0, ShadowMapHandle);
 
-	// ステージモデルの描画
-	for (int model : stageeModels) { MV1DrawModel(model); }
-	// キャラクターモデルの描画
-	MV1DrawModel(player_->GetTransform().modelId);
+	//// ステージモデルの描画
+	//for (int model : stageeModels) { MV1DrawModel(model); }
+	//// キャラクターモデルの描画
+	//MV1DrawModel(player_->GetTransform().modelId);
 
-	// 描画に使用するシャドウマップの設定を解除
-	SetUseShadowMap(0, -1);
+	//// 描画に使用するシャドウマップの設定を解除
+	//SetUseShadowMap(0, -1);
 
-	// シャドウマップの削除
-	DeleteShadowMap(ShadowMapHandle);
+	//// シャドウマップの削除
+	//DeleteShadowMap(ShadowMapHandle);
 }
 
 bool GameScene::IsDebugKeyTriggered(int key)

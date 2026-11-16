@@ -199,8 +199,8 @@ void Camera::SetBeforeDrawFollow(void)
 
 void Camera::Collision(void)
 {
-	// プレイヤーのルートフレーム
-	const Vector3 start = Vector3::GetVector3(MV1GetFramePosition(followTransform_->modelId, 1));
+	// レイの始点（追従対象の目の高さ）
+	const Vector3 start = followTransform_->pos + Vector3(0.0f, FOLLOW_EYE_HEIGHT, 0.0f);
 
 	// カメラの体（球）と同じ相手に、視線も遮られる
 	const CollisionManager::LayerMask mask =
