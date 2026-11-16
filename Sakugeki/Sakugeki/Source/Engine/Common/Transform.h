@@ -27,8 +27,8 @@ public:
 	// 解放
 	void Release(void);
 
-	// モデルのハンドルIDを設定
-	void SetModel(int handleId);
+	// 大きさ・回転・位置から、ワールド行列を作る
+	Matrix3D GetMatrix(void) const;
 
 	// 前方方向を取得
 	Vector3 GetForward(void) const;
@@ -45,9 +45,6 @@ public:
 
 	// 対象方向を取得
 	Vector3 GetDir(const Vector3& dir) const;
-
-	// モデルのハンドルID
-	int modelId;
 
 	// 大きさ
 	Vector3 scl;

@@ -4,6 +4,7 @@
 #include "../../../Engine/Math/UtilityMath.h"
 #include "../../../Engine/Component/Collider/CapsuleCollider.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
+#include "../../../Engine/Component/Mesh.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Component/Animator.h"
 #include "../../../Game/Component/PlayerController.h"
@@ -15,11 +16,13 @@
 
 Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	:
-	GameObject()
+	GameObject(),
+	mesh_(nullptr)
 {
 	auto* controller = AddComponent<PlayerController>(camera);
 	auto* mover = AddComponent<CharacterMover>();
 	AddComponent<CharacterController>(collisionMng);
+	mesh_ = AddComponent<Mesh>();
 
 	// 体力。死んだら操作を受け付けない
 	auto* health = AddComponent<Health>(MAX_HP);
@@ -44,8 +47,8 @@ Player::~Player(void)
 void Player::Load()
 {
 	// モデル
-	transform_.SetModel(resMng_.Load(
-		ResourceManager::SRC::PLAYER).handleId_);
+	mesh_->SetHandle(
+		resMng_.Load(ResourceManager::SRC::PLAYER).handleId_);
 
 	// シェーダー
 	resMng_.Load(ResourceManager::SRC::SHADER_VS_PLAYER);
@@ -71,6 +74,7 @@ void Player::InitTransform(void)
 void Player::InitRenderer()
 {
 	AddComponent<MeshRenderer>(
+		*mesh_,
 		ResourceManager::SRC::SHADER_VS_PLAYER,
 		ResourceManager::SRC::SHADER_PS_PLAYER);
 }
@@ -80,7 +84,7 @@ void Player::InitAnimation(void)
 	using AnimType = PlayerController::ANIM_TYPE;
 
 	// アニメーターコンポーネントを追加（このあとは使わないので、ローカル変数で持つ）
-	auto* animator = AddComponent<Animator>();
+	auto* animator = AddComponent<Animator>(*mesh_);
 
 	// 再生するアニメーションを登録
 	animator->Add(static_cast<int>(AnimType::IDLE), 20.0f, resMng_.Load(ResourceManager::SRC::ANIM_IDLE).handleId_);

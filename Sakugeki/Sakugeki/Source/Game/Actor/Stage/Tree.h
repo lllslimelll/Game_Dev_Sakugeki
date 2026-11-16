@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../Engine/GameObject/GameObject.h"
 
+class Mesh;
 class CollisionManager;
 
 // 木（今は全部の木を1つのモデルとして一括ロード）
@@ -30,4 +31,6 @@ private:
 
 	// 移動可能な半径
 	static constexpr float BOUNDARY_RADIUS = 2800.0f;
+
+	Mesh* mesh_;
 };

@@ -147,9 +147,6 @@
     <ClCompile Include="Source\Engine\Component\Collider\CapsuleCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Component\Collider\LineCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Engine\Component\Collider\MeshCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -186,7 +183,7 @@
     <ClCompile Include="Source\Game\Actor\Stage\Tree.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Engine\Component\Collider\PlaneCollider.cpp">
+    <ClCompile Include="Source\Engine\Component\Mesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -326,9 +323,6 @@
     <ClInclude Include="Source\Engine\Component\Collider\CapsuleCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Component\Collider\LineCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Engine\Component\Collider\MeshCollider.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -368,7 +362,7 @@
     <ClInclude Include="Source\Engine\Component\Collider\RaycastHit.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engine\Component\Collider\PlaneCollider.h">
+    <ClInclude Include="Source\Engine\Component\Mesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -3,6 +3,8 @@
 #include <map>
 #include "Component.h"
 
+class Mesh;
+
 class Animator : public Component
 {
 public:
@@ -20,7 +22,7 @@ public:
 
     // コンストラクタ
     // gameObject : 持ち主の GameObject
-    explicit Animator(GameObject& gameObject);
+    explicit Animator(GameObject& gameObject, const Mesh& mesh);
 
     // デストラクタ
     ~Animator(void) override;
@@ -58,8 +60,7 @@ public:
 
 private:
 
-    // アニメーションするモデルのハンドルID
-    int modelId_;
+    const Mesh& mesh_;
 
     // 種類別のアニメーションデータ
     std::map<int, Animation> animations_;

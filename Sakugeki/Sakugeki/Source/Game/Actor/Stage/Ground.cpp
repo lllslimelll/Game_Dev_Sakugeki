@@ -1,5 +1,6 @@
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Utility/AsoUtility.h"
+#include "../../../Engine/Component/Mesh.h"
 #include "../../../Engine/Component/MeshRenderer.h"
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
@@ -10,10 +11,12 @@
 
 Ground::Ground(CollisionManager& collisionMng)
 	:
-	GameObject()
+	GameObject(),
+	mesh_(nullptr)
 {
+	mesh_ = AddComponent<Mesh>();
 	// メッシュコライダ
-	AddComponent<MeshCollider>(collisionMng, CollisionLayer::GROUND);
+	AddComponent<MeshCollider>(*mesh_, collisionMng, CollisionLayer::GROUND);
 }
 
 Ground::~Ground(void)
@@ -23,7 +26,7 @@ Ground::~Ground(void)
 void Ground::Load(void)
 {
 	// モデル
-	transform_.SetModel(
+	mesh_->SetHandle(
 		resMng_.Load(ResourceManager::SRC::STAGE_GROUND).handleId_);
 
 	// シェーダー
@@ -46,5 +49,5 @@ void Ground::InitTransform(void)
 void Ground::InitRenderer(void)
 {
 	AddComponent<MeshRenderer>(
-		ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);
+		*mesh_, ResourceManager::SRC::SHADER_VS_GROUND, ResourceManager::SRC::SHADER_PS_GROUND);
 }

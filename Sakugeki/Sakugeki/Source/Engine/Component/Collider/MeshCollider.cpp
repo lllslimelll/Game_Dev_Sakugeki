@@ -1,9 +1,11 @@
 #include "../../../Engine/Utility/AsoUtility.h"
+#include "../../../Engine/Component/Mesh.h"
 #include "MeshCollider.h"
 
-MeshCollider::MeshCollider(GameObject& gameObject, CollisionManager& collisionMng, int layer)
+MeshCollider::MeshCollider(GameObject& gameObject, const Mesh& mesh, CollisionManager& collisionMng, int layer)
 	:
-	Collider(gameObject, collisionMng, SHAPE::MESH, layer)
+	Collider(gameObject, collisionMng, SHAPE::MESH, layer),
+	mesh_(mesh)
 {
 }
 
@@ -17,17 +19,17 @@ void MeshCollider::Init(void)
 	Collider::Init();
 
 	// モデルの衝突情報を構築する
-	MV1SetupCollInfo(GetTransform().modelId, -1);
+	MV1SetupCollInfo(mesh_.GetHandle(), -1);
 }
 
 void MeshCollider::AddExcludeFrameIds(const std::wstring& name)
 {
 	// フレーム数を取得
-	int num = MV1GetFrameNum(GetTransform().modelId);
+	int num = MV1GetFrameNum(mesh_.GetHandle());
 	for (int i = 0; i < num; i++)
 	{
 		// フレーム名称を取得
-		std::wstring frameName = MV1GetFrameName(GetTransform().modelId, i);
+		std::wstring frameName = MV1GetFrameName(mesh_.GetHandle(), i);
 
 		if (frameName.find(name) != std::wstring::npos)
 		{
@@ -55,6 +57,11 @@ bool MeshCollider::IsExcludeFrame(int frameIdx) const
 	}
 
 	return false;
+}
+
+int MeshCollider::GetMeshHandle(void) const
+{
+	return mesh_.GetHandle();
 }
 
 

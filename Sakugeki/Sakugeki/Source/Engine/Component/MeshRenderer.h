@@ -3,6 +3,7 @@
 #include "../Resource/ResourceManager.h"
 #include "Component.h"
 
+class Mesh;
 class Material;
 class ModelRenderer;
 
@@ -16,7 +17,7 @@ public:
 	// gameObject   : 持ち主の GameObject
 	// vertexShader : 頂点シェーダー
 	// pixelShader  : ピクセルシェーダー
-	MeshRenderer(GameObject& gameObject,
+	MeshRenderer(GameObject& gameObject, const Mesh& mesh,
 		ResourceManager::SRC vertexShader, ResourceManager::SRC pixelShader);
 
 	// デストラクタ
@@ -26,6 +27,8 @@ public:
 	void Draw(void) override;
 
 private:
+
+	const Mesh& mesh_;
 
 	// マテリアル（renderer_ が参照するので、先に宣言する）
 	std::unique_ptr<Material> material_;

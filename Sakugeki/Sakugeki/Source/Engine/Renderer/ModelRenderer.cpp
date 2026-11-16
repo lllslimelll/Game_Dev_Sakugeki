@@ -1,9 +1,8 @@
 #include "ModelRenderer.h"
 
-ModelRenderer::ModelRenderer(Material& material, int& modelH)
+ModelRenderer::ModelRenderer(Material& material)
 	:
-	material_(material),
-	modelH_(modelH)
+	material_(material)
 {
 }
 
@@ -11,7 +10,7 @@ ModelRenderer::~ModelRenderer()
 {
 }
 
-void ModelRenderer::Draw(void)
+void ModelRenderer::Draw(int modelHandle)
 {
 	// オリジナルシェーダ設定（ON）
 	MV1SetUseOrigShader(true);
@@ -28,7 +27,7 @@ void ModelRenderer::Draw(void)
 	SetTextureAddressModeUV(texAType, texAType);
 
 	// 描画
-	MV1DrawModel(modelH_);
+	MV1DrawModel(modelHandle);
 
 	// テクスチャアドレスタイプを元に戻す
 	SetTextureAddressModeUV(DX_TEXADDRESS_CLAMP, DX_TEXADDRESS_CLAMP);

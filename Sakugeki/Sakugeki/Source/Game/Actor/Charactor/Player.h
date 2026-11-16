@@ -2,6 +2,7 @@
 #include "../../../Engine/Math/Vector3.h"
 #include "../../../Engine/GameObject/GameObject.h"
 
+class Mesh;
 class Camera;
 class CollisionManager;
 
@@ -45,4 +46,6 @@ private:
 	static inline const Vector3 COL_CAPSULE_DOWN_LOCAL_POS = { 0.0f, 30.0f, 0.0f };
 	// 衝突判定用カプセル
 	static constexpr float COL_CAPSULE_RADIUS = 20.0f;
+
+	Mesh* mesh_;
 };

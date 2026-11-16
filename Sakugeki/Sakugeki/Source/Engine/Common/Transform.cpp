@@ -3,7 +3,6 @@
 
 Transform::Transform(void)
 	:
-	modelId(-1),
 	scl(Vector3::ONE),
 	rot(Vector3::ZERO),
 	pos(Vector3::ZERO),
@@ -31,25 +30,19 @@ void Transform::Update(void)
 
 	// 位置
 	matPos = Matrix3D::Translate(pos);
-
-	// 行列の合成
-	Quaternion q = quaRot * quaRotLocal; // ローカル回転 → 回転
-	Matrix3D mat = matScl * q.ToMatrix3D() * matPos;  // 拡縮 → 回転 → 移動
-
-	// 行列をモデルに判定
-	if (modelId != -1)
-	{
-		MV1SetMatrix(modelId, mat.ToMATRIX());
-	}
 }
 
 void Transform::Release(void)
 {
 }
 
-void Transform::SetModel(int handleId)
+Matrix3D Transform::GetMatrix(void) const
 {
-	modelId = handleId;
+	// ワールド行列
+	const Quaternion q = quaRot * quaRotLocal;
+
+	// 拡縮 → 回転 → 平行移動
+	return Matrix3D::Scale(scl) * q.ToMatrix3D() * Matrix3D::Translate(pos);
 }
 
 Vector3 Transform::GetForward(void) const

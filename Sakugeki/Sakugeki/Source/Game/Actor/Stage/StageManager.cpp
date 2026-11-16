@@ -1,4 +1,5 @@
 #include "../../../Engine/Common/Transform.h"
+#include "../../../Engine/Component/Mesh.h"
 #include "Ground.h"
 #include "Tree.h"
 #include "StageManager.h"
@@ -47,7 +48,7 @@ std::vector<int> StageManager::GetModelIds() const
 {
 	return 
 	{
-		ground_->GetTransform().modelId,
-		tree_->GetTransform().modelId
+		ground_->GetComponent<Mesh>()->GetHandle(),
+		tree_->GetComponent<Mesh>()->GetHandle()
 	};
 }

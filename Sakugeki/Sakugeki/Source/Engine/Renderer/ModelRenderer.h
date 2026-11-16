@@ -8,21 +8,18 @@ class ModelRenderer
 public:
 
 	// コンストラクタ
-	ModelRenderer(Material& material, int& modelH);
+	ModelRenderer(Material& material);
 
 	// デストラクタ
 	~ModelRenderer(void);
 
 	// 描画
-	void Draw(void);
+	void Draw(int modelHandle);
 
 private:
 
 	// モデルマテリアル
 	Material& material_; 
-
-	// モデルのハンドル
-	int& modelH_;
 
 	// シェーダ設定（頂点）
 	void SetReserveVS(void);

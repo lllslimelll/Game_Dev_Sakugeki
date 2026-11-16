@@ -1,13 +1,14 @@
 #include <DxLib.h>
 #include "../Common/Transform.h"
+#include "../../Engine/Component/Mesh.h"
 #include "../../Engine/Scene/SceneManager.h"
 #include "../GameObject/GameObject.h"
 #include "Animator.h"
 
-Animator::Animator(GameObject& gameObject)
+Animator::Animator(GameObject& gameObject, const Mesh& mesh)
     :
 	Component(gameObject),
-    modelId_(gameObject.GetTransform().modelId),
+    mesh_(mesh),
     playType_(-1),
     playAnim_(),
     isLoop_(true),
@@ -48,7 +49,7 @@ void Animator::Play(int type, bool isLoop)
         // 既にブレンド中なら前のブレンド先をデタッチ
         if (prevType_ != -1 && prevAnim_.attachNo != -1)
         {
-            MV1DetachAnim(modelId_, prevAnim_.attachNo);
+            MV1DetachAnim(mesh_.GetHandle(), prevAnim_.attachNo);
         }
         prevAnim_ = playAnim_;
         prevType_ = playType_;
@@ -69,13 +70,13 @@ void Animator::Play(int type, bool isLoop)
     playAnim_.speed = animations_[type].speed;
 
     Attach(playAnim_);
-    playAnim_.totalTime = MV1GetAttachAnimTotalTime(modelId_, playAnim_.attachNo);
+    playAnim_.totalTime = MV1GetAttachAnimTotalTime(mesh_.GetHandle(), playAnim_.attachNo);
 
     // ブレンドウェイト初期設定
     if (prevType_ != -1)
     {
-        MV1SetAttachAnimBlendRate(modelId_, prevAnim_.attachNo, 1.0f - blendRate_);
-        MV1SetAttachAnimBlendRate(modelId_, playAnim_.attachNo, blendRate_);
+        MV1SetAttachAnimBlendRate(mesh_.GetHandle(), prevAnim_.attachNo, 1.0f - blendRate_);
+        MV1SetAttachAnimBlendRate(mesh_.GetHandle(), playAnim_.attachNo, blendRate_);
     }
 }
 
@@ -100,21 +101,21 @@ void Animator::Update(void)
             // ブレンド完了：前のアニメーションをデタッチ
             if (prevAnim_.attachNo != -1)
             {
-                MV1DetachAnim(modelId_, prevAnim_.attachNo);
+                MV1DetachAnim(mesh_.GetHandle(), prevAnim_.attachNo);
                 prevAnim_.attachNo = -1;
             }
             prevType_ = -1;
         }
 
-        MV1SetAttachAnimBlendRate(modelId_, prevAnim_.attachNo, 1.0f - blendRate_);
-        MV1SetAttachAnimBlendRate(modelId_, playAnim_.attachNo, blendRate_);
+        MV1SetAttachAnimBlendRate(mesh_.GetHandle(), prevAnim_.attachNo, 1.0f - blendRate_);
+        MV1SetAttachAnimBlendRate(mesh_.GetHandle(), playAnim_.attachNo, blendRate_);
 
         // 前アニメのステップ更新
         if (prevAnim_.attachNo != -1)
         {
             prevAnim_.step += deltaTime * prevAnim_.speed;
             if (prevAnim_.step > prevAnim_.totalTime) { prevAnim_.step = 0.0f; }
-            MV1SetAttachAnimTime(modelId_, prevAnim_.attachNo, prevAnim_.step);
+            MV1SetAttachAnimTime(mesh_.GetHandle(), prevAnim_.attachNo, prevAnim_.step);
         }
     }
 
@@ -127,7 +128,7 @@ void Animator::Update(void)
         else { playAnim_.step = playAnim_.totalTime; }
     }
 
-    MV1SetAttachAnimTime(modelId_, playAnim_.attachNo, playAnim_.step);
+    MV1SetAttachAnimTime(mesh_.GetHandle(), playAnim_.attachNo, playAnim_.step);
 }
 
 void Animator::Release(void)
@@ -169,10 +170,10 @@ void Animator::Attach(Animation& anim)
 {
     if (anim.model == -1)
     {
-        anim.attachNo = MV1AttachAnim(modelId_, anim.animIndex);
+        anim.attachNo = MV1AttachAnim(mesh_.GetHandle(), anim.animIndex);
     }
     else
     {
-        anim.attachNo = MV1AttachAnim(modelId_, 0, anim.model);
+        anim.attachNo = MV1AttachAnim(mesh_.GetHandle(), 0, anim.model);
     }
 }
