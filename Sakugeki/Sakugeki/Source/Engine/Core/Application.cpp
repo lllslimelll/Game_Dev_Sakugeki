@@ -6,6 +6,7 @@
 #include "../Scene/ScreenManager.h"
 #include "../Audio/Audio.h"
 #include "../Common/FpsController.h"
+#include "../Debug/DebugSystem.h"
 #include "Application.h"
 
 Application* Application::instance_ = nullptr;
@@ -31,7 +32,7 @@ void Application::Init(void)
 
 	// ウィンドウサイズ
 	SetGraphMode(SCREEN_SIZE_X, SCREEN_SIZE_Y, COLOR_BIT_DEPTH);
-	ChangeWindowMode(true);
+	ChangeWindowMode(false);
 
 	// FPS制御初期化
 	fpsController_ = std::make_unique<FpsController>(FRAME_RATE);
@@ -47,6 +48,10 @@ void Application::Init(void)
 
 	// Effekseerの初期化
 	InitEffekseer();
+
+	// デバッグシステム初期化
+	debugSystem_ = std::make_unique<DebugSystem>(FRAME_RATE);
+	debugSystem_->Init();
 
 	// 乱数のシード値を設定する
 	DATEDATA date;
@@ -77,18 +82,25 @@ void Application::Run(void)
 	{
 
 		Input.Update();
-		sceneManager.Update();
+
+		// デバッグシステムの更新
+		debugSystem_->BeginFrame();	
+		if (debugSystem_->ShouldUpdateGame())
+		{
+			sceneManager.Update();
+		}
+		else
+		{
+			sceneManager.ResetTime();
+		}
+		debugSystem_->EndUpdate();	
 
 		sceneManager.Draw();
-
-#ifdef _DEBUG
-
-		// 平均FPS描画
-		fpsController_->Draw();
-
-#endif // _DEBUG
+		debugSystem_->Draw();
 
 		ScreenFlip();
+
+		debugSystem_->EndFrame();
 
 		// 理想FPS経過待ち
 		fpsController_->Wait();
@@ -97,6 +109,10 @@ void Application::Run(void)
 
 void Application::Destroy(void)
 {
+	// デバッグシステムの解放
+	debugSystem_->Release();	
+	debugSystem_.reset();
+
 	Input::GetInstance().Destroy();
 	ResourceManager::GetInstance().Destroy();
 	SceneManager::GetInstance().Destroy();
@@ -114,7 +130,6 @@ void Application::Destroy(void)
 
 	// インスタンスのメモリ解放
 	delete instance_;
-
 }
 
 bool Application::IsInitFail(void) const
@@ -131,6 +146,11 @@ bool Application::RequestExit()
 {
 	isRequestedExit_ = true;
 	return isRequestedExit_;
+}
+
+DebugSystem& Application::GetDebugSystem(void)
+{
+	return *debugSystem_;
 }
 
 Application::Application(void)

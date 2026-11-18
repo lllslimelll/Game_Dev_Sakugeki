@@ -11,6 +11,9 @@
 #include "../../Engine/Component/Collider/ContactPoint.h"
 #include "../../Engine/Component/Collider/RaycastHit.h"
 #include "../../Game/Common/CollisionLayer.h"
+
+#include "../../Engine/Core/Application.h"
+#include "../../Engine/Debug/DebugSystem.h"
 #include "Camera.h"
 
 Camera::Camera(CollisionManager& collisionMng)
@@ -253,6 +256,12 @@ void Camera::ResolvePenetration(void)
 
 Vector2 Camera::GetRotMouse()
 {
+	// デバッグ画面を開いている間は、マウスを ImGui に使わせる（カーソルを中心に戻さない）
+	if (Application::GetInstance().GetDebugSystem().IsUsingMouse())
+	{
+		return Vector2(0.0f, 0.0f);
+	}
+
 	int screenW = 0, screenH = 0;
 	GetDrawScreenSize(&screenW, &screenH);
 	Vector2 center(screenW / 2.0f, screenH / 2.0f);

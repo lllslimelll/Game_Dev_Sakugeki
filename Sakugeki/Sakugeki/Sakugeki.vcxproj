@@ -155,6 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Debug\DebugSystem.cpp" />
+    <ClCompile Include="Source\Engine\Debug\DebugGui.cpp" />
+    <ClCompile Include="Source\Engine\Debug\FrameStats.cpp" />
     <ClCompile Include="Source\Engine\Component\Mesh.cpp" />
     <ClCompile Include="Source\Game\Common\CollisionLayer.cpp" />
     <ClCompile Include="Source\Game\UI\Player\HPGauge.cpp" />
@@ -212,6 +215,7 @@
     <ClCompile Include="Source\Engine\Math\Vector3.cpp" />
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
     <ClCompile Include="Source\Game\UI\UIDraw.cpp" />
+    <ClCompile Include="Source\Engine\Debug\StatsPanel.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui.cpp" />
@@ -221,8 +225,14 @@
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\Debug\DebugSystem.h" />
+    <ClInclude Include="Source\Engine\Debug\DebugGui.h" />
+    <ClInclude Include="Source\Engine\Debug\DebugPanel.h" />
+    <ClInclude Include="Source\Engine\Debug\FrameStats.h" />
     <ClInclude Include="Source\Engine\Component\Mesh.h" />
     <ClInclude Include="Source\Engine\Component\Collider\RaycastHit.h" />
+    <ClInclude Include="Source\Engine\Debug\DebugConfig.h" />
+    <ClInclude Include="Source\Engine\Debug\DebugSetting.h" />
     <ClInclude Include="Source\Game\Common\CollisionLayer.h" />
     <ClInclude Include="Source\Game\UI\Player\HPGauge.h" />
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
@@ -280,6 +290,7 @@
     <ClInclude Include="Source\Engine\Math\Vector3.h" />
     <ClInclude Include="Source\Engine\Math\UtilityMath.h" />
     <ClInclude Include="Source\Game\UI\UIDraw.h" />
+    <ClInclude Include="Source\Engine\Debug\StatsPanel.h" />
     <ClInclude Include="ThirdParty\imgui\imgui_impl_dx11.h" />
     <ClInclude Include="ThirdParty\imgui\imgui_impl_win32.h" />
     <ClInclude Include="ThirdParty\imgui\imconfig.h" />

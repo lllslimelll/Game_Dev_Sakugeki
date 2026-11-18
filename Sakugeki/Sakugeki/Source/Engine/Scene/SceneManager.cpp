@@ -239,6 +239,11 @@ void SceneManager::PopOverlay()
 	}
 }
 
+void SceneManager::ResetTime(void)
+{
+	preTime_ = std::chrono::system_clock::now();
+}
+
 SceneManager::SCENE_ID SceneManager::GetSceneID(void)
 {
 	return sceneId_;

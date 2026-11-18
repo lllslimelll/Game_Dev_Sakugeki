@@ -60,6 +60,9 @@ public:
 	// オーバーレイの削除
 	void PopOverlay();
 
+	// 経過時間の基準を今にする（ゲームを止めている間の時間を、次の deltaTime に含めないため）
+	void ResetTime(void);
+
 	// シーンIDの取得
 	SCENE_ID GetSceneID(void);
 
