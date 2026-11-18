@@ -1,15 +1,17 @@
 #pragma once
 #include <memory>
 #include <string>
+
 class FpsController;
+class DebugSystem;
 
 class Application
 {
 
 public:
 	// スクリーンサイズ
-	static constexpr int SCREEN_SIZE_X = 900;
-	static constexpr int SCREEN_SIZE_Y = 900;
+	static constexpr int SCREEN_SIZE_X = 1920;
+	static constexpr int SCREEN_SIZE_Y = 1080;
 	// スクリーンの色深度
 	static constexpr int COLOR_BIT_DEPTH = 32;
 
@@ -40,6 +42,9 @@ public:
 	// 終了リクエスト
 	bool RequestExit();
 
+	// デバッグシステムの取得
+	DebugSystem& GetDebugSystem(void);	
+
 private:
 
 	// 静的インスタンス
@@ -47,6 +52,8 @@ private:
 
 	// FPS制御
 	std::unique_ptr<FpsController> fpsController_;
+	// デバッグシステム
+	std::unique_ptr<DebugSystem> debugSystem_;
 
 	// 終了リクエストフラグ
 	bool isRequestedExit_;
