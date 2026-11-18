@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="ソース ファイル">
@@ -186,175 +186,25 @@
     <ClCompile Include="Source\Engine\Component\Mesh.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_allegro5.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_impl_dx11.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_android.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_impl_win32.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx9.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx10.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_demo.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx11.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_draw.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx12.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_glfw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_glut.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_null.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_opengl2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_opengl3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_qnx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdl2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdl3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlgpu3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlrenderer2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlrenderer3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_vulkan.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_wgpu.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_allegro5\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_android_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_glfw_opengl2\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_glfw_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_glfw_vulkan\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_glfw_wgpu\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_glut_opengl2\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_null\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_qnx_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_qnx_vulkan\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_directx11\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_opengl2\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_sdlrenderer2\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_vulkan\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl2_wgpu\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_directx11\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_sdlgpu3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_sdlrenderer3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_vulkan\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_sdl3_wgpu\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_directx9\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_directx10\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_directx11\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_directx12\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_opengl3\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_win32_vulkan\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\usynergy\uSynergy.c">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\cpp\imgui_stdlib.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\fonts\binary_to_compressed_c.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\freetype\imgui_freetype.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui_demo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui_draw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui_tables.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui_widgets.cpp">
+    <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -536,121 +386,28 @@
     <ClInclude Include="Source\Engine\Component\Mesh.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_allegro5.h">
+    <ClInclude Include="ThirdParty\imgui\imgui_impl_dx11.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_android.h">
+    <ClInclude Include="ThirdParty\imgui\imgui_impl_win32.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx9.h">
+    <ClInclude Include="ThirdParty\imgui\imconfig.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx10.h">
+    <ClInclude Include="ThirdParty\imgui\imgui.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx11.h">
+    <ClInclude Include="ThirdParty\imgui\imgui_internal.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_dx12.h">
+    <ClInclude Include="ThirdParty\imgui\imstb_rectpack.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_glfw.h">
+    <ClInclude Include="ThirdParty\imgui\imstb_textedit.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_glut.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_metal.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_metal4.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_null.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_opengl2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_opengl3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_opengl3_loader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_osx.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_qnx.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdl2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdl3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlgpu3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlgpu3_shaders.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlrenderer2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_sdlrenderer3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_vulkan.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_wgpu.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\backends\imgui_impl_win32.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\example_allegro5\imconfig_allegro5.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\emscripten\emscripten_mainloop_stub.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\glfw\include\GLFW\glfw3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\glfw\include\GLFW\glfw3native.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\usynergy\uSynergy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\cpp\imgui_stdlib.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\freetype\imgui_freetype.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\misc\single_file\imgui_single_file.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imconfig.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imgui_internal.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imstb_rectpack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imstb_textedit.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\imstb_truetype.h">
+    <ClInclude Include="ThirdParty\imgui\imstb_truetype.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -674,7 +431,6 @@
     <None Include="Assets\Animations\Player\Run.mv1" />
     <None Include="Assets\Animations\Player\Idle.mv1" />
     <None Include="Assets\Animations\Player\Jumping.mv1" />
-    <None Include="ThirdParty\imgui-1.93.0\imgui-1.93.0\examples\libs\emscripten\shell_minimal.html" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\Models\Player\Player.fbm\Ch46_1001_Diffuse.png">
@@ -689,5 +445,8 @@
     <Image Include="Assets\Models\Player\Player.fbm\Ch46_1001_Specular.png">
       <Filter>リソース ファイル</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ThirdParty\imgui\LICENSE.txt" />
   </ItemGroup>
 </Project>
