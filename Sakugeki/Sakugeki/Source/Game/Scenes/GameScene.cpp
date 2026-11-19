@@ -6,6 +6,8 @@
 #include "../../Engine/Math/Vector3.h"
 #include "../../Engine/Math/UtilityMath.h"
 #include "../../Engine/Component/Collider/CollisionManager.h"
+#include "../../Engine/Core/Application.h"
+#include "../../Engine/Debug/DebugSystem.h"
 #include "../Actor/Charactor/Player.h"
 #include "../Actor/Stage/StageManager.h"
 #include "../Actor/Camera.h"
@@ -32,7 +34,6 @@ void GameScene::Load()
 {
 	// 当たり判定の管理クラス
 	collisionMng_ = std::make_unique<CollisionManager>();
-	CollisionLayer::SetupMatrix(*collisionMng_);
 
 	camera_ = std::make_unique<Camera>(*collisionMng_);
 
@@ -60,6 +61,9 @@ void GameScene::Init(void)
 	stageMng_->Init();
 	player_->Init();
 	hpGauge_->Init();
+
+	CollisionLayer::SetupMatrix(*collisionMng_);
+	CollisionLayer::RegisterDebugNames(Application::GetInstance().GetDebugSystem());
 
 	debugHud_.Init();
 	debugHudData_.hp = 100;

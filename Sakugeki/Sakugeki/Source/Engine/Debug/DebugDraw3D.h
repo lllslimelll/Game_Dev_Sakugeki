@@ -1,31 +1,48 @@
 #pragma once
 #include "../Math/Vector3.h"
 
-// 3D ‹óŠÔiƒ[ƒ‹ƒhÀ•Wj‚ÉAƒfƒoƒbƒO—p‚Ìü‚âŒ`‚ğ•`‚­
+struct DebugSetting;
+
+// 3D ç©ºé–“ï¼ˆãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ï¼‰ã«ã€ãƒ‡ãƒãƒƒã‚°ç”¨ã®ç·šã‚„å½¢ã‚’æã
 class DebugDraw3D
 {
 public:
 
+	// ä¾é ¼ã®ç¨®é¡ï¼ˆWorld ãƒ‘ãƒãƒ«ã§ç¨®é¡ã”ã¨ã«è¡¨ç¤ºã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹ï¼‰
+	enum class CATEGORY
+	{
+		GENERAL,	// ç¨®é¡ã‚’æŒ‡å®šã—ãªã„ã‚‚ã®ï¼ˆå¸¸ã«æãï¼‰
+		AXES,		// åŸç‚¹ã®è»¸
+		GRID,		// ã‚°ãƒªãƒƒãƒ‰
+		COLLIDER,	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ï¼ˆLayer ã”ã¨ã«åˆ‡ã‚Šæ›¿ãˆã‚‹ï¼‰
+		RAY,		// Linecast
+	};
+
 	DebugDraw3D(void) = delete;
 
-	// ü
-	static void Line(const Vector3& start, const Vector3& end, unsigned int color);
+	// ç·š
+	static void Line(const Vector3& start, const Vector3& end, unsigned int color,
+		CATEGORY category = CATEGORY::GENERAL, int layer = 0);
 
-	// ‹…iƒƒCƒ„[ƒtƒŒ[ƒ€j
-	static void Sphere(const Vector3& center, float radius, unsigned int color);
+	// çƒï¼ˆãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰
+	static void Sphere(const Vector3& center, float radius, unsigned int color,
+		CATEGORY category = CATEGORY::GENERAL, int layer = 0);
 
-	// ƒJƒvƒZƒ‹iƒƒCƒ„[ƒtƒŒ[ƒ€jBtop ‚Æ bottom ‚Í—¼’[‚Ì‹…‚Ì’†S
-	static void Capsule(const Vector3& top, const Vector3& bottom, float radius, unsigned int color);
+	// ã‚«ãƒ—ã‚»ãƒ«ï¼ˆãƒ¯ã‚¤ãƒ¤ãƒ¼ãƒ•ãƒ¬ãƒ¼ãƒ ï¼‰ã€‚top ã¨ bottom ã¯ä¸¡ç«¯ã®çƒã®ä¸­å¿ƒ
+	static void Capsule(const Vector3& top, const Vector3& bottom, float radius, unsigned int color,
+		CATEGORY category = CATEGORY::GENERAL, int layer = 0);
 
-	// –îˆóistart ‚©‚ç end ‚ÖBæ’[‚É‰~‚·‚¢j
-	static void Arrow(const Vector3& start, const Vector3& end, unsigned int color);
+	// çŸ¢å°ï¼ˆstart ã‹ã‚‰ end ã¸ã€‚å…ˆç«¯ã«å††ã™ã„ï¼‰
+	static void Arrow(const Vector3& start, const Vector3& end, unsigned int color,
+		CATEGORY category = CATEGORY::GENERAL, int layer = 0);
 
-	// “_iXYZ •ûŒü‚Ì¬‚³‚È\šBsize ‚Í’†S‚©‚ç’[‚Ü‚Å‚Ì’·‚³j
-	static void Point(const Vector3& pos, float size, unsigned int color);
+	// ç‚¹ï¼ˆXYZ æ–¹å‘ã®å°ã•ãªåå­—ã€‚size ã¯ä¸­å¿ƒã‹ã‚‰ç«¯ã¾ã§ã®é•·ã•ï¼‰
+	static void Point(const Vector3& pos, float size, unsigned int color,
+		CATEGORY category = CATEGORY::GENERAL, int layer = 0);
 
-	// —­‚ß‚½ˆË—Š‚ğ‚·‚×‚Ä•`‚­
-	static void Draw(void);
+	// æºœã‚ãŸä¾é ¼ã®ã†ã¡ã€setting ã§è¡¨ç¤ºãŒã‚ªãƒ³ã«ãªã£ã¦ã„ã‚‹ã‚‚ã®ã‚’æã
+	static void Draw(const DebugSetting& setting);
 
-	// —­‚ß‚½ˆË—Š‚ğ‚·‚×‚ÄÁ‚·
+	// æºœã‚ãŸä¾é ¼ã‚’ã™ã¹ã¦æ¶ˆã™
 	static void Clear(void);
 };

@@ -2,7 +2,6 @@
 #include <array>
 #include <cstdint>
 #include <vector>
-#include <cstdint>
 
 class GameObject;
 class Vector3;

@@ -2,8 +2,10 @@
 #include <array>
 #include <memory>
 #include <vector>
+#include <string>
 #include "DebugSetting.h"
 #include "DebugPanel.h"
+#include "WorldPanel.h"
 #include "FrameStats.h"
 
 class DebugGui;
@@ -42,6 +44,9 @@ public:
 	// パネルを足す（DebugSystem が所有する）
 	void AddPanel(std::unique_ptr<DebugPanel> panel);
 
+	// Layer の名前を登録する（World パネルのチェックボックスに出る）
+	void SetLayerName(int layer, const std::string& name);
+
 	const DebugSetting& GetSettings(void) const;
 
 	// デバッグ画面がマウスを使っているか
@@ -67,6 +72,8 @@ private:
 	FrameStats frameStats_;
 	std::unique_ptr<DebugGui> gui_;
 	std::vector<PanelEntry> panels_;
+
+	WorldPanel::LayerNames layerNames_;
 
 	float targetFrameMs_;
 

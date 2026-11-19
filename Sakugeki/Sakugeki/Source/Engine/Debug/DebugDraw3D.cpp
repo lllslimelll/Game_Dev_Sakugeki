@@ -1,11 +1,12 @@
 #include <vector>
 #include <DxLib.h>
 #include "DebugConfig.h"
+#include "DebugSetting.h"	
 #include "DebugDraw3D.h"
 
 namespace
 {
-	// Œ`‚Ìí—Ş
+	// å½¢ã®ç¨®é¡
 	enum class SHAPE
 	{
 		LINE,
@@ -15,29 +16,32 @@ namespace
 		POINT,
 	};
 
-	// •`‚­ˆË—Š1‚Â•ª
-	// a, b ‚ÌˆÓ–¡‚ÍŒ`‚²‚Æ‚Éˆá‚¤iü‚Æ–îˆó‚Ín“_‚ÆI“_A‹…‚Æ“_‚Í’†SAƒJƒvƒZƒ‹‚Í—¼’[j
+	// æãä¾é ¼1ã¤åˆ†
+	// a, b ã®æ„å‘³ã¯å½¢ã”ã¨ã«é•ã†ï¼ˆç·šã¨çŸ¢å°ã¯å§‹ç‚¹ã¨çµ‚ç‚¹ã€çƒã¨ç‚¹ã¯ä¸­å¿ƒã€ã‚«ãƒ—ã‚»ãƒ«ã¯ä¸¡ç«¯ï¼‰
 	struct Shape
 	{
 		SHAPE type = SHAPE::LINE;
 		Vector3 a;
 		Vector3 b;
-		float size = 0.0f;			// ‹…‚ÆƒJƒvƒZƒ‹‚Í”¼ŒaA“_‚Í\š‚Ì‘å‚«‚³
+		float size = 0.0f;			// çƒã¨ã‚«ãƒ—ã‚»ãƒ«ã¯åŠå¾„ã€ç‚¹ã¯åå­—ã®å¤§ãã•
 		unsigned int color = 0;
+		DebugDraw3D::CATEGORY category = DebugDraw3D::CATEGORY::GENERAL;
+		int layer = 0;
 	};
 
-	// —­‚ß‚½ˆË—Š
+	// æºœã‚ãŸä¾é ¼
 	std::vector<Shape> shapes;
 
-	// ‹…‚âƒJƒvƒZƒ‹‚Ì×‚©‚³i‘å‚«‚¢‚Ù‚ÇŠÛ‚¢‚ªd‚¢j
+	// çƒã‚„ã‚«ãƒ—ã‚»ãƒ«ã®ç´°ã‹ã•ï¼ˆå¤§ãã„ã»ã©ä¸¸ã„ãŒé‡ã„ï¼‰
 	constexpr int SPHERE_DIV = 12;
 
-	// –îˆó‚Ìæ’[
-	constexpr float ARROW_HEAD_RATE = 0.2f;		// ‘S‘Ì‚Ì’·‚³‚É‘Î‚·‚éæ’[‚Ì’·‚³
-	constexpr float ARROW_HEAD_WIDTH = 0.35f;	// æ’[‚Ì’·‚³‚É‘Î‚·‚éªŒ³‚Ì”¼Œa
+	// çŸ¢å°ã®å…ˆç«¯
+	constexpr float ARROW_HEAD_RATE = 0.2f;		// å…¨ä½“ã®é•·ã•ã«å¯¾ã™ã‚‹å…ˆç«¯ã®é•·ã•
+	constexpr float ARROW_HEAD_WIDTH = 0.35f;	// å…ˆç«¯ã®é•·ã•ã«å¯¾ã™ã‚‹æ ¹å…ƒã®åŠå¾„
 	constexpr int ARROW_HEAD_DIV = 8;
 
-	void Add(SHAPE type, const Vector3& a, const Vector3& b, float size, unsigned int color)
+	void Add(SHAPE type, const Vector3& a, const Vector3& b, float size, unsigned int color,
+		DebugDraw3D::CATEGORY category, int layer)
 	{
 		Shape shape;
 		shape.type = type;
@@ -45,7 +49,26 @@ namespace
 		shape.b = b;
 		shape.size = size;
 		shape.color = color;
+		shape.category = category;
+		shape.layer = layer;
 		shapes.push_back(shape);
+	}
+
+	// ã“ã®ä¾é ¼ã‚’æãã‹ï¼ˆç¨®é¡ã”ã¨ã®è¡¨ç¤ºè¨­å®šã‚’è¦‹ã‚‹ï¼‰
+	bool IsVisible(const Shape& shape, const DebugSetting& setting)
+	{
+		switch (shape.category)
+		{
+		case DebugDraw3D::CATEGORY::GENERAL:	return true;
+		case DebugDraw3D::CATEGORY::AXES:		return setting.showOriginAxes;
+		case DebugDraw3D::CATEGORY::GRID:		return setting.showGrid;
+		case DebugDraw3D::CATEGORY::RAY:		return setting.showRays;
+		case DebugDraw3D::CATEGORY::COLLIDER:
+			if (!setting.showColliders) { return false; }
+			if (shape.layer < 0 || shape.layer >= 32) { return false; }
+			return (setting.colliderLayers & (1u << shape.layer)) != 0;
+		}
+		return true;
 	}
 
 	void DrawArrow(const Shape& shape)
@@ -55,7 +78,7 @@ namespace
 		const Vector3 diff = shape.b - shape.a;
 		if (diff.IsZero()) { return; }
 
-		// æ’[‚Ì‰~‚·‚¢i’¸“_‚ªI“_A’ê–Ê‚ª­‚µè‘Oj
+		// å…ˆç«¯ã®å††ã™ã„ï¼ˆé ‚ç‚¹ãŒçµ‚ç‚¹ã€åº•é¢ãŒå°‘ã—æ‰‹å‰ï¼‰
 		const float headLength = diff.Magnitude() * ARROW_HEAD_RATE;
 		const Vector3 headBottom = shape.b - diff.Normalized() * headLength;
 		DrawCone3D(shape.b.ToVECTOR(), headBottom.ToVECTOR(), headLength * ARROW_HEAD_WIDTH,
@@ -72,46 +95,53 @@ namespace
 	}
 }
 
-void DebugDraw3D::Line(const Vector3& start, const Vector3& end, unsigned int color)
+void DebugDraw3D::Line(const Vector3& start, const Vector3& end, unsigned int color,
+	CATEGORY category, int layer)
 {
 #if USE_DEBUG_TOOLS
-	Add(SHAPE::LINE, start, end, 0.0f, color);
+	Add(SHAPE::LINE, start, end, 0.0f, color, category, layer);
 #endif
 }
 
-void DebugDraw3D::Sphere(const Vector3& center, float radius, unsigned int color)
+void DebugDraw3D::Sphere(const Vector3& center, float radius, unsigned int color,
+	CATEGORY category, int layer)
 {
 #if USE_DEBUG_TOOLS
-	Add(SHAPE::SPHERE, center, center, radius, color);
+	Add(SHAPE::SPHERE, center, center, radius, color, category, layer);
 #endif
 }
 
-void DebugDraw3D::Capsule(const Vector3& top, const Vector3& bottom, float radius, unsigned int color)
+void DebugDraw3D::Capsule(const Vector3& top, const Vector3& bottom, float radius, unsigned int color,
+	CATEGORY category, int layer)
 {
 #if USE_DEBUG_TOOLS
-	Add(SHAPE::CAPSULE, top, bottom, radius, color);
+	Add(SHAPE::CAPSULE, top, bottom, radius, color, category, layer);
 #endif
 }
 
-void DebugDraw3D::Arrow(const Vector3& start, const Vector3& end, unsigned int color)
+void DebugDraw3D::Arrow(const Vector3& start, const Vector3& end, unsigned int color,
+	CATEGORY category, int layer)
 {
 #if USE_DEBUG_TOOLS
-	Add(SHAPE::ARROW, start, end, 0.0f, color);
+	Add(SHAPE::ARROW, start, end, 0.0f, color, category, layer);
 #endif
 }
 
-void DebugDraw3D::Point(const Vector3& pos, float size, unsigned int color)
+void DebugDraw3D::Point(const Vector3& pos, float size, unsigned int color,
+	CATEGORY category, int layer)
 {
 #if USE_DEBUG_TOOLS
-	Add(SHAPE::POINT, pos, pos, size, color);
+	Add(SHAPE::POINT, pos, pos, size, color, category, layer);
 #endif
 }
 
-void DebugDraw3D::Draw(void)
+void DebugDraw3D::Draw(const DebugSetting& setting)
 {
 #if USE_DEBUG_TOOLS
 	for (const Shape& shape : shapes)
 	{
+		if (!IsVisible(shape, setting)) { continue; }
+
 		switch (shape.type)
 		{
 		case SHAPE::LINE:
