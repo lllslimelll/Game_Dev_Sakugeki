@@ -5,7 +5,7 @@
 
 namespace
 {
-    constexpr int CIRCLE_SEGMENTS = 64;		// ‰~‚ğ‰½–{‚Ìü‚Å•`‚­‚©
+    constexpr int CIRCLE_SEGMENTS = 64;		// å††ã‚’ä½•æœ¬ã®ç·šã§æãã‹
 }
 
 CircleBoundaryCollider::CircleBoundaryCollider(
@@ -27,7 +27,7 @@ float CircleBoundaryCollider::GetRadius(void) const
 
 void CircleBoundaryCollider::AddDebugShape(unsigned int color) const
 {
-    // ‚¿å‚ÌˆÊ’u‚ğ’†S‚ÉA…•½‚È‰~‚ğ•`‚­
+    // æŒã¡ä¸»ã®ä½ç½®ã‚’ä¸­å¿ƒã«ã€æ°´å¹³ãªå††ã‚’æã
     const Vector3 center = GetTransform().pos;
     const float step = 2.0f * std::numbers::pi_v<float> / CIRCLE_SEGMENTS;
 
