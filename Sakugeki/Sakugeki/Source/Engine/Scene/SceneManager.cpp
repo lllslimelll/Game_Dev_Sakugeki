@@ -12,6 +12,8 @@
 #include "../Resource/ResourceManager.h"
 #include "../Audio/Audio.h"
 #include "../Scene/ScreenManager.h"
+#include "../Core/Application.h"
+#include "../Debug/DebugSystem.h"
 #include "SceneManager.h"
 
 SceneManager* SceneManager::instance_ = nullptr;
@@ -132,6 +134,9 @@ void SceneManager::Draw(void)
 
 		// Effekseerにより再生中のエフェクトを描画する。
 		DrawEffekseer3D();
+
+		// デバッグ用の 3D 表示
+		Application::GetInstance().GetDebugSystem().DrawWorld();
 	}
 	
 	// 暗転・明転

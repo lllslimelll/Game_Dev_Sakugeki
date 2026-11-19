@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Debug\DebugDraw3D.cpp" />
     <ClCompile Include="Source\Engine\Debug\DebugSystem.cpp" />
     <ClCompile Include="Source\Engine\Debug\DebugGui.cpp" />
     <ClCompile Include="Source\Engine\Debug\FrameStats.cpp" />
@@ -225,6 +226,7 @@
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\Debug\DebugDraw3D.h" />
     <ClInclude Include="Source\Engine\Debug\DebugSystem.h" />
     <ClInclude Include="Source\Engine\Debug\DebugGui.h" />
     <ClInclude Include="Source\Engine\Debug\DebugPanel.h" />

@@ -48,6 +48,9 @@ public:
 	// true の間、ゲーム側はマウスを使わない（カメラがカーソルを中心に戻さない、など）
 	bool IsUsingMouse(void) const;
 
+	// 3D 空間のデバッグ表示（DebugDraw3D に溜めた線や形）を描く
+	void DrawWorld(void);
+
 private:
 
 	// パネルと、そのウィンドウを開いているか
@@ -79,4 +82,7 @@ private:
 
 	// メニューバーと各パネルを描く
 	void DrawGui(void);
+
+	// 原点の XYZ 軸を DebugDraw3D に溜める
+	void AddOriginAxes(void) const;
 };
