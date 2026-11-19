@@ -40,15 +40,6 @@ private:
 	std::unique_ptr<HPGauge> hpGauge_;
 	std::unique_ptr<Player> player_;
 
-	// （既存のメンバの後に追加）
-	// TODO(仮UI)
-	DebugHud debugHud_;
-	HudData debugHudData_;
-
 	// リアルシャドウ描画
 	void DrawShadow(void);
-
-
-	bool IsDebugKeyTriggered(int key);
-	bool debugKeyPrev_[];
 };

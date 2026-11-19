@@ -27,7 +27,6 @@ GameScene::~GameScene()
 	if (hpGauge_) { hpGauge_->Release(); }
 	if (player_) { player_->Release(); }
 	if (stageMng_) { stageMng_->Release(); }
-	debugHud_.Release();
 }
 
 void GameScene::Load()
@@ -64,15 +63,6 @@ void GameScene::Init(void)
 
 	CollisionLayer::SetupMatrix(*collisionMng_);
 	CollisionLayer::RegisterDebugNames(Application::GetInstance().GetDebugSystem());
-
-	debugHud_.Init();
-	debugHudData_.hp = 100;
-	debugHudData_.maxHp = 100;
-	debugHudData_.spirit = 0.0f;
-	debugHudData_.maxSpirit = 100.0f;
-	debugHudData_.moves = {
-		{ L"Y" }, { L"X+X" }, { L"B+X" }, { L"X長押し" }, { L"空中+X+X" }, { L"X+X+X長押し" },
-	};
 }
 
 void GameScene::Update(void)
@@ -88,46 +78,6 @@ void GameScene::Update(void)
 	{
 		sceMng_.PushOverlay(SceneManager::SCENE_ID::PAUSE);
 	}
-
-	if (CheckHitKey(KEY_INPUT_F1)) player_->GetComponent<Health>()->TakeDamage(1);
-
-
-	// TODO(仮UI) 動作確認用
-	//   F1：ダメージ  F2(長押し)：加護ゲージ  F3：技を1つ達成  F4：技リストを戻す  F5：全回復
-	HudData& hud = debugHudData_;
-
-	if (IsDebugKeyTriggered(KEY_INPUT_F1)) { hud.hp = (std::max)(0, hud.hp - 15); }
-	if (IsDebugKeyTriggered(KEY_INPUT_F5)) { hud.hp = hud.maxHp; }
-	if (CheckHitKey(KEY_INPUT_F2))
-	{
-		hud.spirit = (std::min)(hud.maxSpirit, hud.spirit + 40.0f * sceMng_.GetDeltaTime());
-	}
-	if (IsDebugKeyTriggered(KEY_INPUT_F3))
-	{
-		for (auto& move : hud.moves)
-		{
-			if (!move.isDone) { move.isDone = true; break; }
-		}
-	}
-	if (IsDebugKeyTriggered(KEY_INPUT_F4))
-	{
-		for (auto& move : hud.moves) { move.isDone = false; }
-	}
-
-	// 以下はゲームのルールの代わり（本来はゲージや技リストのクラスが決める）
-	constexpr int HEAL_GUIDE_HPGauge = 50;   // これ以下なら回復を勧める
-	hud.isBloom = !hud.moves.empty() &&
-		std::all_of(hud.moves.begin(), hud.moves.end(), [](const HudMove& m) { return m.isDone; });
-
-	if (hud.spirit < hud.maxSpirit)
-	{
-		hud.guide = HudData::GUIDE::NONE;
-	}
-	else
-	{
-		hud.guide = (hud.hp <= HEAL_GUIDE_HPGauge) ? HudData::GUIDE::HEAL : HudData::GUIDE::FINISHER;
-	}
-	debugHud_.Update(debugHudData_, sceMng_.GetDeltaTime());
 }
 
 void GameScene::Draw(void)
@@ -142,8 +92,6 @@ void GameScene::Draw(void)
 
 	// 影描画
 	//DrawShadow();
-
-	//debugHud_.Draw(debugHudData_);
 }
 
 // リアルシャドウ描画
@@ -183,13 +131,4 @@ void GameScene::DrawShadow(void)
 
 	//// シャドウマップの削除
 	//DeleteShadowMap(ShadowMapHandle);
-}
-
-bool GameScene::IsDebugKeyTriggered(int key)
-{
-	const bool isNow = CheckHitKey(key) != 0;
-	bool& isPrev = debugKeyPrev_[key];
-	const bool ret = isNow && !isPrev;
-	isPrev = isNow;
-	return ret;
 }
