@@ -1,5 +1,6 @@
 #include "../../../Engine/Utility/AsoUtility.h"
 #include "../../../Engine/Component/Mesh.h"
+#include "../../../Engine/Debug/DebugDraw3D.h"
 #include "MeshCollider.h"
 
 MeshCollider::MeshCollider(GameObject& gameObject, const Mesh& mesh, CollisionManager& collisionMng, int layer)
@@ -62,6 +63,12 @@ bool MeshCollider::IsExcludeFrame(int frameIdx) const
 int MeshCollider::GetMeshHandle(void) const
 {
 	return mesh_.GetHandle();
+}
+
+void MeshCollider::AddDebugShape(unsigned int color) const
+{
+	// 当たり判定に使うモデルそのものを、ワイヤーフレームで描く
+	DebugDraw3D::ModelWireframe(GetMeshHandle(), DebugDraw3D::CATEGORY::COLLIDER, GetLayer());
 }
 
 

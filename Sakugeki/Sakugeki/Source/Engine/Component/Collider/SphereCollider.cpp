@@ -1,4 +1,5 @@
 #include "../../../Engine/Common/Transform.h"
+#include "../../../Engine/Debug/DebugDraw3D.h"
 #include "../../../Engine/Component/Collider/SphereCollider.h"
 #include "../../../Engine/Component/Collider/CollisionManager.h"
 
@@ -41,7 +42,7 @@ void SphereCollider::SetRadius(float radius)
 	radius_ = radius;
 }
 
-void SphereCollider::DrawDebug(int color)
+void SphereCollider::AddDebugShape(unsigned int color) const
 {
-	DrawSphere3D(GetPos().ToVECTOR(), radius_, 16, color, color, false);
+	DebugDraw3D::Sphere(GetPos(), radius_, color, DebugDraw3D::CATEGORY::COLLIDER, GetLayer());
 }

@@ -29,9 +29,6 @@ public:
 	// 初期化
 	void Init() override;
 
-	// 描画
-	void Draw() override;
-
 	// 解放
 	void Release() override;
 
@@ -44,16 +41,13 @@ public:
 	// 衝突種別
 	int GetLayer() const;
 
-protected:
+	// 自分の形を DebugDraw3D に渡す
+	virtual void AddDebugShape(unsigned int color) const = 0;
 
-	// デバッグ表示の色
-	static constexpr int COLOR_DEBUG = 0xff0000;
+protected:
 
 	// ローカル座標をワールド座標に変換
 	Vector3 GetRotPos(const Vector3& localPos) const;
-
-	// デバッグ用描画
-	virtual void DrawDebug(int color) = 0;
 
 private:
 

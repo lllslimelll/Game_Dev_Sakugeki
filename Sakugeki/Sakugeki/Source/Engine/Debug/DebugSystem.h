@@ -2,8 +2,10 @@
 #include <array>
 #include <memory>
 #include <vector>
+#include <string>
 #include "DebugSetting.h"
 #include "DebugPanel.h"
+#include "WorldPanel.h"
 #include "FrameStats.h"
 
 class DebugGui;
@@ -42,11 +44,17 @@ public:
 	// パネルを足す（DebugSystem が所有する）
 	void AddPanel(std::unique_ptr<DebugPanel> panel);
 
+	// Layer の名前を登録する（World パネルのチェックボックスに出る）
+	void SetLayerName(int layer, const std::string& name);
+
 	const DebugSetting& GetSettings(void) const;
 
 	// デバッグ画面がマウスを使っているか
 	// true の間、ゲーム側はマウスを使わない（カメラがカーソルを中心に戻さない、など）
 	bool IsUsingMouse(void) const;
+
+	// 3D 空間のデバッグ表示（DebugDraw3D に溜めた線や形）を描く
+	void DrawWorld(void);
 
 private:
 
@@ -65,6 +73,8 @@ private:
 	std::unique_ptr<DebugGui> gui_;
 	std::vector<PanelEntry> panels_;
 
+	WorldPanel::LayerNames layerNames_;
+
 	float targetFrameMs_;
 
 	// キーの状態（今と前のフレーム）
@@ -79,4 +89,7 @@ private:
 
 	// メニューバーと各パネルを描く
 	void DrawGui(void);
+
+	// 原点の XYZ 軸を DebugDraw3D に溜める
+	void AddOriginAxes(void) const;
 };

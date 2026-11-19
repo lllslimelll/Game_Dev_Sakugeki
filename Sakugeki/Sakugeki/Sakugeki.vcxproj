@@ -155,6 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Engine\Debug\DebugDraw3D.cpp" />
     <ClCompile Include="Source\Engine\Debug\DebugSystem.cpp" />
     <ClCompile Include="Source\Engine\Debug\DebugGui.cpp" />
     <ClCompile Include="Source\Engine\Debug\FrameStats.cpp" />
@@ -163,7 +164,6 @@
     <ClCompile Include="Source\Game\UI\Player\HPGauge.cpp" />
     <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\NarrowPhase.cpp" />
-    <ClCompile Include="Source\Game\UI\DebugHud.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\CollisionManager.cpp" />
     <ClCompile Include="Source\Engine\Component\MeshRenderer.cpp" />
     <ClCompile Include="Source\Engine\Component\Health.cpp" />
@@ -223,8 +223,10 @@
     <ClCompile Include="ThirdParty\imgui\imgui_draw.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Source\Engine\Debug\WorldPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Engine\Debug\DebugDraw3D.h" />
     <ClInclude Include="Source\Engine\Debug\DebugSystem.h" />
     <ClInclude Include="Source\Engine\Debug\DebugGui.h" />
     <ClInclude Include="Source\Engine\Debug\DebugPanel.h" />
@@ -238,7 +240,6 @@
     <ClInclude Include="Source\Engine\Component\CharacterController.h" />
     <ClInclude Include="Source\Engine\Component\Collider\ContactPoint.h" />
     <ClInclude Include="Source\Engine\Component\Collider\NarrowPhase.h" />
-    <ClInclude Include="Source\Game\UI\DebugHud.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CollisionManager.h" />
     <ClInclude Include="Source\Engine\Component\MeshRenderer.h" />
     <ClInclude Include="Source\Engine\Component\Health.h" />
@@ -299,6 +300,7 @@
     <ClInclude Include="ThirdParty\imgui\imstb_rectpack.h" />
     <ClInclude Include="ThirdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="ThirdParty\imgui\imstb_truetype.h" />
+    <ClInclude Include="Source\Engine\Debug\WorldPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Game\Shader\Model\Stage\GroundPS.hlsl">

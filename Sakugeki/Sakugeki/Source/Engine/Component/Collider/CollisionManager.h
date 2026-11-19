@@ -2,7 +2,6 @@
 #include <array>
 #include <cstdint>
 #include <vector>
-#include <cstdint>
 
 class GameObject;
 class Vector3;
@@ -58,6 +57,9 @@ public:
 	// レイヤー a と レイヤー b が当たるかを設定する
 	void SetLayerCollision(int a, int b, bool isCollide);
 
+	// 登録されているコライダーの形を DebugDraw3D に渡す
+	void AddDebugShapes(void) const;
+
 	// レイヤー a と レイヤー b が当たるか
 	bool IsLayerCollide(int a, int b) const;
 
@@ -71,6 +73,9 @@ public:
 	static constexpr int MAX_LAYERS = 32;
 
 private:
+
+	// Linecast の結果を DebugDraw3D に渡す（線、当たった点、法線）
+	void AddDebugRay(const Vector3& start, const Vector3& end, bool isHit, const RaycastHit& hit) const;
 
 	// コライダー
 	std::vector<const Collider*> colliders_;

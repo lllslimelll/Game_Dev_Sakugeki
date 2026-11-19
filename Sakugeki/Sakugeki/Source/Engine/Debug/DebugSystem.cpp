@@ -3,6 +3,8 @@
 #include "DebugConfig.h"
 #include "DebugGui.h"
 #include "StatsPanel.h"
+#include "../Math/Vector3.h"
+#include "DebugDraw3D.h"
 #include "DebugSystem.h"
 
 namespace
@@ -13,6 +15,11 @@ namespace
 	constexpr int KEY_STEP = KEY_INPUT_F6;		// コマ送り
 
 	constexpr unsigned int COLOR_PAUSE = 0xffff66;
+
+	constexpr float		   AXIS_LENGTH = 100.0f;		// 1m（1 = 1cm の想定）
+	constexpr unsigned int COLOR_AXIS_X = 0xff4040;
+	constexpr unsigned int COLOR_AXIS_Y = 0x40ff40;
+	constexpr unsigned int COLOR_AXIS_Z = 0x4080ff;
 }
 
 DebugSystem::DebugSystem(int targetFps)
@@ -43,6 +50,7 @@ void DebugSystem::Init(void)
 	}
 
 	AddPanel(std::make_unique<StatsPanel>(frameStats_, setting_, targetFrameMs_));
+	AddPanel(std::make_unique<WorldPanel>(setting_, layerNames_));
 #endif
 }
 
@@ -65,6 +73,13 @@ void DebugSystem::BeginFrame(void)
 		// 動いているときに押したら、止めてから1フレーム進める
 		setting_.isPaused = true;
 		setting_.isStepRequested = true;
+	}
+
+	// ゲームが進むフレームだけ、3D の表示を作り直す（止めている間は残す）
+	if (ShouldUpdateGame())
+	{
+		DebugDraw3D::Clear();
+		AddOriginAxes();
 	}
 #endif
 }
@@ -127,6 +142,12 @@ void DebugSystem::AddPanel(std::unique_ptr<DebugPanel> panel)
 	panels_.push_back({ std::move(panel), true });
 }
 
+void DebugSystem::SetLayerName(int layer, const std::string& name)
+{
+	if (layer < 0 || layer >= WorldPanel::MAX_LAYERS) { return; }
+	layerNames_[layer] = name;
+}
+
 const DebugSetting& DebugSystem::GetSettings(void) const
 {
 	return setting_;
@@ -139,6 +160,27 @@ bool DebugSystem::IsUsingMouse(void) const
 	return gui_ && setting_.isVisible;
 #else
 	return false;
+#endif
+}
+
+void DebugSystem::DrawWorld(void)
+{
+#if USE_DEBUG_TOOLS
+	if (!setting_.isVisible) { return; }
+
+	// 描く間だけ奥行きの判定を切る
+	if (setting_.drawOnTop)
+	{
+		SetUseZBuffer3D(FALSE);
+	}
+
+	DebugDraw3D::Draw(setting_);
+
+	// 奥行きの判定ありに戻す
+	if (setting_.drawOnTop)
+	{
+		SetUseZBuffer3D(TRUE);
+	}
 #endif
 }
 
@@ -195,4 +237,12 @@ void DebugSystem::DrawGui(void)
 	{
 		ImGui::ShowDemoWindow(&setting_.showDemoWindow);
 	}
+}
+
+void DebugSystem::AddOriginAxes(void) const
+{
+	const Vector3 start(0.0f, 0.0f, 0.0f);
+	DebugDraw3D::Arrow(start, Vector3(AXIS_LENGTH, 0.0f, 0.0f), COLOR_AXIS_X, DebugDraw3D::CATEGORY::AXES);
+	DebugDraw3D::Arrow(start, Vector3(0.0f, AXIS_LENGTH, 0.0f), COLOR_AXIS_Y, DebugDraw3D::CATEGORY::AXES);
+	DebugDraw3D::Arrow(start, Vector3(0.0f, 0.0f, AXIS_LENGTH), COLOR_AXIS_Z, DebugDraw3D::CATEGORY::AXES);
 }
