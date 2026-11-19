@@ -16137,8 +16137,8 @@ static void WindowSettingsHandler_WriteAll(ImGuiContext* ctx, ImGuiSettingsHandl
     {
         if (settings->WantDelete)
             continue;
-        const char* settings_name = settings->GetName();
-        buf->appendf("[%s][%s]\n", handler->TypeName, settings_name); // [Window][name]
+        const char* setting_name = settings->GetName();
+        buf->appendf("[%s][%s]\n", handler->TypeName, setting_name); // [Window][name]
         if (settings->IsChild)
         {
             buf->appendf("IsChild=1\n");

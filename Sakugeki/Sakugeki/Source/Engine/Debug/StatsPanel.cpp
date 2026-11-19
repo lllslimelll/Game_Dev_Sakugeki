@@ -12,7 +12,7 @@ namespace
 StatsPanel::StatsPanel(const FrameStats& stats, DebugSetting& settings, float targetFrameMs)
 	:
 	stats_(stats),
-	settings_(settings),
+	setting_(settings),
 	targetFrameMs_(targetFrameMs)
 {
 }
@@ -44,11 +44,11 @@ void StatsPanel::Draw(void)
 	ImGui::Separator();
 
 	// 一時停止とコマ送り
-	ImGui::Checkbox("一時停止 (F5)", &settings_.isPaused);
+	ImGui::Checkbox("一時停止 (F5)", &setting_.isPaused);
 	ImGui::SameLine();
 	if (ImGui::Button("コマ送り (F6)"))
 	{
-		settings_.isPaused = true;
-		settings_.isStepRequested = true;
+		setting_.isPaused = true;
+		setting_.isStepRequested = true;
 	}
 }

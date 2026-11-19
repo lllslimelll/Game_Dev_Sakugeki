@@ -19,6 +19,6 @@ public:
 private:
 
 	const FrameStats& stats_;
-	DebugSetting& settings_;
+	DebugSetting& setting_;
 	float targetFrameMs_;
 };
