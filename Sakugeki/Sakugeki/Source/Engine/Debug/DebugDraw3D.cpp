@@ -78,7 +78,6 @@ namespace
 		{
 		case DebugDraw3D::CATEGORY::GENERAL:	return true;
 		case DebugDraw3D::CATEGORY::AXES:		return setting.showOriginAxes;
-		case DebugDraw3D::CATEGORY::GRID:		return setting.showGrid;
 		case DebugDraw3D::CATEGORY::RAY:		return setting.showRays;
 		case DebugDraw3D::CATEGORY::COLLIDER:
 			if (!setting.showColliders) { return false; }

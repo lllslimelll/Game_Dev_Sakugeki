@@ -13,7 +13,6 @@ public:
 	{
 		GENERAL,	// 種類を指定しないもの（常に描く）
 		AXES,		// 原点の軸
-		GRID,		// グリッド
 		COLLIDER,	// コライダー（Layer ごとに切り替える）
 		RAY,		// Linecast
 	};

@@ -23,7 +23,6 @@ void WorldPanel::Draw(void)
 {
 	ImGui::SeparatorText("表示");
 	ImGui::Checkbox("原点の軸", &setting_.showOriginAxes);
-	ImGui::Checkbox("グリッド", &setting_.showGrid);
 	ImGui::Checkbox("レイ（Linecast）", &setting_.showRays);
 	ImGui::Checkbox("コライダー", &setting_.showColliders);
 
