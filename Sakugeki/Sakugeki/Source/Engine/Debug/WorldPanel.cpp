@@ -23,19 +23,11 @@ void WorldPanel::Draw(void)
 {
 	ImGui::SeparatorText("表示");
 	ImGui::Checkbox("原点の軸", &setting_.showOriginAxes);
-
-	// グリッドと、その高さ（グリッドがオフのときは高さを灰色にする）
 	ImGui::Checkbox("グリッド", &setting_.showGrid);
-	ImGui::BeginDisabled(!setting_.showGrid);
-	ImGui::Indent();
-	ImGui::DragFloat("高さ", &setting_.gridHeight, 1.0f);
-	ImGui::Unindent();
-	ImGui::EndDisabled();
-
 	ImGui::Checkbox("レイ（Linecast）", &setting_.showRays);
-
-	// コライダーと、表示する Layer（コライダーがオフのときは Layer を灰色にする）
 	ImGui::Checkbox("コライダー", &setting_.showColliders);
+
+	// コライダーがオフのときは、Layer の選択を灰色にして触れなくする
 	ImGui::BeginDisabled(!setting_.showColliders);
 	ImGui::Indent();
 	DrawLayerCheckBoxes();

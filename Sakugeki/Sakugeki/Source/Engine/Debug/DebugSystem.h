@@ -92,6 +92,4 @@ private:
 
 	// 原点の XYZ 軸を DebugDraw3D に溜める
 	void AddOriginAxes(void) const;
-	// 注視点を中心にしたグリッドを DebugDraw3D に溜める
-	void AddGrid(void) const;
 };

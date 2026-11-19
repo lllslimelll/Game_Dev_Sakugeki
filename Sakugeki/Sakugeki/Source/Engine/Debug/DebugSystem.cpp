@@ -1,4 +1,3 @@
-#include <cmath>
 #include <imgui/imgui.h>
 #include <DxLib.h>
 #include "DebugConfig.h"
@@ -21,13 +20,6 @@ namespace
 	constexpr unsigned int COLOR_AXIS_X = 0xff4040;
 	constexpr unsigned int COLOR_AXIS_Y = 0x40ff40;
 	constexpr unsigned int COLOR_AXIS_Z = 0x4080ff;
-
-	// グリッド
-	constexpr float GRID_SPACING = 100.0f;		// 線の間隔（1m）
-	constexpr int GRID_HALF_COUNT = 10;			// 中心から片側に何本引くか（半径 10m）
-	constexpr int GRID_MAJOR_EVERY = 5;			// 何本ごとに明るい線にするか（5m）
-	constexpr unsigned int COLOR_GRID = 0x505050;
-	constexpr unsigned int COLOR_GRID_MAJOR = 0x909090;
 }
 
 DebugSystem::DebugSystem(int targetFps)
@@ -88,7 +80,6 @@ void DebugSystem::BeginFrame(void)
 	{
 		DebugDraw3D::Clear();
 		AddOriginAxes();
-		AddGrid();
 	}
 #endif
 }
@@ -254,37 +245,4 @@ void DebugSystem::AddOriginAxes(void) const
 	DebugDraw3D::Arrow(start, Vector3(AXIS_LENGTH, 0.0f, 0.0f), COLOR_AXIS_X, DebugDraw3D::CATEGORY::AXES);
 	DebugDraw3D::Arrow(start, Vector3(0.0f, AXIS_LENGTH, 0.0f), COLOR_AXIS_Y, DebugDraw3D::CATEGORY::AXES);
 	DebugDraw3D::Arrow(start, Vector3(0.0f, 0.0f, AXIS_LENGTH), COLOR_AXIS_Z, DebugDraw3D::CATEGORY::AXES);
-}
-
-void DebugSystem::AddGrid(void) const
-{
-	// 中心：注視点を 1m 単位にそろえる（線が地面に固定されて見えるように）
-	const Vector3 target = Vector3::GetVector3(GetCameraTarget());
-	const float centerX = std::floor(target.x / GRID_SPACING) * GRID_SPACING;
-	const float centerZ = std::floor(target.z / GRID_SPACING) * GRID_SPACING;
-	const float y = setting_.gridHeight;
-	const float half = GRID_SPACING * GRID_HALF_COUNT;
-
-	for (int i = -GRID_HALF_COUNT; i <= GRID_HALF_COUNT; i++)
-	{
-		const float offset = GRID_SPACING * i;
-
-		// 原点からの位置が 5m の倍数なら明るい線（中心からではなく、世界の座標で数える）
-		const int lineX = static_cast<int>(std::lround((centerX + offset) / GRID_SPACING));
-		const int lineZ = static_cast<int>(std::lround((centerZ + offset) / GRID_SPACING));
-		const unsigned int colorX = (lineX % GRID_MAJOR_EVERY == 0) ? COLOR_GRID_MAJOR : COLOR_GRID;
-		const unsigned int colorZ = (lineZ % GRID_MAJOR_EVERY == 0) ? COLOR_GRID_MAJOR : COLOR_GRID;
-
-		// Z 方向に伸びる線（X が一定）
-		DebugDraw3D::Line(
-			Vector3(centerX + offset, y, centerZ - half),
-			Vector3(centerX + offset, y, centerZ + half),
-			colorX, DebugDraw3D::CATEGORY::GRID);
-
-		// X 方向に伸びる線（Z が一定）
-		DebugDraw3D::Line(
-			Vector3(centerX - half, y, centerZ + offset),
-			Vector3(centerX + half, y, centerZ + offset),
-			colorZ, DebugDraw3D::CATEGORY::GRID);
-	}
 }
