@@ -139,7 +139,7 @@ void DebugGui::LoadFont(void)
 	// 標準フォントには日本語がないので、Windows のフォントを読む
 	if (std::filesystem::exists(FONT_PATH))
 	{
-		io.Fonts->AddFontFromFileTTF(FONT_PATH, FONT_SIZE, nullptr, io.Fonts->GetGlyphRangesJapanese());
+		io.Fonts->AddFontFromFileTTF(FONT_PATH, FONT_SIZE);
 	}
 	else
 	{
