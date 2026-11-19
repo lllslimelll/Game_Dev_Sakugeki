@@ -72,6 +72,9 @@ void GameScene::Update(void)
 	hpGauge_->Update(sceMng_.GetDeltaTime());
 	camera_->Update();
 
+	// 全員が動き終わった後に、コライダーの形をデバッグ表示へ渡す
+	collisionMng_->AddDebugShapes();
+
 	// シーン遷移
 	auto const& ins = Input::GetInstance();
 	if (ins.IsTriggered(Input::Command::PAUSE))

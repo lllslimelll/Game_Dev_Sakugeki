@@ -57,6 +57,9 @@ public:
 	// レイヤー a と レイヤー b が当たるかを設定する
 	void SetLayerCollision(int a, int b, bool isCollide);
 
+	// 登録されているコライダーの形を DebugDraw3D に渡す
+	void AddDebugShapes(void) const;
+
 	// レイヤー a と レイヤー b が当たるか
 	bool IsLayerCollide(int a, int b) const;
 

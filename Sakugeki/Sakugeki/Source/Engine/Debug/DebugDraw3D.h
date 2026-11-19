@@ -45,4 +45,10 @@ public:
 
 	// 溜めた依頼をすべて消す
 	static void Clear(void);
+
+	// モデルのワイヤーフレーム（MeshCollider 用）
+	static void ModelWireframe(int modelHandle, CATEGORY category = CATEGORY::GENERAL, int layer = 0);
+
+	// Layer ごとのデバッグ表示の色
+	static unsigned int GetLayerColor(int layer);
 };

@@ -1,5 +1,6 @@
 #include <imgui/imgui.h>
 #include "DebugSetting.h"
+#include "DebugDraw3D.h"
 #include "WorldPanel.h"
 
 WorldPanel::WorldPanel(DebugSetting& setting, const LayerNames& layerNames)
@@ -53,6 +54,19 @@ void WorldPanel::DrawLayerCheckBoxes(void)
 	{
 		// 名前が登録されていない Layer は使われていない
 		if (layerNames_[i].empty()) { continue; }
+
+		// その Layer の色の四角を、チェックボックスの左に出す
+		const unsigned int color = DebugDraw3D::GetLayerColor(i);
+		const ImVec4 imColor(
+			((color >> 16) & 0xff) / 255.0f,
+			((color >> 8) & 0xff) / 255.0f,
+			(color & 0xff) / 255.0f,
+			1.0f);
+
+		ImGui::PushID(i);
+		ImGui::ColorButton("##LayerColor", imColor, ImGuiColorEditFlags_NoTooltip, ImVec2(12.0f, 12.0f));
+		ImGui::PopID();
+		ImGui::SameLine();
 
 		// ビットを1つだけ切り替えるチェックボックス
 		ImGui::CheckboxFlags(layerNames_[i].c_str(), &setting_.colliderLayers, 1u << i);

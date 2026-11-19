@@ -37,10 +37,7 @@ public:
 	// カプセルの中心座標
 	Vector3 GetCenter(void) const;
 
-protected:
-
-	// デバッグ用描画
-	void DrawDebug(int color) override;
+	void AddDebugShape(unsigned int color) const override;
 
 private:
 

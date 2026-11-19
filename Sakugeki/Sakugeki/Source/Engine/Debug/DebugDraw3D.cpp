@@ -1,4 +1,5 @@
 #include <vector>
+#include <iterator>
 #include <DxLib.h>
 #include "DebugConfig.h"
 #include "DebugSetting.h"	
@@ -14,6 +15,7 @@ namespace
 		CAPSULE,
 		ARROW,
 		POINT,
+		MODEL_WIREFRAME,
 	};
 
 	// 描く依頼1つ分
@@ -27,7 +29,22 @@ namespace
 		unsigned int color = 0;
 		DebugDraw3D::CATEGORY category = DebugDraw3D::CATEGORY::GENERAL;
 		int layer = 0;
+		int modelHandle = -1;
 	};
+
+	// Layer ごとの色
+	constexpr unsigned int LAYER_COLORS[] =
+	{
+		0xff5050,	// 赤
+		0x50ff50,	// 緑
+		0x5080ff,	// 青
+		0xffff50,	// 黄
+		0xff50ff,	// 紫
+		0x50ffff,	// 水色
+		0xffa040,	// 橙
+		0xffffff,	// 白
+	};
+
 
 	// 溜めた依頼
 	std::vector<Shape> shapes;
@@ -92,6 +109,14 @@ namespace
 		DrawLine3D((p + Vector3(-s, 0.0f, 0.0f)).ToVECTOR(), (p + Vector3(s, 0.0f, 0.0f)).ToVECTOR(), shape.color);
 		DrawLine3D((p + Vector3(0.0f, -s, 0.0f)).ToVECTOR(), (p + Vector3(0.0f, s, 0.0f)).ToVECTOR(), shape.color);
 		DrawLine3D((p + Vector3(0.0f, 0.0f, -s)).ToVECTOR(), (p + Vector3(0.0f, 0.0f, s)).ToVECTOR(), shape.color);
+	}
+
+	// モデルをワイヤーフレームで描く
+	void DrawModelWireframe(const Shape& shape)
+	{
+		MV1SetWireFrameDrawFlag(shape.modelHandle, TRUE);
+		MV1DrawModel(shape.modelHandle);
+		MV1SetWireFrameDrawFlag(shape.modelHandle, FALSE);
 	}
 }
 
@@ -159,6 +184,9 @@ void DebugDraw3D::Draw(const DebugSetting& setting)
 		case SHAPE::POINT:
 			DrawPoint(shape);
 			break;
+		case SHAPE::MODEL_WIREFRAME:
+			DrawModelWireframe(shape);
+			break;
 		}
 	}
 #endif
@@ -169,4 +197,23 @@ void DebugDraw3D::Clear(void)
 #if USE_DEBUG_TOOLS
 	shapes.clear();
 #endif
+}
+
+void DebugDraw3D::ModelWireframe(int modelHandle, CATEGORY category, int layer)
+{
+#if USE_DEBUG_TOOLS
+	Shape shape;
+	shape.type = SHAPE::MODEL_WIREFRAME;
+	shape.modelHandle = modelHandle;
+	shape.category = category;
+	shape.layer = layer;
+	shapes.push_back(shape);
+#endif
+}
+
+unsigned int DebugDraw3D::GetLayerColor(int layer)
+{
+	constexpr int COLOR_NUM = static_cast<int>(std::size(LAYER_COLORS));
+	if (layer < 0) { return LAYER_COLORS[0]; }
+	return LAYER_COLORS[layer % COLOR_NUM];
 }

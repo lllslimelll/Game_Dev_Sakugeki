@@ -1,5 +1,6 @@
 #include <DxLib.h>
 #include "../../../Engine/Common/Transform.h"
+#include "../../../Engine/Debug/DebugDraw3D.h"
 #include "MeshCollider.h"
 #include "CapsuleCollider.h"
 
@@ -72,42 +73,7 @@ Vector3 CapsuleCollider::GetCenter(void) const
     return down + (diff * 0.5f);
 }
 
-void CapsuleCollider::DrawDebug(int color)
+void CapsuleCollider::AddDebugShape(unsigned int color) const
 {
-    // 上の球体
-    Vector3 pos1 = GetPosTop();
-    DrawSphere3D(pos1.ToVECTOR(), radius_, 5, color, color, false);
-
-    // 下の球体
-    Vector3 pos2 = GetPosDown();
-    DrawSphere3D(pos2.ToVECTOR(), radius_, 5, color, color, false);
-
-    Vector3 dir, start, end;
-
-    // 球体を繋ぐ線(X+)
-    dir = GetTransform().GetRight();
-    start = pos1 + (dir * radius_);
-    end = pos2 + (dir * radius_);
-    DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
-
-    // 球体を繋ぐ線(X-)
-    dir = GetTransform().GetLeft();
-    start = pos1 + (dir *radius_);
-    end = pos2 + (dir * radius_);
-    DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
-
-    // 球体を繋ぐ線(Z+)
-    dir = GetTransform().GetForward();
-    start = pos1 + (dir *radius_);
-    end = pos2 + (dir * radius_);
-    DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
-
-    // 球体を繋ぐ線(Z-)
-    dir = GetTransform().GetBack();
-    start = pos1 + (dir *radius_);
-    end = pos2 + (dir * radius_);
-    DrawLine3D(start.ToVECTOR(), end.ToVECTOR(), color);
-
-    // カプセルの中心
-    DrawSphere3D(GetCenter().ToVECTOR(), 5.0f, 10, color, color, true);
+    DebugDraw3D::Capsule(GetPosTop(), GetPosDown(), radius_, color, DebugDraw3D::CATEGORY::COLLIDER, GetLayer());
 }

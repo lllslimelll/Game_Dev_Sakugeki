@@ -15,10 +15,7 @@ public:
 	// 制限半径
 	float GetRadius(void) const;
 
-protected:
-
-	// デバッグ表示
-	void DrawDebug(int color) override {}
+	void AddDebugShape(unsigned int color) const override;
 
 private:
 

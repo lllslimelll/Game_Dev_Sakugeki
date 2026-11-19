@@ -28,10 +28,7 @@ public:
 	float GetRadius(void) const;
 	void SetRadius(float radius);
 
-protected:
-
-	// デバッグ用描画
-	void DrawDebug(int color) override;
+	void AddDebugShape(unsigned int color) const override;
 
 private:
 

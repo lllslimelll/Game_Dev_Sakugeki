@@ -1,5 +1,7 @@
 #include <algorithm>
 #include <cassert>
+#include "../../Debug/DebugConfig.h"
+#include "../../Debug/DebugDraw3D.h"
 #include "Collider.h"
 #include "CapsuleCollider.h"
 #include "MeshCollider.h"
@@ -141,6 +143,17 @@ void CollisionManager::SetLayerCollision(int a, int b, bool isCollide)
 		layerMasks_[a] &= ~bitB;
 		layerMasks_[b] &= ~bitA;
 	}
+}
+
+void CollisionManager::AddDebugShapes(void) const
+{
+#if USE_DEBUG_TOOLS
+	for (const Collider* collider : colliders_)
+	{
+		const int layer = collider->GetLayer();
+		collider->AddDebugShape(DebugDraw3D::GetLayerColor(layer));
+	}
+#endif
 }
 
 bool CollisionManager::IsLayerCollide(int a, int b) const

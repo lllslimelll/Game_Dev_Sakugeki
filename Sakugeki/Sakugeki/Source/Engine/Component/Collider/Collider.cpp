@@ -26,13 +26,6 @@ void Collider::Init(void)
 	collisionMng_.Register(this);
 }
 
-void Collider::Draw(void)
-{
-#ifdef _DEBUG
-	DrawDebug(COLOR_DEBUG);
-#endif
-}
-
 void Collider::Release()
 {
 	collisionMng_.Unregister(this);
