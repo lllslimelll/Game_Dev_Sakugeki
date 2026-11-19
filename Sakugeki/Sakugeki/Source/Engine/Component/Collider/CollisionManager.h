@@ -74,6 +74,9 @@ public:
 
 private:
 
+	// Linecast の結果を DebugDraw3D に渡す（線、当たった点、法線）
+	void AddDebugRay(const Vector3& start, const Vector3& end, bool isHit, const RaycastHit& hit) const;
+
 	// コライダー
 	std::vector<const Collider*> colliders_;
 

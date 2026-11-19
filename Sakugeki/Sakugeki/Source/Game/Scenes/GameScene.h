@@ -2,7 +2,6 @@
 #include <vector>
 #include <memory>
 #include "SceneBase.h"
-#include "../UI/DebugHud.h"   
 
 class Camera;
 class StageManager;

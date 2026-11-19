@@ -12,6 +12,17 @@
 #include "NarrowPhase.h"
 #include "CollisionManager.h"
 
+namespace
+{
+	// Linecast のデバッグ表示
+	constexpr unsigned int COLOR_RAY_MISS = 0x40ff40;		// 当たらなかった
+	constexpr unsigned int COLOR_RAY_HIT = 0xff4040;		// 当たった点まで
+	constexpr unsigned int COLOR_RAY_BLOCKED = 0x804040;	// 遮られた先
+	constexpr unsigned int COLOR_RAY_NORMAL = 0xffff40;		// 当たった面の法線
+	constexpr float RAY_POINT_SIZE = 5.0f;					// 当たった点の十字の大きさ
+	constexpr float RAY_NORMAL_LENGTH = 30.0f;				// 法線の矢印の長さ
+}
+
 CollisionManager::CollisionManager(void)
 	:
 	colliders_(),
@@ -110,6 +121,11 @@ bool CollisionManager::Linecast(const Vector3& start, const Vector3& end, LayerM
 		}
 	}
 
+	// デバッグ表示
+#if USE_DEBUG_TOOLS
+	AddDebugRay(start, end, isHit, hitResult);
+#endif
+
 	return isHit;
 }
 
@@ -164,4 +180,21 @@ bool CollisionManager::IsLayerCollide(int a, int b) const
 bool CollisionManager::CanCollide(const Collider& a, const Collider& b) const
 {
 	return IsLayerCollide(a.GetLayer(), b.GetLayer());
+}
+
+void CollisionManager::AddDebugRay(const Vector3& start, const Vector3& end, bool isHit, const RaycastHit& hit) const
+{
+	constexpr DebugDraw3D::CATEGORY RAY = DebugDraw3D::CATEGORY::RAY;
+
+	if (!isHit)
+	{
+		DebugDraw3D::Line(start, end, COLOR_RAY_MISS, RAY);
+		return;
+	}
+
+	// 当たった点まで、遮られた先、当たった点、法線
+	DebugDraw3D::Line(start, hit.point, COLOR_RAY_HIT, RAY);
+	DebugDraw3D::Line(hit.point, end, COLOR_RAY_BLOCKED, RAY);
+	DebugDraw3D::Point(hit.point, RAY_POINT_SIZE, COLOR_RAY_HIT, RAY);
+	DebugDraw3D::Arrow(hit.point, hit.point + hit.normal * RAY_NORMAL_LENGTH, COLOR_RAY_NORMAL, RAY);
 }
