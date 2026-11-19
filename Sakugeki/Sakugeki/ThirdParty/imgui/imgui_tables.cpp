@@ -3858,9 +3858,9 @@ void ImGui::TableDrawDefaultContextMenu(ImGuiTable* table, ImGuiTableFlags flags
 static void TableSettingsInit(ImGuiTableSettings* settings, ImGuiID id, int columns_count, int columns_count_max)
 {
     IM_PLACEMENT_NEW(settings) ImGuiTableSettings();
-    ImGuiTableColumnSettings* setting_column = settings->GetColumnSettings();
-    for (int n = 0; n < columns_count_max; n++, setting_column++)
-        IM_PLACEMENT_NEW(setting_column) ImGuiTableColumnSettings();
+    ImGuiTableColumnSettings* settings_column = settings->GetColumnSettings();
+    for (int n = 0; n < columns_count_max; n++, settings_column++)
+        IM_PLACEMENT_NEW(settings_column) ImGuiTableColumnSettings();
     settings->ID = id;
     settings->ColumnsCount = (ImGuiTableColumnIdx)columns_count;
     settings->ColumnsCountMax = (ImGuiTableColumnIdx)columns_count_max;
@@ -4038,14 +4038,14 @@ void ImGui::TableLoadSettingsForColumns(ImGuiTable* table)
     }
     if (matches == settings->ColumnsCount)
         return;
-    const int setting_start_n = matches; // Small optimization
-    for (int n = setting_start_n; n < settings->ColumnsCount; n++)
+    const int settings_start_n = matches; // Small optimization
+    for (int n = settings_start_n; n < settings->ColumnsCount; n++)
         column_settings[n].IsLoaded = false;
 
     // Find matches for named columns
     for (ImGuiTableColumn& column : table->Columns)
         if (column.ID != 0 && !column.IsLoadedSettings)
-            for (int n = setting_start_n; n < settings->ColumnsCount; n++)
+            for (int n = settings_start_n; n < settings->ColumnsCount; n++)
                 if (column_settings[n].ID == column.ID && !column_settings[n].IsLoaded)
                 {
                     TableLoadSettingsForColumn(&column, &column_settings[n], settings->SaveFlags);
@@ -4055,7 +4055,7 @@ void ImGui::TableLoadSettingsForColumns(ImGuiTable* table)
 
     // Remaining entries are matched sequentially
     int dst_idx = 0;
-    for (int n = setting_start_n; n < settings->ColumnsCount; n++)
+    for (int n = settings_start_n; n < settings->ColumnsCount; n++)
         if (!column_settings[n].IsLoaded)
         {
             while (dst_idx < table->ColumnsCount && table->Columns[dst_idx].IsLoadedSettings)
