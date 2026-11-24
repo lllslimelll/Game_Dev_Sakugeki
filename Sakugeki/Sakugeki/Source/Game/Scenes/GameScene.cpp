@@ -14,6 +14,7 @@
 #include "../../Engine/Component/Health.h"
 #include "../../Game/UI/Player/HPGauge.h"
 #include "../../Game/Common/CollisionLayer.h"
+#include "../../Game/Scenes/PauseScene.h"
 #include "GameScene.h"
 
 GameScene::GameScene()
@@ -79,7 +80,7 @@ void GameScene::Update(void)
 	auto const& ins = Input::GetInstance();
 	if (ins.IsTriggered(Input::Command::PAUSE))
 	{
-		sceMng_.PushOverlay(SceneManager::SCENE_ID::PAUSE);
+		sceMng_.PushOverlay(std::make_unique<PauseScene>());
 	}
 }
 

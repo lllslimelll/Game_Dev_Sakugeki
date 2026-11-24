@@ -1,5 +1,5 @@
 #pragma once
-#include "SceneBase.h"
+#include "../../Engine/Scene/SceneBase.h"
 
 class OptionScene : public SceneBase
 {

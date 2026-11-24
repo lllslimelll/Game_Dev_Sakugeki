@@ -11,7 +11,6 @@ struct DebugSetting
 
 	// 3D 空間の表示（World パネル）
 	bool showOriginAxes = true;					// 原点の XYZ 軸
-	bool showGrid = false;						// グリッド
 	bool showRays = false;						// Linecast
 	bool showColliders = false;					// コライダー
 	std::uint32_t colliderLayers = 0xFFFFFFFFu;	// 表示する Layer（ビットごと）
