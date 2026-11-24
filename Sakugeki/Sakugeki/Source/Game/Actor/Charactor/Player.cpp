@@ -1,3 +1,4 @@
+#include <memory>
 #include "../../../Engine/Common/Transform.h"
 #include "../../../Engine/Resource/ResourceManager.h"
 #include "../../../Engine/Scene/SceneManager.h"
@@ -11,6 +12,7 @@
 #include "../../../Engine/Component/CharacterMover.h"
 #include "../../../Engine/Component/CharacterController.h"
 #include "../../../Engine/Component/Health.h"  
+#include "../../../Game/Scenes/TitleScene.h"
 #include "../../../Game/Common/CollisionLayer.h"
 #include "../../../Game/Actor/Charactor/Player.h"
 
@@ -28,7 +30,7 @@ Player::Player(const Camera& camera, CollisionManager& collisionMng)
 	auto* health = AddComponent<Health>(MAX_HP);
 	health->SetOnDeath([controller]() 
 		{ 
-		SceneManager::GetInstance().ChangeScene(SceneManager::SCENE_ID::TITLE);
+		SceneManager::GetInstance().ChangeScene(std::make_unique<TitleScene>());
 		controller->SetEnabled(false); 
 		});
 

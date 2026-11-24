@@ -3,6 +3,7 @@
 #include "../../Engine/Input/Input.h"
 #include "../../Engine/Audio/Audio.h"
 #include "../../Engine/Scene/SceneManager.h"
+#include "../../Game/Scenes/TitleScene.h"
 #include "../UI/Menu.h"
 #include "PauseScene.h"
 
@@ -28,7 +29,7 @@ void PauseScene::Init()
 
 	menu_->AddItem(L"ゲーム再開", [this] { sceMng_.PopOverlay(); });
 	menu_->AddItem(L"設定", [this] {  });
-	menu_->AddItem(L"タイトルへ戻る", [this] { sceMng_.ChangeScene(SceneManager::SCENE_ID::TITLE); });
+	menu_->AddItem(L"タイトルへ戻る", [this] { sceMng_.ChangeScene(std::make_unique<TitleScene>()); });
 	menu_->AddItem(L"ゲーム終了", [] { Application::GetInstance().RequestExit(); });
 }
 

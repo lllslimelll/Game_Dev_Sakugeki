@@ -1,7 +1,9 @@
+#include <memory>
 #include <DxLib.h>
 #include "../../Engine/Core/Application.h"
 #include "../../Engine/Scene/SceneManager.h"
 #include "../../Engine/Input/Input.h"
+#include "../../Game/Scenes/GameScene.h"
 #include "../Actor/Camera.h"
 #include "../UI/Menu.h"
 #include "TitleScene.h"
@@ -29,7 +31,7 @@ void TitleScene::Init(void)
 	float y = Application::SCREEN_SIZE_Y * 0.55f;            // 縦は画面の 55% の位置
 	menu_ = std::make_unique<Menu>(Menu::Layout{ {x, y}, ITEM_W, 60, 16 });
 
-	menu_->AddItem(L"ゲーム開始", [this] { sceMng_.ChangeScene(SceneManager::SCENE_ID::GAME); });
+	menu_->AddItem(L"ゲーム開始", [this] { sceMng_.ChangeScene(std::make_unique<GameScene>()); });
 	menu_->AddItem(L"設定", [this] {  });
 	menu_->AddItem(L"ゲーム終了", [] { Application::GetInstance().RequestExit(); });
 

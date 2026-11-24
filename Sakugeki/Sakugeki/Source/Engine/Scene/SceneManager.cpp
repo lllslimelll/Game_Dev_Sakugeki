@@ -1,13 +1,8 @@
 #include <chrono>
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
-#include "../../Game/Scenes/SceneBase.h"
-#include "../../Game/Scenes/TitleScene.h"
-#include "../../Game/Scenes/GameScene.h"
-#include "../../Game/Scenes/PauseScene.h"
-#include "../../Game/Scenes/OptionScene.h"
-#include "../../Game/Scenes/DeadScene.h"
-#include "../../Game/Common/AsyncLoadingScreen.h"
+#include "../../Engine/Scene/SceneBase.h"
+#include "../../Engine/Scene/AsyncLoadingScreen.h"
 #include "../Common/Fader.h"
 #include "../Resource/ResourceManager.h"
 #include "../Audio/Audio.h"
@@ -34,9 +29,6 @@ SceneManager& SceneManager::GetInstance(void)
 
 void SceneManager::Init(void)
 {
-	sceneId_ = SCENE_ID::TITLE;
-	waitSceneId_ = SCENE_ID::NONE;
-
 	// フェード
 	fader_ = std::make_unique<Fader>();
 	fader_->Init();
@@ -51,7 +43,8 @@ void SceneManager::Init(void)
 	Init3D();
 
 	// 初期シーンの設定
-	DoChangeScene(SCENE_ID::TITLE);
+	nextScene_ = CreateFirstScene();
+	DoChangeScene();
 }
 
 void SceneManager::Init3D(void)
@@ -155,6 +148,7 @@ void SceneManager::Destroy(void)
 
 	// シーンリストの破棄
 	scenes_.clear();
+	nextScene_.reset();
 	loading_.reset();
 
 	// インスタンスのメモリ解放
@@ -162,38 +156,28 @@ void SceneManager::Destroy(void)
 }
 
 // シーン遷移
-void SceneManager::ChangeScene(SCENE_ID nextId)
+void SceneManager::ChangeScene(std::unique_ptr<SceneBase> nextScene)
 {
-	// フェード処理が終わってからシーンを変える場合もあるため、
+	// フェードが終わってから切り替えるので、
 	// 遷移先シーンをメンバ変数に保持
-	waitSceneId_ = nextId;
+	nextScene_ = std::move(nextScene);
+
 	// フェードアウト(暗転)を開始する
 	fader_->SetFade(Fader::STATE::FADE_OUT);
 	isSceneChanging_ = true;
 }
 
 // シーン遷移実行
-void SceneManager::DoChangeScene(SCENE_ID sceneId)
+void SceneManager::DoChangeScene()
 {
 	// リソースの解放
 	ResourceManager::GetInstance().Release();
 
-	// シーンを変更する
-	sceneId_ = sceneId;
-
 	// シーンリストの破棄
 	scenes_.clear();
 
-	// シーンの生成と追加
-	switch (sceneId_)
-	{
-	case SCENE_ID::TITLE:
-		scenes_.push_back(std::make_unique<TitleScene>());
-		break;
-	case SCENE_ID::GAME:
-		scenes_.push_back(std::make_unique<GameScene>());
-		break;
-	}
+	// 新シーンをスタックに追加
+	scenes_.push_back(std::move(nextScene_));
 
 	// ロード待ち画面を作り、新シーンの Load を非同期で発行する
 	loading_ = std::make_unique<AsyncLoadingScreen>();
@@ -204,30 +188,13 @@ void SceneManager::DoChangeScene(SCENE_ID sceneId)
 
 	// 旧シーン破棄などにかかった時間を、ローディングの経過時間に含めない
 	ResetDeltaTime();
-
-
-	waitSceneId_ = SCENE_ID::NONE;
 }
 
 // シーンの追加（オーバーレイ）
-void SceneManager::PushOverlay(SCENE_ID sceneId)
+void SceneManager::PushOverlay(std::unique_ptr<SceneBase> overlay)
 { 
-	// シーンの変更
-	sceneId_ = sceneId;
-	
-	// シーンの生成
-	switch (sceneId_)
-	{
-	case SCENE_ID::PAUSE:
-		scenes_.push_back(std::make_unique<PauseScene>());
-		break;
-	case SCENE_ID::OPTION:
-		scenes_.push_back(std::make_unique<OptionScene>());
-		break;
-	case SCENE_ID::DEAD:
-		scenes_.push_back(std::make_unique<DeadScene>());
-		break;
-	}
+	// 旧シーンの上に新シーンを追加する
+	scenes_.push_back(std::move(overlay));
 
 	// オーバーレイシーンはリソースが少ないため、非同期ロードはしない
 	scenes_.back()->Load();
@@ -249,11 +216,6 @@ void SceneManager::ResetTime(void)
 	preTime_ = std::chrono::system_clock::now();
 }
 
-SceneManager::SCENE_ID SceneManager::GetSceneID(void)
-{
-	return sceneId_;
-}
-
 float SceneManager::GetDeltaTime(void) const
 {
 	return deltaTime_;
@@ -261,9 +223,6 @@ float SceneManager::GetDeltaTime(void) const
 
 SceneManager::SceneManager(void)
 {
-	sceneId_ = SCENE_ID::NONE;
-	waitSceneId_ = SCENE_ID::NONE;
-
 	fader_ = nullptr;
 
 	isSceneChanging_ = false;
@@ -322,7 +281,7 @@ void SceneManager::Fade(void)
 		if (fader_->IsEnd())
 		{
 			// 完全に暗転してからシーン遷移
-			DoChangeScene(waitSceneId_);
+			DoChangeScene();
 		}
 		break;
 	}

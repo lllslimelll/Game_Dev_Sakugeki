@@ -1,8 +1,8 @@
 #include <algorithm>
 #include <DxLib.h>
-#include "../Scenes/SceneBase.h"
-#include "../UI/Loading.h"
-#include "AsyncLoadingScreen.h"
+#include "../../Engine/Scene/SceneBase.h"
+#include "../../Engine/Scene/Loading.h"
+#include "../../Engine/Scene/AsyncLoadingScreen.h"
 
 namespace
 {

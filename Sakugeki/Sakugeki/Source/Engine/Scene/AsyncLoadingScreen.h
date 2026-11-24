@@ -10,7 +10,7 @@ class AsyncLoadingScreen
 public:
 
 	AsyncLoadingScreen(void);
-	~AsyncLoadingScreen(void);   // unique_ptr<Loading> のため .cpp で定義
+	~AsyncLoadingScreen(void);
 
 	// 画面用リソースの読み込み（同期）
 	void Load(void);

@@ -1,6 +1,6 @@
 #include <DxLib.h>
 #include "../../Engine/Core/Application.h"
-#include "Loading.h"
+#include "../../Engine/Scene/Loading.h"
 
 namespace
 {

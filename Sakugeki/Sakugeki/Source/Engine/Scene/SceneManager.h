@@ -8,6 +8,8 @@ class SceneBase;
 class AsyncLoadingScreen;
 class Fader;
 
+std::unique_ptr<SceneBase> CreateFirstScene();
+
 class SceneManager
 {
 
@@ -17,20 +19,6 @@ public:
 	static constexpr int BACKGROUND_COLOR_R = 60;
 	static constexpr int BACKGROUND_COLOR_G = 60;
 	static constexpr int BACKGROUND_COLOR_B = 60;
-
-	// シーン管理用
-	enum class SCENE_ID
-	{
-		NONE,
-		TITLE,
-		PROLOGUE,
-		GAME,
-		PAUSE,
-		OPTION,
-		DEAD,
-		RESULT,
-		DEBUG,
-	};
 	
 	// インスタンスの生成
 	static void CreateInstance(void);
@@ -54,17 +42,14 @@ public:
 	void Destroy(void);
 
 	// 状態遷移
-	void ChangeScene(SCENE_ID nextId);
+	void ChangeScene(std::unique_ptr<SceneBase> nextScene);
 	// オーバーレイの追加（オーバーレイとして）
-	void PushOverlay(SCENE_ID sceneId);
+	void PushOverlay(std::unique_ptr<SceneBase> overlay);
 	// オーバーレイの削除
 	void PopOverlay();
 
 	// 経過時間の基準を今にする（ゲームを止めている間の時間を、次の deltaTime に含めないため）
 	void ResetTime(void);
-
-	// シーンIDの取得
-	SCENE_ID GetSceneID(void);
 
 	// デルタタイムの取得
 	float GetDeltaTime(void) const;
@@ -77,7 +62,7 @@ private:
 	~SceneManager(void);
 
 	// シーン遷移実行
-	void DoChangeScene(SCENE_ID sceneId);
+	void DoChangeScene();
 
 	// デルタタイムをリセットする
 	void ResetDeltaTime(void);
@@ -91,11 +76,10 @@ private:
 	// 静的インスタンス
 	static SceneManager* instance_;
 
-	SCENE_ID sceneId_;
-	SCENE_ID waitSceneId_;
-
 	// 各種シーン
 	std::vector<std::unique_ptr<SceneBase>> scenes_;
+	// 切り替え先のシーン
+	std::unique_ptr<SceneBase> nextScene_;
 
 	// ローディング画面
 	std::unique_ptr<AsyncLoadingScreen> loading_;

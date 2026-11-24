@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <memory>
-#include "SceneBase.h"
+#include "../../Engine/Scene/SceneBase.h"
 
 class Camera;
 class StageManager;

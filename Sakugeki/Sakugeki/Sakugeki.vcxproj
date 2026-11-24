@@ -161,6 +161,7 @@
     <ClCompile Include="Source\Engine\Debug\FrameStats.cpp" />
     <ClCompile Include="Source\Engine\Component\Mesh.cpp" />
     <ClCompile Include="Source\Game\Common\CollisionLayer.cpp" />
+    <ClCompile Include="Source\Game\Scenes\FirstScene.cpp" />
     <ClCompile Include="Source\Game\UI\Player\HPGauge.cpp" />
     <ClCompile Include="Source\Engine\Component\CharacterController.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\NarrowPhase.cpp" />
@@ -171,7 +172,7 @@
     <ClCompile Include="Source\Game\Component\PlayerController.cpp" />
     <ClCompile Include="Source\Engine\Component\CharacterMover.cpp" />
     <ClCompile Include="Source\Engine\Math\Matrix3D.cpp" />
-    <ClCompile Include="Source\Game\Common\AsyncLoadingScreen.cpp" />
+    <ClCompile Include="Source\Engine\Scene\AsyncLoadingScreen.cpp" />
     <ClCompile Include="Source\Game\UI\Menu.cpp" />
     <ClCompile Include="Source\Engine\Component\Collider\CircleBoundaryCollider.cpp" />
     <ClCompile Include="Source\Engine\Audio\Audio.cpp" />
@@ -206,12 +207,12 @@
     <ClCompile Include="Source\Game\Scenes\GameScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\OptionScene.cpp" />
     <ClCompile Include="Source\Game\Scenes\PauseScene.cpp" />
-    <ClCompile Include="Source\Game\Scenes\SceneBase.cpp" />
+    <ClCompile Include="Source\Engine\Scene\SceneBase.cpp" />
     <ClCompile Include="Source\Game\Scenes\TitleScene.cpp" />
     <ClCompile Include="Source\Engine\Core\main.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\Ground.cpp" />
     <ClCompile Include="Source\Game\Actor\Stage\Tree.cpp" />
-    <ClCompile Include="Source\Game\UI\Loading.cpp" />
+    <ClCompile Include="Source\Engine\Scene\Loading.cpp" />
     <ClCompile Include="Source\Engine\Math\Vector3.cpp" />
     <ClCompile Include="Source\Engine\Math\UtilityMath.cpp" />
     <ClCompile Include="Source\Game\UI\UIDraw.cpp" />
@@ -247,7 +248,7 @@
     <ClInclude Include="Source\Game\Component\PlayerController.h" />
     <ClInclude Include="Source\Engine\Component\CharacterMover.h" />
     <ClInclude Include="Source\Engine\Math\Matrix3D.h" />
-    <ClInclude Include="Source\Game\Common\AsyncLoadingScreen.h" />
+    <ClInclude Include="Source\Engine\Scene\AsyncLoadingScreen.h" />
     <ClInclude Include="Source\Game\UI\Menu.h" />
     <ClInclude Include="Source\Engine\Component\Collider\CircleBoundaryCollider.h" />
     <ClInclude Include="Source\Engine\Audio\Audio.h" />
@@ -283,11 +284,11 @@
     <ClInclude Include="Source\Game\Scenes\GameScene.h" />
     <ClInclude Include="Source\Game\Scenes\OptionScene.h" />
     <ClInclude Include="Source\Game\Scenes\PauseScene.h" />
-    <ClInclude Include="Source\Game\Scenes\SceneBase.h" />
+    <ClInclude Include="Source\Engine\Scene\SceneBase.h" />
     <ClInclude Include="Source\Game\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Game\Actor\Stage\Ground.h" />
     <ClInclude Include="Source\Game\Actor\Stage\Tree.h" />
-    <ClInclude Include="Source\Game\UI\Loading.h" />
+    <ClInclude Include="Source\Engine\Scene\Loading.h" />
     <ClInclude Include="Source\Engine\Math\Vector3.h" />
     <ClInclude Include="Source\Engine\Math\UtilityMath.h" />
     <ClInclude Include="Source\Game\UI\UIDraw.h" />
