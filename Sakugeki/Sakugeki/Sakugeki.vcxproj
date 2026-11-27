@@ -223,6 +223,7 @@
     <ClCompile Include="ThirdParty\imgui\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="Source\Engine\Debug\WorldPanel.cpp" />
+    <ClCompile Include="Source\Engine\GameObject\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Engine\Debug\DebugDraw3D.h" />
@@ -298,6 +299,7 @@
     <ClInclude Include="ThirdParty\imgui\imstb_textedit.h" />
     <ClInclude Include="ThirdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Source\Engine\Debug\WorldPanel.h" />
+    <ClInclude Include="Source\Engine\GameObject\World.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Source\Game\Shader\Model\Stage\GroundPS.hlsl">

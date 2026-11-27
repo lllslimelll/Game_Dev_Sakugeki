@@ -1,26 +1,24 @@
 #pragma once
-#include <vector>
 #include <memory>
 #include "../../Engine/Scene/SceneBase.h"
 
+class World;
 class Camera;
-class StageManager;
 class Player;
-class CollisionManager;
 class HPGauge;
 
 class GameScene : public SceneBase
 {
 public:
-	
+
 	// コンストラクタ
-	GameScene();
+	GameScene(void);
 
 	// デストラクタ
-	~GameScene() override;
+	~GameScene(void) override;
 
 	// ロード
-	void Load() override;
+	void Load(void) override;
 
 	// 初期化
 	void Init(void) override;
@@ -32,13 +30,14 @@ public:
 	void Draw(void) override;
 
 private:
-	
-	std::unique_ptr<CollisionManager> collisionMng_;
-	std::unique_ptr<Camera> camera_;
-	std::unique_ptr<StageManager> stageMng_;
-	std::unique_ptr<HPGauge> hpGauge_;
-	std::unique_ptr<Player> player_;
 
-	// リアルシャドウ描画
-	void DrawShadow(void);
+	// ゲーム空間
+	std::unique_ptr<World> world_;
+
+	// オブジェクト
+	Camera* camera_;
+	Player* player_;
+
+	// UI
+	std::unique_ptr<HPGauge> hpGauge_;
 };
